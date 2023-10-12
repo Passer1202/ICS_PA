@@ -103,10 +103,10 @@ static bool make_token(char *e) {
          */
         Token token_getted;//貌似不要也罢；
         switch (rules[i].token_type) {
-		case'+':{	printf("%d\n",nr_token);
+		case'+':{	//printf("%d\n",nr_token);
 				token_getted.type='+';
 				tokens[nr_token++]=token_getted;
-				printf("%d\n",nr_token);
+				//printf("%d\n",nr_token);
 				break;
 			}
 		case'-':{
@@ -188,7 +188,7 @@ bool check_parentheses(int p,int q){
 uint32_t eval(int p,int q){
 	if(p>q)
 	{
-		printf("xxxx%d \n",q);
+		//printf("xxxx%d \n",q);
 		assert(0);
 		return -1;
 	}
@@ -269,7 +269,7 @@ uint32_t eval(int p,int q){
                 
 
 		uint32_t val1=eval(p,op-1);
-		uint32_t val2=eval(op+1,1);
+		uint32_t val2=eval(op+1,q);
 
 		int op_type=tokens[op].type;
 
