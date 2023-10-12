@@ -19,9 +19,11 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-
+/*目前只有十进制四则运算*/
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256,//空格
+  TK_EQ=1,//==
+  TK_NUM=2,//十进制整数
 
   /* TODO: Add more token types */
 
@@ -38,6 +40,12 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
+  {"\\-", '-'},		//sub
+  {"\\*", '*'},		//mul
+  {"\\/", '/'},		//div
+  {"\\(", '('},	//左括弧
+  {"\\)", ')'},	//右括弧
+
   {"==", TK_EQ},        // equal
 };
 
@@ -93,9 +101,54 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+        Token token_getted;//貌似不要也罢；
         switch (rules[i].token_type) {
-          default: TODO();
+		case'+':{
+				token_getted.type='+';
+				tokens[nr_token++]=token_getted;
+				break;
+			}
+		case'-':{
+			        token_getted.type='-';
+				tokens[nr_token++]=token_getted;
+				break;
+			}
+		case'*':{
+				token_getted.type='*';
+				tokens[nr_token++]=token_getted;
+				break;
+			}
+		case'/':{
+				token_getted.type='/';
+				tokens[nr_token++]=token_getted;
+				break;
+			}
+		case TK_NOTYPE:{
+				break;
+			       }
+		case TK_NUM:{//缓冲区溢出还没考虑
+			       tokens[nr_token].type=TK_NUM;
+			       if(substr_len>=32)
+			       {
+				       assert(0);
+			       }
+			       strncpy(tokens[nr_token].str,substr_start,substr_len);
+			       tokens[nr_token].str[substr_len]='\0';
+			       nr_token++;
+			       break;
+			    }
+		case '(':{
+				   token_getted.type='(';
+				   tokens[nr_token++]=token_getted;
+				   break;
+			   }
+		case ')':{
+				   token_getted.type=')';
+				   tokens[nr_token++]=token_getted;
+				   break;
+			   }
+				   
+		default:break; //TODO();//错误输入提醒还没写
         }
 
         break;
@@ -110,7 +163,127 @@ static bool make_token(char *e) {
 
   return true;
 }
+bool check_parentheses(int p,int q){
+	if(tokens[p].type!='('||tokens[q].type!=')')
+		return false;
+	else{
+		int i=p+1;
+		int num=0;
+		for(;i<q;i++)
+		{
+			if(tokens[i].type=='(')
+				num++;
+			else if(tokens[i].type==')')
+				num--;
 
+			if(num<0) return false;
+		}
+		if(num!=0)
+			return false;
+
+	}
+	return true;
+}
+uint32_t eval(int p,int q){
+	if(p>q)
+	{
+		assert(0);
+		return -1;
+	}
+	else if(p==q)
+	{
+		return atoi(tokens[p].str);
+	}
+	else if(check_parentheses(p,q)==true)
+	{
+		return eval(p+1,q-1);
+	}
+	else
+	{
+		int op=-1;
+		int kuohao=0;//识别括号
+		bool islow=false;//有无+-
+
+		for(int i=p;i<=q;i++)
+		{
+			switch(tokens[i].type)
+			{
+				case'+':
+				{
+					if(kuohao==0)
+					{
+						if(op<i)op=i;	
+						islow=true;
+					}
+					break;
+				}
+				case'-':
+				{
+					if(kuohao==0)
+					{
+						if(op<i)op=i;
+						islow=true;
+					}
+					break;
+				}
+				case'*':
+				{
+					if(kuohao==0&&!islow)
+					{
+						if(op<i)op=i;
+					}
+					break;
+				}
+				case'/':
+				{
+					if(kuohao==0&&!islow)
+					{
+						if(op<i)op=i;
+					}
+					break;
+				}
+				case'(':
+				{
+					kuohao++;
+					break;
+				}
+				case')':
+				{
+					kuohao--;
+					if(kuohao<0)
+					{
+						printf("wrong\n");
+						assert(0);	//报错
+					}
+
+					break;
+				}
+				default:break;
+
+			}
+		}
+
+
+                
+
+		uint32_t val1=eval(p,op-1);
+		uint32_t val2=eval(op+1,1);
+
+		int op_type=tokens[op].type;
+
+		switch(op_type){
+			case'+':return val1+val2;
+			case'-':return val1-val2;
+			case'*':return val1*val2;
+			case'/':return val1/val2;
+			default:
+				printf("optype wrong/n");
+				assert(0);
+		}
+		//主要要做的
+	}
+
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -119,7 +292,9 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  //TODO();
+
+  eval(0,nr_token-1);
 
   return 0;
 }

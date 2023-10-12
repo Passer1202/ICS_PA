@@ -87,6 +87,18 @@ static int cmd_x(char *args){
 	
 	}
 	return 0;
+
+}
+
+static int cmd_p(char* args){
+	if(args==NULL){
+		printf("empty input\n");
+		return 0;
+	}
+
+	bool success=false;
+	expr(args,&success);
+	return 0;
 }
 static int cmd_q(char *args) {
   nemu_state.state=NEMU_QUIT;	
@@ -105,7 +117,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si", "Single-step execution",cmd_si},
   {"info","Display relevant status/information",cmd_info},
-  {"x","Scanning Memory",cmd_x}, 
+  {"x","Scanning Memory",cmd_x},
+  {"p","Expression evaluation",cmd_p}, 
   /* TODO: Add more commands */
 
 };
