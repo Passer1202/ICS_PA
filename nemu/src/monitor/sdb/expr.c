@@ -103,9 +103,10 @@ static bool make_token(char *e) {
          */
         Token token_getted;//貌似不要也罢；
         switch (rules[i].token_type) {
-		case'+':{
+		case'+':{	printf("%d\n",nr_token);
 				token_getted.type='+';
 				tokens[nr_token++]=token_getted;
+				printf("%d\n",nr_token);
 				break;
 			}
 		case'-':{
