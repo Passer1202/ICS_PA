@@ -82,7 +82,7 @@ static int cmd_x(char *args){
 	const int width=4;
 	for(int i=0;i<length;i++)
 	{
-		printf("%x\n",paddr_read(startp,width));
+		printf("0x%x	0x%x\n",startp,paddr_read(startp,width));
 		startp=startp+width;
 	
 	}
