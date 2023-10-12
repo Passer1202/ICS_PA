@@ -187,7 +187,7 @@ bool check_parentheses(int p,int q){
 uint32_t eval(int p,int q){
 	if(p>q)
 	{
-		printf("xxxx\n");
+		printf("xxxx%d \n",q);
 		assert(0);
 		return -1;
 	}
