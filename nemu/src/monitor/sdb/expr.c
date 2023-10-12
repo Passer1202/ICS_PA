@@ -43,9 +43,9 @@ static struct rule {
   {"\\-", '-'},		//sub
   {"\\*", '*'},		//mul
   {"\\/", '/'},		//div
-  {"\\(", '('},	//左括弧
-  {"\\)", ')'},	//右括弧
-
+  {"\\(", '('},		//左括弧
+  {"\\)", ')'},		//右括弧
+  {"[0-9]+",TK_NUM},
   {"==", TK_EQ},        // equal
 };
 
@@ -294,7 +294,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
 
-  eval(0,nr_token-1);
+ printf("%d",eval(0,nr_token-1));
 
   return 0;
 }
