@@ -232,6 +232,7 @@ uint32_t evalnum(int i,bool *ok){
 	switch(tokens[i].type)
 	{
 		case TK_HEX:
+		assert(0);
 			return strtol(tokens[i].str,NULL,16);
 		case TK_NUM:
 		       	return strtol(tokens[i].str,NULL,10);
@@ -301,7 +302,6 @@ uint32_t eval(int p,int q,bool *ok){
 		}
 		return num;
 	*/
-	        assert(0);
 		return 	evalnum(p,ok);
 	}
 	else if(check_parentheses(p,q)==true)
