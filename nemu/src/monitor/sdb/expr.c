@@ -407,7 +407,7 @@ uint32_t eval(int p,int q,bool *ok){
 					kuohao--;
 					if(kuohao<0)
 					{
-						printf("wrong\n");
+						printf("wrong kuohao\n");
 						assert(0);	//报错
 					}
 
