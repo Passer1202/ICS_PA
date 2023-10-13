@@ -34,6 +34,7 @@ enum {
 
 };
 
+
 static struct rule {
   const char *regex;
   int token_type;
@@ -171,6 +172,7 @@ static bool make_token(char *e) {
 		case TK_EQ:{
 				   tokens[nr_token].type=TK_EQ;
 				   strcpy(tokens[nr_token++].str,"==");
+				   break;
 			   }
 		case TK_REG:{
 				    tokens[nr_token].type=TK_REG;
@@ -419,6 +421,7 @@ uint32_t eval(int p,int q,bool *ok){
 		int op_type=tokens[op].type;
           //       printf("op%d\n",op_type);//ddebug		
 		uint32_t val1=eval(p,op-1,&isok1);
+		
 		uint32_t val2=eval(op+1,q,&isok2);
 		assert(0);
 		if(!isok2){
