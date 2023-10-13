@@ -23,6 +23,8 @@
 // this should be enough
 const int MAX_EXR=120;//生成表达式不要太长
 const int MAX_NUM=10086;//生成数字最大
+
+const int spacelenmax=5;
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
@@ -51,6 +53,16 @@ static void gen(char x)
 	sprintf(buf+index_buf,"%c",x);
 	index_buf++;
 
+}
+
+static void gen_rand_space()
+{
+	int len=choose(spacelenmax);
+	for(int i=0;i<len;i++)
+	{
+		buf[index_buf++]=' ';	
+	}
+	
 }
 
 static void gen_rand_op()
