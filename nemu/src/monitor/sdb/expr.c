@@ -24,6 +24,10 @@ enum {
   TK_NOTYPE = 256,//空格
   TK_EQ=1,//==
   TK_NUM=2,//十进制整数
+  TK_NEQ=3,//!=
+  TK_AND=4,//&&
+  TK_HEX=5,//16进制
+  TK_REG=6,//寄存器$开头
 
   /* TODO: Add more token types */
 
@@ -41,12 +45,15 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"\\-", '-'},		//sub
-  {"\\*", '*'},		//mul
+  {"\\*", '*'},		//mul或指针
   {"\\/", '/'},		//div
   {"\\(", '('},		//左括弧
   {"\\)", ')'},		//右括弧
   {"[0-9]+",TK_NUM},
-  {"==", TK_EQ},        // equal
+  {"\\=\\=", TK_EQ},    // equal
+  {"\\!\\=",TK_NEQ},	//不等
+  {"\\&\\&",TK_AND},    //&&
+  {"0[xX][0-9a-fA-F]+",TK_HEX},//16进制
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -148,7 +155,42 @@ static bool make_token(char *e) {
 				   tokens[nr_token++]=token_getted;
 				   break;
 			   }
-				   
+		case TK_NEQ:{
+				   tokens[nr_token].type=TK_NEQ;
+				   strcpy(tokens[nr_token++].str,"!=");
+		 	   
+				   break;
+			    }
+		case TK_AND:{
+			 tokens[nr_token].type=TK_AND;
+			 strcpy(tokens[nr_token++].str,"&&");
+		 
+			 break;
+		 }		 
+		case TK_EQ:{
+				   tokens[nr_token].type=TK_EQ;
+				   strcpy(tokens[nr_token++].str,"==");
+			   }
+		case TK_REG:{
+				    tokens[nr_token].type=TK_REG;
+				    if(substr_len>=32)
+				    {
+					    assert(0);
+				    }
+				    strncpy(tokens[nr_token].str,substr_start,substr_len);
+				    tokens[nr_token++].str[substr_len]='\0';
+				    break;
+			    }
+		case TK_HEX:{
+				    tokens[nr_token].type=TK_HEX;
+				    if(substr_len>=32)
+				    {
+					    assert(0);
+				    }
+				    strncpy(tokens[nr_token].str,substr_start,substr_len);
+				    tokens[nr_token++].str[substr_len]='\0';
+				    break;
+			    }
 		default:break; //TODO();//错误输入提醒还没写
         }
 
@@ -287,7 +329,14 @@ uint32_t eval(int p,int q){
 			case'+':return val1+val2;
 			case'-':return val1-val2;
 			case'*':return val1*val2;
-			case'/':return val1/val2;
+			case'/':
+				{if(val2==0){
+
+					printf("出现除0\n");
+					assert(0);
+					    }
+					return val1/val2;
+				}
 			default:
 				printf("optype wrong/n");
 				assert(0);
