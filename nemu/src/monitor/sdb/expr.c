@@ -242,7 +242,7 @@ uint32_t evalnum(int i,bool *ok){
 	}
 	}
 
-uint32_t solve2(int val1,int op_type,int val2,bool *ok)
+uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
 {
 	
 		switch(op_type){
@@ -267,7 +267,7 @@ uint32_t solve2(int val1,int op_type,int val2,bool *ok)
 		}
 }
 
-uint32_t solve1(int op_type,int val2,bool *ok)//解指针
+uint32_t solve1(uint32_t op_type,uint32_t val2,bool *ok)//解指针
 {
 	if(op_type!=TK_DEREF)
 	{
