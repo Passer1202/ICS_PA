@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <isa.h>
-
+#include<memory/vaddr.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -28,6 +28,7 @@ enum {
   TK_AND=4,//&&
   TK_HEX=5,//16进制
   TK_REG=6,//寄存器$开头
+  TK_DEREF=7,//解指针
 
   /* TODO: Add more token types */
 
@@ -227,16 +228,70 @@ bool check_parentheses(int p,int q){
 	}
 	return true;
 }
-uint32_t eval(int p,int q){
+uint32_t evalnum(int i,bool *ok){
+	switch(tokens[i].type)
+	{
+		case TK_NUM:
+			if(strncmp("0x",tokens[i].str,2)==0)
+				return strtol(tokens[i].str,NULL,16);
+			else return strtol(tokens[i].str,NULL,10);
+		case TK_REG:
+			return isa_reg_str2val(tokens[i].str,ok);
+			
+		default:*ok=false;return 0;
+	}
+	}
+
+uint32_t solve2(int val1,int op_type,int val2,bool *ok)
+{
+	
+		switch(op_type){
+			case'+':return val1+val2;
+			case'-':return val1-val2;
+			case'*':return val1*val2;
+			case'/':
+				{if(val2==0){
+
+					*ok=false;
+					return 0;
+					    }
+					return val1/val2;
+				}
+			case TK_EQ:return val1==val2;
+			case TK_AND:return val1&&val2;
+			case TK_NEQ:return val1!=val2;
+			default:
+				*ok=false;
+				return 0;
+				
+		}
+}
+
+uint32_t solve1(int op_type,int val2,bool *ok)//解指针
+{
+	if(op_type!=TK_DEREF)
+	{
+		*ok=false;
+		return 0;
+	}
+	else
+	{
+		return vaddr_read(val2,4);
+	}
+}
+uint32_t eval(int p,int q,bool *ok){
+        *ok=true;
+        
 	if(p>q)
 	{
 		//printf("xxxx%d \n",q);
-		assert(0);
-		return -1;
+		//assert(0);
+		*ok=false;
+		return 0;
 	}
 	else if(p==q)
 	{
-		uint32_t num=0;
+	/*	uint32_t num=0;
 		int j=0;
 		while(tokens[p].str[j]!='\0')
 		{//存在溢出问题
@@ -245,44 +300,67 @@ uint32_t eval(int p,int q){
 			j++;
 		}
 		return num;
-
+	*/
+		return 	evalnum(p,ok);
 
 	}
 	else if(check_parentheses(p,q)==true)
 	{
-		return eval(p+1,q-1);
+		return eval(p+1,q-1,ok);
 	}
 	else
 	{
 		int op=-1;
 		int kuohao=0;//识别括号
-		bool islow=false;//有无+-
+		bool isand=false;//有无&&
+		bool islow=false;//有无==
+		bool ismid=false;//有无+-
 
 		for(int i=p;i<=q;i++)
 		{
 			switch(tokens[i].type)
 			{
-				case'+':
-				{
+				case TK_AND:
+				{	
 					if(kuohao==0)
 					{
-						if(op<i)op=i;	
+						if(op<i)op=i;
+						isand=true;
 						islow=true;
+					}
+					break;
+				}
+				case TK_EQ:
+				{
+					if(kuohao==0&&!isand)
+					{
+						if(op<i)op=i;
+						islow=true;
+					
+					}
+					break;
+				}
+				case'+':
+				{
+					if(!islow&&kuohao==0)
+					{
+						if(op<i)op=i;	
+						ismid=true;
 					}
 					break;
 				}
 				case'-':
 				{
-					if(kuohao==0)
+					if(!islow&&kuohao==0)
 					{
 						if(op<i)op=i;
-						islow=true;
+						ismid=true;
 					}
 					break;
 				}
 				case'*':
 				{
-					if(kuohao==0&&!islow)
+					if(kuohao==0&&!islow&&!ismid)
 					{
 						if(op<i)op=i;
 					}
@@ -290,12 +368,13 @@ uint32_t eval(int p,int q){
 				}
 				case'/':
 				{
-					if(kuohao==0&&!islow)
+					if(kuohao==0&&!islow&&!ismid)
 					{
 						if(op<i)op=i;
 					}
 					break;
 				}
+				
 				case'(':
 				{
 					kuohao++;
@@ -316,13 +395,26 @@ uint32_t eval(int p,int q){
 
 			}
 		}
-
-
-                
-
-		uint32_t val1=eval(p,op-1);
-		uint32_t val2=eval(op+1,q);
-
+		
+		bool isok1,isok2;
+		int op_type=tokens[op].type;
+		
+		uint32_t val1=eval(p,op-1,&isok1);
+		uint32_t val2=eval(op+1,q,&isok2);
+		
+		if(!isok2){
+			*ok=false;
+			return 0;
+			}
+		if(isok1)
+		{
+			return solve2(val1,op_type,val2,ok);
+		}
+		else
+		{
+			return solve1(op_type,val2,ok);
+		}
+/*
 		int op_type=tokens[op].type;
 
 		switch(op_type){
@@ -342,6 +434,7 @@ uint32_t eval(int p,int q){
 				assert(0);
 		}
 		//主要要做的
+*/
 	}
 
 }
@@ -351,11 +444,21 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+  for(int i=0;i<nr_token;i++)
+  {
+  	if(tokens[i].type=='*')
+  	{
+  		if(i==0)
+  			tokens[i].type=TK_DEREF;
+  		else if(tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_HEX&&tokens[i-1].type!=')')
+  			tokens[i].type=TK_DEREF;
+  	}
+  }
+  			
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
 
- printf("%u",eval(0,nr_token-1));
-
-  return 0;
+ //printf("%u",eval(0,nr_token-1));
+  bool flag=true;
+  return eval(0,nr_token-1,&flag);
 }
