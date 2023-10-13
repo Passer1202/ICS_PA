@@ -87,8 +87,8 @@ static void gen_rand_expr() {
 		
 	switch(ch){
 		case 0:gen_num();break;
-		case 1:gen('(');gen_rand_expr();gen(')');break;
-		default:gen_rand_expr();gen_rand_op();gen_rand_expr();
+		case 1:gen('(');gen_rand_space();gen_rand_expr();gen_rand_space();gen(')');break;
+		default:gen_rand_expr();gen_rand_space();gen_rand_op();gen_rand_space();gen_rand_expr();
       // buf[index_buf]='\0'; 
        //	buf[0] = '\0';
 	}
