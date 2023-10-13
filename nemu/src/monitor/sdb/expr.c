@@ -231,10 +231,10 @@ bool check_parentheses(int p,int q){
 uint32_t evalnum(int i,bool *ok){
 	switch(tokens[i].type)
 	{
+		case TK_HEX:
+			return strtol(tokens[i].str,NULL,16);
 		case TK_NUM:
-			if(strncmp("0x",tokens[i].str,2)==0)
-				return strtol(tokens[i].str,NULL,16);
-			else return strtol(tokens[i].str,NULL,10);
+		       	return strtol(tokens[i].str,NULL,10);
 		case TK_REG:
 			return isa_reg_str2val(tokens[i].str,ok);
 			
