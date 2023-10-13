@@ -409,7 +409,7 @@ uint32_t eval(int p,int q,bool *ok){
 		printf("op%d\n",op);//ddebug		
 		bool isok1,isok2;
 		int op_type=tokens[op].type;
-		
+                 printf("op%d\n",op_type);//ddebug		
 		uint32_t val1=eval(p,op-1,&isok1);
 		uint32_t val2=eval(op+1,q,&isok2);
 		
