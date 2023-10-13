@@ -197,7 +197,7 @@ uint32_t eval(int p,int q){
 		uint32_t num=0;
 		int j=0;
 		while(tokens[p].str[j]!='\0')
-		{
+		{//存在溢出问题
 			int temp=tokens[p].str[j]-'0';
 			num=num*10+temp;
 			j++;
@@ -306,7 +306,7 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
 
- printf("%d",eval(0,nr_token-1));
+ printf("%u",eval(0,nr_token-1));
 
   return 0;
 }
