@@ -127,7 +127,7 @@ static bool make_token(char *e) {
 		case TK_NOTYPE:{
 				break;
 			       }
-		case TK_NUM:{//缓冲区溢出还没考虑
+		case TK_NUM:{//基于假设，num其实是个unsigned int
 			       tokens[nr_token].type=TK_NUM;
 			       if(substr_len>=32)
 			       {
