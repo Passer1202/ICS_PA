@@ -406,7 +406,7 @@ uint32_t eval(int p,int q,bool *ok){
 
 			}
 		}
-		
+		printf("op%d\n",op);//ddebug		
 		bool isok1,isok2;
 		int op_type=tokens[op].type;
 		
