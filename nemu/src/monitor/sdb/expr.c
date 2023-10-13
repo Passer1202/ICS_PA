@@ -232,9 +232,9 @@ uint32_t evalnum(int i,bool *ok){
 	switch(tokens[i].type)
 	{
 		case TK_HEX:
-		assert(0);
 			return strtol(tokens[i].str,NULL,16);
 		case TK_NUM:
+		        assert(0);
 		       	return strtol(tokens[i].str,NULL,10);
 		case TK_REG:
 			return isa_reg_str2val(tokens[i].str,ok);
