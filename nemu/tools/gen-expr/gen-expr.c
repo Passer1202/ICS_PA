@@ -21,6 +21,7 @@
 #include <string.h>
 
 // this should be enough
+const int MAXBUF=65534;
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
@@ -30,20 +31,54 @@ static char *code_format =
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
+static int num_k=0;//括号数
+static int index_buf=0;
 static int choose(int n){
 	return rand()%n;
 }
+static void gen_num(){
+	int isok=choose(2);
+	while(isok!=0&&index_buf+num_k<MAXBUF)
+	{
+		int num=choose(10);
+		buf[index_buf++]=num+'0';
+		isok=choose(2);
+	}
+}
 
+static void gen(char x)
+{
+	switch(x)
+	{
+		case'(':if(index_buf+num_k+1<MAXBUF)buf[index_buf++]='(';num_k++;break;
+		case')':if(index_buf<=MAXBUF)buf[index_buf++]=')';num_k--;break;
+		default:if(index_buf+num_k+1<MAXBUF)buf[index_buf++]=x;
+	}
+
+}
+
+static void gen_rand_op()
+{
+	int op=choose(4);
+	switch(op)
+	{
+		case 0:gen('+');break;
+		case 1:gen('-');break;
+		case 2:gen('*');break;
+		case 3:gen('/');break;
+		       
+	}
+}
 static void gen_rand_expr() {
 
 	switch(choose(3)){
 		case 0:gen_num();break;
 		case 1:gen('(');gen_rand_expr();gen(')');break;
 		default:gen_rand_expr();gen_rand_op();gen_rand_expr();
- 
-       	buf[0] = '\0';
+       buf[index_buf]='\0'; 
+       //	buf[0] = '\0';
+	}
 }
-
 int main(int argc, char *argv[]) {
   int seed = time(0);
   srand(seed);
@@ -53,6 +88,7 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    index_buf=0;
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
