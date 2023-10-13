@@ -330,16 +330,6 @@ uint32_t eval(int p,int q,bool *ok){
 					}
 					break;
 				}
-				case TK_EQ:
-				{printf("sb\n");
-					if(kuohao==0&&!isand)
-					{
-						if(op<i)op=i;
-						islow=true;
-					
-					}
-					break;
-				}
 				case TK_NEQ:
 				{
 					if(kuohao==0&&!isand)
