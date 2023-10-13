@@ -69,7 +69,7 @@ static int cmd_info(char *args){
 	*/
 	return 0;
 }
-static int cmd_x(char *args){
+static int cmd_x(char *args){//扫描物理内存
 	/*求读取长度*/
 	char* len=strtok(NULL," ");
 	int length=0;
