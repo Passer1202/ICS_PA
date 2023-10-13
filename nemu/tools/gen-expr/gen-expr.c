@@ -21,7 +21,8 @@
 #include <string.h>
 
 // this should be enough
-const int MAXBUF=65534;
+const int MAX_EXR=120;//生成表达式不要太长
+const int MAX_NUM=10086;//生成数字最大
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
@@ -37,23 +38,18 @@ static int choose(int n){
 	return rand()%n;
 }
 static void gen_num(){
-	int isok=choose(2);
-	while(isok!=0&&index_buf+num_k<MAXBUF)
+	int num=choose(MAX_NUM);//num大小可调
+	sprintf(buf+index_buf,"%d",num);
+	while(buf[index_buf])
 	{
-		int num=choose(10);
-		buf[index_buf++]=num+'0';
-		isok=choose(2);
+		index_buf++;
 	}
 }
 
 static void gen(char x)
 {
-	switch(x)
-	{
-		case'(':if(index_buf+num_k+1<MAXBUF)buf[index_buf++]='(';num_k++;break;
-		case')':if(index_buf<=MAXBUF)buf[index_buf++]=')';num_k--;break;
-		default:if(index_buf+num_k+1<MAXBUF)buf[index_buf++]=x;
-	}
+	sprintf(buf+index_buf,"%c",x);
+	index_buf++;
 
 }
 
@@ -71,13 +67,21 @@ static void gen_rand_op()
 }
 static void gen_rand_expr() {
 
-	switch(choose(3)){
+	int ch=0;
+	if(index_buf<MAX_EXR)
+	{
+		ch=choose(3);
+	}
+		
+	switch(ch){
 		case 0:gen_num();break;
 		case 1:gen('(');gen_rand_expr();gen(')');break;
 		default:gen_rand_expr();gen_rand_op();gen_rand_expr();
-       buf[index_buf]='\0'; 
+      // buf[index_buf]='\0'; 
        //	buf[0] = '\0';
 	}
+
+	
 }
 int main(int argc, char *argv[]) {
   int seed = time(0);
