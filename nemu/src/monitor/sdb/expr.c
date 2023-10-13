@@ -14,7 +14,7 @@
 ***************************************************************************************/
 
 #include <isa.h>
-#include<memory/paddr.h>
+#include<memory/vaddr.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
@@ -276,7 +276,7 @@ uint32_t solve1(int op_type,int val2,bool *ok)//解指针
 	}
 	else
 	{
-		return paddr_read(val2,4);
+		return vaddr_read(val2,4);
 	}
 }
 uint32_t eval(int p,int q,bool *ok){

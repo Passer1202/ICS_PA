@@ -18,7 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-#include <memory/paddr.h>
+#include <memory/vaddr.h>
 static int is_batch_mode = false;
 
 void init_regex();
@@ -82,7 +82,7 @@ static int cmd_x(char *args){//扫描物理内存
 	const int width=4;
 	for(int i=0;i<length;i++)
 	{
-		printf("0x%x	0x%x\n",startp,paddr_read(startp,width));
+		printf("0x%x	0x%x\n",startp,vaddr_read(startp,width));
 		startp=startp+width;
 	
 	}
