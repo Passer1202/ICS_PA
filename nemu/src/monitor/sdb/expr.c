@@ -234,7 +234,6 @@ uint32_t evalnum(int i,bool *ok){
 		case TK_HEX:
 			return strtol(tokens[i].str,NULL,16);
 		case TK_NUM:
-		        assert(0);
 		       	return strtol(tokens[i].str,NULL,10);
 		case TK_REG:
 			return isa_reg_str2val(tokens[i].str,ok);
@@ -420,6 +419,7 @@ uint32_t eval(int p,int q,bool *ok){
 		int op_type=tokens[op].type;
           //       printf("op%d\n",op_type);//ddebug		
 		uint32_t val1=eval(p,op-1,&isok1);
+		assert(0);
 		uint32_t val2=eval(op+1,q,&isok2);
 		if(!isok2){
 			*ok=false;
