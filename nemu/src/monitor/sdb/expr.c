@@ -196,7 +196,7 @@ uint32_t eval(int p,int q){
 	{
 		uint32_t num=0;
 		int j=0;
-		while(tokens[p].str[j]!='0')
+		while(tokens[p].str[j]!='\0')
 		{
 			int temp=tokens[p].str[j]-'0';
 			num=num*10+temp;
