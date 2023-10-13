@@ -301,9 +301,8 @@ uint32_t eval(int p,int q,bool *ok){
 		}
 		return num;
 	*/
+	        assert(0);
 		return 	evalnum(p,ok);
-		assert(0);
-
 	}
 	else if(check_parentheses(p,q)==true)
 	{
