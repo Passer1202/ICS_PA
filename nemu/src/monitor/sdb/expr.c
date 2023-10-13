@@ -258,7 +258,7 @@ uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
 					*ok=false;
 					return 0;
 					    }
-					return val1/val2;
+					return (int)val1/(int)val2;
 				}
 			case TK_EQ:return val1==val2;
 			case TK_AND:return val1&&val2;
