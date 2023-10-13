@@ -315,7 +315,7 @@ uint32_t eval(int p,int q,bool *ok){
 		bool isand=false;//有无&&
 		bool islow=false;//有无==
 		bool ismid=false;//有无+-
-
+		bool ishigh=false;//有无*/
 		for(int i=p;i<=q;i++)
 		{
 			switch(tokens[i].type)
@@ -363,12 +363,23 @@ uint32_t eval(int p,int q,bool *ok){
 					if(kuohao==0&&!islow&&!ismid)
 					{
 						if(op<i)op=i;
+						ishigh=true;
+
 					}
 					break;
 				}
 				case'/':
 				{
 					if(kuohao==0&&!islow&&!ismid)
+					{
+						if(op<i)op=i;
+						ishigh=true;
+					}
+					break;
+				}
+				case TK_DEREF:
+				{
+					if(kuohao==0&&!islow&&!ismid&&!ishigh)
 					{
 						if(op<i)op=i;
 					}
