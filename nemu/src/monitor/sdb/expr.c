@@ -50,11 +50,11 @@ static struct rule {
   {"\\/", '/'},		//div
   {"\\(", '('},		//左括弧
   {"\\)", ')'},		//右括弧
+  {"0[xX][0-9a-fA-F]+",TK_HEX},		//16进制
   {"[0-9]+",TK_NUM},
   {"\\=\\=", TK_EQ},    // equal
   {"\\!\\=",TK_NEQ},	//不等
   {"\\&\\&",TK_AND},    //&&
-  {"0[xX][0-9a-fA-F]+",TK_HEX},//16进制
 };
 
 #define NR_REGEX ARRLEN(rules)
