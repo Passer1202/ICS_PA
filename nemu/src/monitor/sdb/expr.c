@@ -22,7 +22,7 @@
 /*目前只有十进制四则运算*/
 enum {
   TK_NOTYPE = 256,//空格
-  TK_EQ=8,//==
+  TK_EQ=1,//==
   TK_NUM=2,//十进制整数
   TK_NEQ=3,//!=
   TK_AND=4,//&&
@@ -257,7 +257,7 @@ uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
 					    }
 					return val1/val2;
 				}
-			case TK_EQ:return val1==val2;
+			case TK_EQ:assert(0);return val1==val2;
 			case TK_AND:return val1&&val2;
 			case TK_NEQ:return val1!=val2;
 			default:
