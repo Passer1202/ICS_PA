@@ -275,7 +275,7 @@ uint32_t solve1(uint32_t op_type,uint32_t val2,bool *ok)//解指针
 		return 0;
 	}
 	else
-	{	printf("0x%xval2\n",val2);//debug
+	{//	printf("0x%xval2\n",val2);//debug
 		return vaddr_read(val2,4);
 	}
 }
