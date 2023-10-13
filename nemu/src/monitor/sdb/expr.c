@@ -257,7 +257,7 @@ uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
 					    }
 					return val1/val2;
 				}
-			case TK_EQ:assert(0);return val1==val2;
+			case TK_EQ:return val1==val2;
 			case TK_AND:return val1&&val2;
 			case TK_NEQ:return val1!=val2;
 			default:
@@ -421,7 +421,7 @@ uint32_t eval(int p,int q,bool *ok){
           //       printf("op%d\n",op_type);//ddebug		
 		uint32_t val1=eval(p,op-1,&isok1);
 		uint32_t val2=eval(op+1,q,&isok2);
-		
+		assert(0);
 		if(!isok2){
 			*ok=false;
 			return 0;
