@@ -194,7 +194,17 @@ uint32_t eval(int p,int q){
 	}
 	else if(p==q)
 	{
-		return atoi(tokens[p].str);
+		uint32_t num=0;
+		int j=0;
+		while(tokens[p].str[j]!='0')
+		{
+			int temp=tokens[p].str[j]-'0';
+			num=num*10+temp;
+			j++;
+		}
+		return num;
+
+
 	}
 	else if(check_parentheses(p,q)==true)
 	{
