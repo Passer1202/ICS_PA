@@ -104,6 +104,7 @@ static int cmd_q(char *args) {
   nemu_state.state=NEMU_QUIT;	
   return -1;
 }
+/*
 static void test_expr()
 {
 	FILE *fp=fopen("/home/hengji/ics2023/nemu/tools/gen-expr/input","r");
@@ -132,6 +133,7 @@ static void test_expr()
 	if(e) free(e);
 	Log("expr test pass");
 }
+*/
 static int cmd_help(char *args);
 
 static struct {
@@ -221,7 +223,7 @@ void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
   /*测试expr*/
-  test_expr();
+//  test_expr();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
