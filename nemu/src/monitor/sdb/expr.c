@@ -423,7 +423,7 @@ uint32_t eval(int p,int q,bool *ok){
 		uint32_t val1=eval(p,op-1,&isok1);
 		
 		uint32_t val2=eval(op+1,q,&isok2);
-		assert(0);
+//		assert(0);
 		if(!isok2){
 			*ok=false;
 			return 0;
