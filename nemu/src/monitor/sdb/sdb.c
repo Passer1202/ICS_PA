@@ -62,11 +62,14 @@ static int cmd_info(char *args){
 	{
 		isa_reg_display();
 	}
-/*	else if(strcmp(args,"w")==0)
+//	else if(strcmp(args,"w")==0)
+//	{
+//		sdb_watchpoint_display();
+//	}
+	else
 	{
-		sdb_watchpoint_display();
+		Log("wrong input");
 	}
-	*/
 	return 0;
 }
 static int cmd_x(char *args){//扫描物理内存
@@ -107,7 +110,7 @@ static int cmd_q(char *args) {
   return -1;
 }
 /*随机测试用*/
-
+/*
 static void test_expr()
 {
 	FILE *fp=fopen("/home/hengji/ics2023/nemu/tools/gen-expr/input","r");
@@ -136,7 +139,7 @@ static void test_expr()
 	if(e) free(e);
 	Log("expr test pass");
 }
-
+*/
 static int cmd_help(char *args);
 
 static struct {
@@ -226,7 +229,7 @@ void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
   /*测试expr*/
-  test_expr();
+  //test_expr();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
