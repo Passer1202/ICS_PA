@@ -54,10 +54,11 @@ void scan_watchpoint()
 		{
 			bool success;
 			word_t value=expr(h->expr,&success);
+			assert(success);
 			if(h->val!=value)
 			{
 				printf("Watchpoint %d:\"%s\":oldvlaue=%u,newvalue=%u\n",h->NO,h->expr,h->val,value);
-			h->val=value;
+				h->val=value;
 			}
          	}
          }
@@ -108,7 +109,7 @@ void delete_watchpoint(int no)
         if(no>=NR_WP)assert(0);
         WP* wp=&wp_pool[no];
         free_wp(wp);
-        printf("delete watchpoint%d:%s\n",wp->NO,wp->expr);
+        printf("delete watchpoint %d:\" %s\"\n",wp->NO,wp->expr);
 }
 
 
@@ -117,5 +118,5 @@ void set_watchpoint(char *args,word_t ans)
 	WP* wp=new_wp();
 	strcpy(wp->expr,args);
 	wp->val=ans;
-	printf("Watchpoint %d:%s\n",wp->NO,wp->expr);
+	printf("Watchpoint %d:\"%s\"\n",wp->NO,wp->expr);
 }

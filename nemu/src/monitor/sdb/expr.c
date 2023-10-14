@@ -111,34 +111,23 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-        Token token_getted;//貌似不要也罢；
+       // Token token_getted;//貌似不要也罢；
         switch (rules[i].token_type) {
-		case'+':{	//printf("%d\n",nr_token);
-				token_getted.type='+';
-				tokens[nr_token++]=token_getted;
-				//printf("%d\n",nr_token);
-				break;
-			}
-		case'-':{
-			        token_getted.type='-';
-				tokens[nr_token++]=token_getted;
-				break;
-			}
-		case'*':{
-				token_getted.type='*';
-				tokens[nr_token++]=token_getted;
-				break;
-			}
-		case'/':{
-				token_getted.type='/';
-				tokens[nr_token++]=token_getted;
-				break;
-			}
+		case'+':
+		case'-':
+		case'*':
+		case'/':
+		case'(':
+		case')':
+		case TK_NEQ:
+		case TK_AND:
+		case TK_EQ:tokens[nr_token++].type=rules[i].token_type;break;
 		case TK_NOTYPE:{
 				break;
 			       }
+		case TK_HEX:
 		case TK_NUM:{//基于假设，num其实是个unsigned int
-			       tokens[nr_token].type=TK_NUM;
+			       tokens[nr_token].type=rules[i].token_type;
 			       if(substr_len>=32)
 			       {
 				       assert(0);
@@ -148,33 +137,6 @@ static bool make_token(char *e) {
 			       nr_token++;
 			       break;
 			    }
-		case '(':{
-				   token_getted.type='(';
-				   tokens[nr_token++]=token_getted;
-				   break;
-			   }
-		case ')':{
-				   token_getted.type=')';
-				   tokens[nr_token++]=token_getted;
-				   break;
-			   }
-		case TK_NEQ:{
-				   tokens[nr_token].type=TK_NEQ;
-				   strcpy(tokens[nr_token++].str,"!=");
-		 	   
-				   break;
-			    }
-		case TK_AND:{
-			 tokens[nr_token].type=TK_AND;
-			 strcpy(tokens[nr_token++].str,"&&");
-		 
-			 break;
-		 }		 
-		case TK_EQ:{
-				   tokens[nr_token].type=TK_EQ;
-				   strcpy(tokens[nr_token++].str,"==");
-				   break;
-			   }
 		case TK_REG:{
 				    tokens[nr_token].type=TK_REG;
 				    if(substr_len>=32)
@@ -194,16 +156,6 @@ static bool make_token(char *e) {
 				    nr_token++;
 				    break;
 				    
-			    }
-		case TK_HEX:{
-				    tokens[nr_token].type=TK_HEX;
-				    if(substr_len>=32)
-				    {
-					    assert(0);
-				    }
-				    strncpy(tokens[nr_token].str,substr_start,substr_len);
-				    tokens[nr_token++].str[substr_len]='\0';
-				    break;
 			    }
 		default:break; //TODO();//错误输入提醒还没写
         }
@@ -281,20 +233,19 @@ uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
 		}
 }
 
-uint32_t solve1(uint32_t op_type,uint32_t val2,bool *ok)//解指针
+uint32_t solve1(uint32_t op_type,uint32_t val)//解指针取负
 {
 	switch(op_type){
-		case TK_NEG:
-		{
-			return -val2;
+		case TK_NEG:{
+			return -val;
 		}
 		case TK_DEREF:
 		{//	printf("0x%xval2\n",val2);//debug
-			return vaddr_read(val2,4);
+			return vaddr_read(val,4);
 		}
 		default:
 		{
-			*ok=false;
+			assert(0);
 			return 0;
 		
 		}
@@ -443,24 +394,22 @@ uint32_t eval(int p,int q,bool *ok){
 			}
 		}
 	//	printf("op%d\n",op);//ddebug		
-		bool isok1,isok2;
+	
 		int op_type=tokens[op].type;
           //       printf("op%d\n",op_type);//ddebug		
-		uint32_t val1=eval(p,op-1,&isok1);
 		
-		uint32_t val2=eval(op+1,q,&isok2);
-//		assert(0);
-		if(!isok2){
-			*ok=false;
-			return 0;
-			}
-		if(isok1)
+		if(op_type==TK_NEG||op_type==TK_DEREF)
 		{
-			return solve2(val1,op_type,val2,ok);
+			uint32_t val=eval(op+1,q,ok);
+			return solve1(op_type,val);
 		}
 		else
 		{
-			return solve1(op_type,val2,ok);
+			bool ok1,ok2;
+			uint32_t val1=eval(p,op-1,&ok1);
+			uint32_t val2=eval(op+1,q,&ok2);
+			*ok=ok1&&ok2;
+			return solve2(val1,op_type,val2,ok);
 		}
 /*
 		int op_type=tokens[op].type;
