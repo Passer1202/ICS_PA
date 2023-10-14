@@ -19,6 +19,7 @@
 #include <readline/history.h>
 #include "sdb.h"
 #include <memory/vaddr.h>
+#include "watchpoint.h"
 static int is_batch_mode = false;
 
 void init_regex();
@@ -64,7 +65,7 @@ static int cmd_info(char *args){
 	}
 	else if(strcmp(args,"w")==0)
 	{
-//		sdb_watchpoint_display();
+		sdb_watchpoint_display();
 	}
 	else
 	{
@@ -72,7 +73,7 @@ static int cmd_info(char *args){
 	}
 	return 0;
 }
-static int cmd_x(char *args){//扫描物理内存
+static int cmd_x(char *args){//扫描虚拟内存
 	/*求读取长度*/
 	char* len=strtok(NULL," ");
 	int length=0;
@@ -91,6 +92,33 @@ static int cmd_x(char *args){//扫描物理内存
 	}
 	return 0;
 
+}
+static int cmd_w(char *args){
+	if(args==NULL){
+		printf("empty input\n");
+		return 0;
+	}
+	bool success;
+	word_t ans=expr(args,&success);
+	if(!success)
+	{
+		printf("invalid expression\n");
+	}
+	else 
+	{
+		set_watchpoint(args,ans);
+	}
+	return 0;
+}
+
+static int cmd_d(char* args){
+	if(args==NULL){
+		printf("empty input\n");
+		return 0;
+	}
+	int NO=atoi(args);
+	delete_watchpoint(NO);
+	return 0;
 }
 
 static int cmd_p(char* args){
@@ -151,9 +179,11 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si", "Single-step execution",cmd_si},
-  {"info","Display relevant status/information",cmd_info},
+  {"info","r:Display register status;w:Display watchpoint information",cmd_info},
   {"x","Scanning Memory",cmd_x},
-  {"p","Expression evaluation",cmd_p}, 
+  {"p","Expression evaluation",cmd_p},
+  {"w","Setting watchpoint",cmd_w},
+  {"d","Delete watchpoint",cmd_d}, 
   /* TODO: Add more commands */
 
 };
