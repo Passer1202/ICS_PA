@@ -72,12 +72,15 @@ void sdb_watchpoint_display(){
 	
 static void free_wp(WP*wp)
 {
-	WP* h=head;
-	if(h == wp)head=NULL;
-	else
+	
+	if(wp==head)
 	{
+		head=head->next;
+	}
+	else
+	{	WP* h=head;
 		while(h!=NULL&&h->next!=wp)h=h->next;
-	//	assert(h!=NULL);
+		assert(h!=NULL);
 		h->next=wp->next;
 	}
 	wp->next=free_;
