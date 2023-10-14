@@ -29,7 +29,7 @@ enum {
   TK_HEX=5,//16进制
   TK_REG=6,//寄存器$开头
   TK_DEREF=7,//解指针
-
+  TK_NEG=8,//一元-
   /* TODO: Add more token types */
 
 };
@@ -283,14 +283,21 @@ uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
 
 uint32_t solve1(uint32_t op_type,uint32_t val2,bool *ok)//解指针
 {
-	if(op_type!=TK_DEREF)
-	{
-		*ok=false;
-		return 0;
-	}
-	else
-	{//	printf("0x%xval2\n",val2);//debug
-		return vaddr_read(val2,4);
+	switch(op_type){
+		case TK_NEG:
+		{
+			return -val2;
+		}
+		case TK_DEREF:
+		{//	printf("0x%xval2\n",val2);//debug
+			return vaddr_read(val2,4);
+		}
+		default:
+		{
+			*ok=false;
+			return 0;
+		
+		}
 	}
 }
 uint32_t eval(int p,int q,bool *ok){
@@ -488,8 +495,14 @@ word_t expr(char *e, bool *success) {
   		else if(tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_HEX&&tokens[i-1].type!=')')
   			tokens[i].type=TK_DEREF;
   	}
-  }
-  			
+	if(tokens[i].type=='-')
+	{
+		if(i==0)
+                        tokens[i].type=TK_DEREF;
+                else if(tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_HEX&&tokens[i-1].type!=')')
+                        tokens[i].type=TK_NEG;
+	}
+  } 			
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //bool flag=true;
