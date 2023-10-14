@@ -70,7 +70,7 @@ void sdb_watchpoint_display(){
 }
 
 	
-static void free_wp(WP*wp)
+static void free_wp(WP *wp)
 {
 	
 	if(wp==head)
