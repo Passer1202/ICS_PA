@@ -195,7 +195,8 @@ static bool make_token(char *e) {
 						    tokens[nr_token].str[index]=tokens[nr_token].str[index+1];
 					    
 					    }
-					    if(strcmp(tokens[nr_token].str,"t0")==0)assert(0);
+					   // if(strcmp(tokens[nr_token].str,"t0")==0)assert(0);
+					    
 					    nr_token++;
 					    break;
 				    }
@@ -254,6 +255,7 @@ uint32_t evalnum(int i,bool *ok){
 		case TK_NUM:
 		       	return strtol(tokens[i].str,NULL,10);
 		case TK_REG:
+			printf("%s",tokens[i].str);
 			return isa_reg_str2val(tokens[i].str,ok);
 			
 		default:*ok=false;return 0;
