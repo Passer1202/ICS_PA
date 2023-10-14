@@ -467,6 +467,7 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
+  printf("sb\n");
   for(int i=0;i<nr_token;i++)
   {
   	if(tokens[i].type=='*')
