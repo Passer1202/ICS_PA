@@ -482,6 +482,6 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   //bool flag=true;
-  printf("%u",eval(0,nr_token-1,success));
+  // printf("%u",eval(0,nr_token-1,success));
   return eval(0,nr_token-1,success);
 }
