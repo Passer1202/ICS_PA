@@ -62,10 +62,10 @@ static int cmd_info(char *args){
 	{
 		isa_reg_display();
 	}
-//	else if(strcmp(args,"w")==0)
-//	{
+	else if(strcmp(args,"w")==0)
+	{
 //		sdb_watchpoint_display();
-//	}
+	}
 	else
 	{
 		Log("wrong input");
