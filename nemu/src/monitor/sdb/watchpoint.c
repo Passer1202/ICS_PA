@@ -80,7 +80,7 @@ static void free_wp(WP *wp)
 	else
 	{	WP* h=head;
 		while(h!=NULL&&h->next!=wp)h=h->next;
-		if(h!=NULL)	
+		if(h==NULL)	
 		{printf("no watchpoint");return;}
 		assert(h!=NULL);
 		h->next=wp->next;
