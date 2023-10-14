@@ -414,7 +414,14 @@ uint32_t eval(int p,int q,bool *ok){
 					}
 					break;
 				}
-				
+			        case TK_NEG:
+				{
+					if(kuohao==0&&!islow&&!ismid&&!ishigh)
+					{
+						if(op<i)op=i;
+					}
+					break;
+				}	
 				case'(':
 				{
 					kuohao++;
