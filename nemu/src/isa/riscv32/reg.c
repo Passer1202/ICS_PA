@@ -22,15 +22,25 @@ const char *regs[] = {
   "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
-
+static int len_reg=32;
 void isa_reg_display() {
 
-	int len=32;
-	for(int i=0;i<len;i++)
+
+	for(int i=0;i<len_reg;i++)
 		printf("%s	%d	0x%x\n",regs[i],cpu.gpr[i],cpu.gpr[i]);
 
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+
+      	for(int i=0;i<len_reg;i++)
+	{
+		if(strcmp(s,regs[i])==0)
+		{
+			*success=true;
+			return cpu.gpr[i];
+		}
+	}
+	*success=false;
+	return 0;
 }
