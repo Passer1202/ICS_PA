@@ -183,7 +183,7 @@ static bool make_token(char *e) {
 				    }
 				    strncpy(tokens[nr_token].str,substr_start,substr_len);
 				    if(strcmp(tokens[nr_token].str,"$0")==0)
-				    {	assert(0);
+				    {//	assert(0);
 				    	tokens[nr_token++].str[substr_len]='\0';
 				    	break;
 				    }
@@ -193,7 +193,9 @@ static bool make_token(char *e) {
 					    for(int index=0;index<substr_len;index++)
 					    {
 						    tokens[nr_token].str[index]=tokens[nr_token].str[index+1];
+					    
 					    }
+					    if(strcmp(tokens[nr_token].str,"t0")==0)assert(0);
 					    nr_token++;
 					    break;
 				    }
