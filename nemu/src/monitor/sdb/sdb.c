@@ -18,7 +18,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
-
+#include <memory/vaddr.h>
+#include "watchpoint.h"
 static int is_batch_mode = false;
 
 void init_regex();
@@ -47,11 +48,126 @@ static int cmd_c(char *args) {
   return 0;
 }
 
-
-static int cmd_q(char *args) {
-  return -1;
+static int cmd_si(char *args){
+	int step_num=0;//the number of step
+	if(args==NULL)
+		step_num=1;
+	else
+		sscanf(args,"%d",&step_num);
+	cpu_exec(step_num);
+	return 0;
 }
 
+static int cmd_info(char *args){
+	if(strcmp(args,"r")==0)
+	{
+		isa_reg_display();
+	}
+	else if(strcmp(args,"w")==0)
+	{
+		sdb_watchpoint_display();
+	}
+	else
+	{
+		Log("wrong input");
+	}
+	return 0;
+}
+static int cmd_x(char *args){//扫描虚拟内存
+	/*求读取长度*/
+	char* len=strtok(NULL," ");
+	int length=0;
+	sscanf(len,"%d",&length);
+	/*求起始点，第一阶段简化为不需要表达式求值*/
+	char* startpoint=strtok(NULL," ");
+	paddr_t startp=0;
+	sscanf(startpoint,"%x",&startp);
+	
+	const int width=4;
+	for(int i=0;i<length;i++)
+	{
+		printf("0x%x	0x%x\n",startp,vaddr_read(startp,width));
+		startp=startp+width;
+	
+	}
+	return 0;
+
+}
+static int cmd_w(char *args){
+	if(args==NULL){
+		printf("empty input\n");
+		return 0;
+	}
+	bool success;
+	word_t ans=expr(args,&success);
+	if(!success)
+	{
+		printf("invalid expression\n");
+	}
+	else 
+	{
+		set_watchpoint(args,ans);
+	}
+	return 0;
+}
+
+static int cmd_d(char* args){
+	if(args==NULL){
+		printf("empty input\n");
+		return 0;
+	}
+	int NO=atoi(args);
+	delete_watchpoint(NO);
+	return 0;
+}
+
+static int cmd_p(char* args){
+	if(args==NULL){
+		printf("empty input\n");
+		return 0;
+	}
+
+	bool success=false;
+	word_t ans=expr(args,&success);
+	if(!success) assert(0);
+	printf("%u\n",ans);
+	return 0;
+}
+static int cmd_q(char *args) {
+  nemu_state.state=NEMU_QUIT;	
+  return -1;
+}
+/*随机测试用*/
+/*
+static void test_expr()
+{
+	FILE *fp=fopen("/home/hengji/ics2023/nemu/tools/gen-expr/input","r");
+	if(fp==NULL)perror("test_expr error");
+
+	char *e=NULL;
+	word_t correct_res;
+	size_t len=0;
+	ssize_t read;
+	bool success=false;
+	while(true){
+		if(fscanf(fp,"%u",&correct_res)==-1)break;
+		read=getline(&e,&len,fp);
+		e[read-1]='\0';
+
+		word_t res = expr(e,&success);
+
+		assert(success);
+		if(res!=correct_res){
+			puts(e);
+			printf("exected:%u,got:%u\n",correct_res,res);
+			assert(0);
+		}
+	}
+	fclose(fp);
+	if(e) free(e);
+	Log("expr test pass");
+}
+*/
 static int cmd_help(char *args);
 
 static struct {
@@ -62,7 +178,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
+  {"si", "Single-step execution",cmd_si},
+  {"info","r:Display register status;w:Display watchpoint information",cmd_info},
+  {"x","Scanning Memory",cmd_x},
+  {"p","Expression evaluation",cmd_p},
+  {"w","Setting watchpoint",cmd_w},
+  {"d","Delete watchpoint",cmd_d}, 
   /* TODO: Add more commands */
 
 };
@@ -137,7 +258,8 @@ void sdb_mainloop() {
 void init_sdb() {
   /* Compile the regular expressions. */
   init_regex();
-
+  /*测试expr*/
+  //test_expr();
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }

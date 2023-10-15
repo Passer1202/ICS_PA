@@ -22,6 +22,9 @@ typedef struct watchpoint {
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
+  int val;
+  
+  char expr[200];
 
 } WP;
 
@@ -41,3 +44,79 @@ void init_wp_pool() {
 
 /* TODO: Implement the functionality of watchpoint */
 
+
+
+void scan_watchpoint()
+{
+	if(head!=NULL)
+	{
+		for(WP* h=head;h!=NULL;h=h->next)
+		{
+			bool success;
+			word_t value=expr(h->expr,&success);
+			assert(success);
+			if(h->val!=value)
+			{
+				printf("Watchpoint %d:\"%s\":oldvlaue=%u,newvalue=%u\n",h->NO,h->expr,h->val,value);
+				h->val=value;
+			}
+         	}
+         }
+}
+
+void sdb_watchpoint_display(){
+	
+	if(head==NULL){printf("No watchpoint\n");return;}	
+	scan_watchpoint();
+}
+
+	
+static void free_wp(WP *wp)
+{
+	
+	if(wp==head)
+	{
+		head=head->next;
+	}
+	else
+	{	WP* h=head;
+		while(h!=NULL&&h->next!=wp)h=h->next;
+		if(h==NULL)	
+		{printf("no watchpoint");return;}
+		assert(h!=NULL);
+		h->next=wp->next;
+	}
+	wp->next=free_;
+	free_=wp;
+}
+
+static WP* new_wp()
+{
+	if(free_==NULL)
+	{Log("too much watchpoint");
+		assert(0);//空的了
+	}	  //}
+	WP* p=free_;
+	free_=free_->next;
+	p->next=head;
+	head=p;
+	return p;
+
+}
+
+void delete_watchpoint(int no)
+{
+        if(no>=NR_WP)assert(0);
+        WP* wp=&wp_pool[no];
+        free_wp(wp);
+        printf("delete watchpoint %d:\" %s\"\n",wp->NO,wp->expr);
+}
+
+
+void set_watchpoint(char *args,word_t ans)
+{
+	WP* wp=new_wp();
+	strcpy(wp->expr,args);
+	wp->val=ans;
+	printf("Watchpoint %d:\"%s\"\n",wp->NO,wp->expr);
+}

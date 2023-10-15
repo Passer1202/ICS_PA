@@ -14,18 +14,26 @@
 ***************************************************************************************/
 
 #include <isa.h>
-
+#include<memory/vaddr.h>
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
-
+/*目前只有十进制四则运算*/
 enum {
-  TK_NOTYPE = 256, TK_EQ,
-
+  TK_NOTYPE = 256,//空格
+  TK_EQ=1,//==
+  TK_NUM=2,//十进制整数
+  TK_NEQ=3,//!=
+  TK_AND=4,//&&
+  TK_HEX=5,//16进制
+  TK_REG=6,//寄存器$开头
+  TK_DEREF=7,//解指针
+  TK_NEG=8,//一元-
   /* TODO: Add more token types */
 
 };
+
 
 static struct rule {
   const char *regex;
@@ -38,7 +46,17 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"==", TK_EQ},        // equal
+  {"\\-", '-'},		//sub
+  {"\\*", '*'},		//mul或指针
+  {"\\/", '/'},		//div
+  {"\\(", '('},		//左括弧
+  {"\\)", ')'},		//右括弧
+  {"0[xX][0-9a-fA-F]+",TK_HEX},		//16进制
+  {"[0-9]+",TK_NUM},
+  {"\\=\\=", TK_EQ},    // equal
+  {"\\!\\=",TK_NEQ},	//不等
+  {"\\&\\&",TK_AND},    //&&
+  {"\\$[a-zA-Z]*[0-9]*",TK_REG},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -67,7 +85,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+static Token tokens[65535] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -93,9 +111,53 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-
+       // Token token_getted;//貌似不要也罢；
         switch (rules[i].token_type) {
-          default: TODO();
+		case'+':
+		case'-':
+		case'*':
+		case'/':
+		case'(':
+		case')':
+		case TK_NEQ:
+		case TK_AND:
+		case TK_EQ:tokens[nr_token++].type=rules[i].token_type;break;
+		case TK_NOTYPE:{
+				break;
+			       }
+		case TK_HEX:
+		case TK_NUM:{//基于假设，num其实是个unsigned int
+			       tokens[nr_token].type=rules[i].token_type;
+			       if(substr_len>=32)
+			       {
+				       assert(0);
+			       }
+			       strncpy(tokens[nr_token].str,substr_start,substr_len);
+			       tokens[nr_token].str[substr_len]='\0';
+			       nr_token++;
+			       break;
+			    }
+		case TK_REG:{
+				    tokens[nr_token].type=TK_REG;
+				    if(substr_len>=32)
+				    {
+					    assert(0);
+				    }
+				    strncpy(tokens[nr_token].str,substr_start,substr_len);
+				    
+				    tokens[nr_token].str[substr_len]='\0';
+				    for(int index=0;index<substr_len;index++)
+				    {
+					    tokens[nr_token].str[index]=tokens[nr_token].str[index+1];
+					    
+				    }
+					   // if(strcmp(tokens[nr_token].str,"t0")==0)assert(0);
+					    
+				    nr_token++;
+				    break;
+				    
+			    }
+		default:break; //TODO();//错误输入提醒还没写
         }
 
         break;
@@ -110,16 +172,296 @@ static bool make_token(char *e) {
 
   return true;
 }
+bool check_parentheses(int p,int q){
+	if(tokens[p].type!='('||tokens[q].type!=')')
+		return false;
+	else{
+		int i=p+1;
+		int num=0;
+		for(;i<q;i++)
+		{
+			if(tokens[i].type=='(')
+				num++;
+			else if(tokens[i].type==')')
+				num--;
 
+			if(num<0) return false;
+		}
+		if(num!=0)
+			return false;
+
+	}
+	return true;
+}
+uint32_t evalnum(int i,bool *ok){
+	switch(tokens[i].type)
+	{
+		case TK_HEX:
+			return strtol(tokens[i].str,NULL,16);
+		case TK_NUM:
+		       	return strtol(tokens[i].str,NULL,10);
+		case TK_REG:
+		//	printf("%s",tokens[i].str);
+			return isa_reg_str2val(tokens[i].str,ok);
+			
+		default:*ok=false;return 0;
+	}
+	}
+
+uint32_t solve2(uint32_t val1,int op_type,uint32_t val2,bool *ok)
+{
+	
+		switch(op_type){
+			case'+':return val1+val2;
+			case'-':return val1-val2;
+			case'*':return val1*val2;
+			case'/':
+				{if(val2==0){
+
+					*ok=false;
+					return 0;
+					    }
+					return (int)val1/(int)val2;
+				}
+			case TK_EQ:return val1==val2;
+			case TK_AND:return val1&&val2;
+			case TK_NEQ:return val1!=val2;
+			default:
+				*ok=false;
+				return 0;
+				
+		}
+}
+
+uint32_t solve1(uint32_t op_type,uint32_t val)//解指针取负
+{
+	switch(op_type){
+		case TK_NEG:{
+			return -val;
+		}
+		case TK_DEREF:
+		{//	printf("0x%xval2\n",val2);//debug
+			return vaddr_read(val,4);
+		}
+		default:
+		{
+			assert(0);
+			return 0;
+		
+		}
+	}
+}
+uint32_t eval(int p,int q,bool *ok){
+        *ok=true;
+        
+	if(p>q)
+	{
+		//printf("xxxx%d \n",q);
+		//assert(0);
+		*ok=false;
+		return 0;
+	}
+	else if(p==q)
+	{
+	/*	uint32_t num=0;
+		int j=0;
+		while(tokens[p].str[j]!='\0')
+		{//存在溢出问题
+			int temp=tokens[p].str[j]-'0';
+			num=num*10+temp;
+			j++;
+		}
+		return num;
+	*/
+		return 	evalnum(p,ok);
+	}
+	else if(check_parentheses(p,q)==true)
+	{
+		return eval(p+1,q-1,ok);
+	}
+	else
+	{
+		int op=-1;
+		int kuohao=0;//识别括号
+		bool isand=false;//有无&&
+		bool islow=false;//有无==
+		bool ismid=false;//有无+-
+		bool ishigh=false;//有无*/
+		for(int i=p;i<=q;i++)
+		{
+			switch(tokens[i].type)
+			{
+				case TK_AND:
+				{	
+					if(kuohao==0)
+					{
+						if(op<i)op=i;
+						isand=true;
+						islow=true;
+					}
+					break;
+				}
+				case TK_NEQ:
+				{
+					if(kuohao==0&&!isand)
+					{
+						if(op<i)op=i;
+						islow=true;
+					}
+					break;
+				}
+				case TK_EQ:
+				{
+					if(kuohao==0&&!isand)
+					{
+						if(op<i)op=i;
+						islow=true;
+					
+					}
+					break;
+				}
+				case'+':
+				{
+					if(!islow&&kuohao==0)
+					{
+						if(op<i)op=i;	
+						ismid=true;
+					}
+					break;
+				}
+				case'-':
+				{
+					if(!islow&&kuohao==0)
+					{
+						if(op<i)op=i;
+						ismid=true;
+					}
+					break;
+				}
+				case'*':
+				{
+					if(kuohao==0&&!islow&&!ismid)
+					{
+						if(op<i)op=i;
+						ishigh=true;
+
+					}
+					break;
+				}
+				case'/':
+				{
+					if(kuohao==0&&!islow&&!ismid)
+					{
+						if(op<i)op=i;
+						ishigh=true;
+					}
+					break;
+				}
+				case TK_DEREF:
+				{
+					if(kuohao==0&&!islow&&!ismid&&!ishigh)
+					{
+						if(op<i)op=i;
+					}
+					break;
+				}
+			        case TK_NEG:
+				{
+					if(kuohao==0&&!islow&&!ismid&&!ishigh)
+					{
+						if(op<i)op=i;
+					}
+					break;
+				}	
+				case'(':
+				{
+					kuohao++;
+					break;
+				}
+				case')':
+				{
+					kuohao--;
+					if(kuohao<0)
+					{
+						printf("wrong kuohao\n");
+						assert(0);	//报错
+					}
+
+					break;
+				}
+				default:break;
+
+			}
+		}
+	//	printf("op%d\n",op);//ddebug		
+	
+		int op_type=tokens[op].type;
+          //       printf("op%d\n",op_type);//ddebug		
+		
+		if(op_type==TK_NEG||op_type==TK_DEREF)
+		{
+			uint32_t val=eval(op+1,q,ok);
+			return solve1(op_type,val);
+		}
+		else
+		{
+			bool ok1,ok2;
+			uint32_t val1=eval(p,op-1,&ok1);
+			uint32_t val2=eval(op+1,q,&ok2);
+			*ok=ok1&&ok2;
+			return solve2(val1,op_type,val2,ok);
+		}
+/*
+		int op_type=tokens[op].type;
+
+		switch(op_type){
+			case'+':return val1+val2;
+			case'-':return val1-val2;
+			case'*':return val1*val2;
+			case'/':
+				{if(val2==0){
+
+					printf("出现除0\n");
+					assert(0);
+					    }
+					return val1/val2;
+				}
+			default:
+				printf("optype wrong/n");
+				assert(0);
+		}
+		//主要要做的
+*/
+	}
+
+}
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
-
+  
+  for(int i=0;i<nr_token;i++)
+  {
+  	if(tokens[i].type=='*')
+  	{
+  		if(i==0)
+  			tokens[i].type=TK_DEREF;
+  		else if(tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_HEX&&tokens[i-1].type!=')')
+  			tokens[i].type=TK_DEREF;
+  	}
+	if(tokens[i].type=='-')
+	{
+		if(i==0)
+                        tokens[i].type=TK_NEG;
+                else if(tokens[i-1].type!=TK_NUM&&tokens[i-1].type!=TK_REG&&tokens[i-1].type!=TK_HEX&&tokens[i-1].type!=')')
+                        tokens[i].type=TK_NEG;
+	}
+  } 			
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
-
-  return 0;
+  //TODO();
+  //bool flag=true;
+  // printf("%u",eval(0,nr_token-1,success));
+  return eval(0,nr_token-1,success);
 }
