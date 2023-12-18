@@ -20,8 +20,7 @@ int sprintf(char *out, const char *fmt, ...) {
   va_start(ap,fmt);
   while(*fmt!='\0'){
     if(*fmt=='%'){
-      fmt++;
-      switch(*fmt){
+      switch(*++fmt){
         case'd':{
           int num=va_arg(ap,int);
           if(num<0){*out++='-';num=(-num);}
@@ -49,6 +48,7 @@ int sprintf(char *out, const char *fmt, ...) {
           break;
           }
       }
+      fmt++;
     }
     else{
       *out++=*fmt++;//maybe wrong
