@@ -24,8 +24,8 @@ int sprintf(char *out, const char *fmt, ...) {
       switch(*fmt){
         case'd':{
           int num=va_arg(ap,int);
-          if(num<0){*(out++)='-';num=(-num);}
-          else if(num==0){*(out++)='0';}
+          if(num<0){*out++='-';num=(-num);}
+          else if(num==0){*out++='0';}
           else{
 		  int cnt=0;
 		  char src[15];
@@ -35,7 +35,7 @@ int sprintf(char *out, const char *fmt, ...) {
 		  }
 		  cnt--;
 		  while(cnt>=0){
-		    *(out++)=(src[cnt]);
+		    *out++=src[cnt];
 		  }
           }
           break;
@@ -44,14 +44,14 @@ int sprintf(char *out, const char *fmt, ...) {
         case 's':{
           char* str=va_arg(ap,char*);
           while(*str!='\0'){
-            *(out++)=*(str++);
+            *out++=*str++;
           }  
           break;
           }
       }
     }
     else{
-      *(out++)=*(fmt++);//maybe wrong
+      *out++=*fmt++;//maybe wrong
     }
     
   }
