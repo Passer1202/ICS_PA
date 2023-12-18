@@ -13,53 +13,59 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   panic("Not implemented");
 }
 
+static void reverse(char *s, int len) {
+  char *end = s + len - 1;
+  char tmp;
+  while (s < end) {
+    tmp = *s;
+    *s = *end;
+    *end = tmp;
+  }
+}
+
+/* itoa convert int to string under base. return string length */
+static int itoa(int n, char *s, int base) {
+  assert(base <= 16);
+
+  int i = 0, sign = n, bit;
+  if (sign < 0) n = -n;
+  do {
+    bit = n % base;
+    if (bit >= 10) s[i++] = 'a' + bit - 10;
+    else s[i++] = '0' + bit;
+  } while ((n /= base) > 0);
+  if (sign < 0) s[i++] = '-';
+  s[i] = '\0';
+  reverse(s, i);
+
+  return i;
+}
+
 int sprintf(char *out, const char *fmt, ...) {
-  //panic("Not implemented");
-  char* start=out;
-  va_list ap;
-  va_start(ap,fmt);
-  while(*fmt!='\0'){
-    if(*fmt=='%'){
-      fmt++;
-      switch(*fmt){
-        case'd':{
-          int num=va_arg(ap,int);
-          if(num<0){*(out++)='-';num=(-num);}
-          else if(num==0){*(out++)='0';}
-          else{
-		  int cnt=0;
-		  char src[15];
-		  while(num!=0){
-		    src[cnt++]=num%10;
-		    num/=10;
-		  }
-		  cnt--;
-		  while(cnt>=0){
-		    *(out++)=(src[cnt]);
-		  }
-          }
-          break;
-          }
-        
-        case 's':{
-          char* str=va_arg(ap,char*);
-          while(*str!='\0'){
-            *(out++)=*(str++);
-          }  
-          break;
-          }
+  va_list pArgs;
+  va_start(pArgs, fmt);
+  char *start = out;
+  
+  for (; *fmt != '\0'; ++fmt) {
+    if (*fmt != '%') {
+      *out = *fmt;
+      ++out;
+    } else {
+      switch (*(++fmt)) {
+      case '%': *out = *fmt; ++out; break;
+      case 'd': out += itoa(va_arg(pArgs, int), out, 10); break;
+      case 's':
+        char *s = va_arg(pArgs, char*);
+        strcpy(out, s);
+        out += strlen(out);
+        break;
       }
     }
-    else{
-      *(out++)=*(fmt++);//maybe wrong
-    }
-    
   }
-  *out='\0';
+  *out = '\0';
+  va_end(pArgs);
 
-  va_end(ap);
-
-  return (out-start);
+  return out - start;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
