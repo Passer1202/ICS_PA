@@ -35,7 +35,7 @@ int sprintf(char *out, const char *fmt, ...) {
 		  }
 		  cnt--;
 		  while(cnt>=0){
-		    *out++=src[cnt];
+		    *out++=src[cnt--];
 		  }
           }
           break;
