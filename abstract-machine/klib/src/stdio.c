@@ -59,7 +59,7 @@ int sprintf(char *out, const char *fmt, ...) {
 
   va_end(ap);
 
-  return (out-start);
+  return (out-start-1);
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
