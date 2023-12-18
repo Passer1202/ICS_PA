@@ -21,7 +21,34 @@ int sprintf(char *out, const char *fmt, ...) {
   while(*fmt!='\0'){
     if(*fmt=='%'){
       fmt++;
-      
+      switch(*fmt){
+        case'd':{
+          int num=va_arg(ap,int);
+          if(num<0){*(out++)='-';num=(-num);}
+          else if(num==0){*(out++)='0';}
+          else{
+		  int cnt=0;
+		  char src[15];
+		  while(num!=0){
+		    src[cnt++]=num%10;
+		    num/=10;
+		  }
+		  cnt--;
+		  while(cnt>=0){
+		    *(out++)=(src[cnt]);
+		  }
+          }
+          break;
+          }
+        
+        case 's':{
+          char* str=va_arg(ap,char*);
+          while(*str!='\0'){
+            *(out++)=*(str++);
+          }  
+          break;
+          }
+      }
     }
     else{
       *(out++)=*(fmt++);//maybe wrong
