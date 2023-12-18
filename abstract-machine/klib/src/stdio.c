@@ -30,7 +30,7 @@ int sprintf(char *out, const char *fmt, ...) {
 		  int cnt=0;
 		  char src[15];
 		  while(num!=0){
-		    src[cnt++]=(num%10-'0');
+		    src[cnt++]=(num%10+'0');
 		    num/=10;
 		  }
 		  cnt--;
