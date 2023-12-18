@@ -14,7 +14,25 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  panic("Not implemented");
+  //panic("Not implemented");
+  char* start=out;
+  va_list ap;
+  va_start(ap,fmt);
+  while(*fmt!='\0'){
+    if(*fmt=='%'){
+      fmt++;
+      
+    }
+    else{
+      *(out++)=*(fmt++);//maybe wrong
+    }
+    
+  }
+  *out='\0';
+
+  va_end(ap);
+
+  return (out-start);
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
