@@ -43,7 +43,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
             }
             else
             {n=-n;num=n;}
-
+num=n;
             }
             else num=n;
           if(num==0){*out++='0';}
