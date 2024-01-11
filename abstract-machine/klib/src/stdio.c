@@ -10,7 +10,7 @@ int printf(const char *fmt, ...) {
   char out[100];//buffer,可能不够大？
   va_list ap;
   va_start(ap,fmt);
-  int ret=vsprintf(out,fmt,ap);
+  int ret=vsprintf(out,fmt,ap)+1;
   if(ret>=10086||ret<0)ret=-1;
   va_end(ap);
   int index_printf=0;
