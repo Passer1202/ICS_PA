@@ -15,9 +15,9 @@ int printf(const char *fmt, ...) {
   va_end(ap);
   int index_printf=0;
   while(out[index_printf]!='\0'){
-  	putch('1');
+  	putch(' ');
   	putch(out[index_printf++]);
-  	putch('2');
+  	putch(' ');
   }
   return ret;
 }
