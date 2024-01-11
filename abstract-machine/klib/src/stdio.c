@@ -15,7 +15,7 @@ int printf(const char *fmt, ...) {
   va_end(ap);
   if(ret>10086||ret<0)ret=-1;
   int index_printf=0;
-  while(out[index_printf]!='\0'){
+  while(index_printf<10){
   	putch('1');
   	index_printf++;
   }
