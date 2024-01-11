@@ -63,18 +63,20 @@ int printf(const char *fmt, ...) {
   //panic("Not implemented");
   char out[8192]={'\0'};;//buffer,可能不够大？
   va_list ap;
+  int ret=0;
   va_start(ap,fmt);
   
-  int ret=vsprintf(out,fmt,ap);
+  vsprintf(out,fmt,ap);
   //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
   int index_printf=0;
   while(out[index_printf]!='\0'){
   	//putch(' ');
   	putch(out[index_printf++]);
+  	ret++;
   	//putch(' ');
   }
-  return ret+1;
+  return ret;
 }
 
 
