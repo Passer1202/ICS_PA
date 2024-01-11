@@ -30,7 +30,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if(*fmt=='%'){
       switch(*++fmt){
         case'd':{
-          int num=va_arg(ap,int);
+          long long num=va_arg(ap,int);
           int ow=0;
           if(num<0){
             *out++='-';
@@ -41,7 +41,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
             else
             num=(-num);
             }
-          else if(num==0){*out++='0';}
+          if(num==0){*out++='0';}
           else{
 		  int cnt=0;
 		  char src[32];
