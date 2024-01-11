@@ -19,9 +19,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           int32_t num=va_arg(ap,int);
            //panic("Not implemented");
            int ow;
-          if(num==-2147483647){ow=1;num=0;}
+          if((num^(1<<31))==0){ow=1;num++;}
          if(num<0){
-         num++;
+  
           *out++='-';
           num=-num;
           }
