@@ -38,10 +38,13 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           }
           if(cn==32){
           *out++='-';
-          num=n;
+          num=2147483648;
           }
           else if(n&(1<<31)){
-          num=-n;
+          for(int i=0;i<32;i++){
+          	n^=(1<<i);
+          	num=n+1;
+          }
           }
          if(num==0){*out++='0';}
           else{
