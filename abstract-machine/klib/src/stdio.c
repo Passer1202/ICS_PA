@@ -25,6 +25,7 @@ int printf(const char *fmt, ...) {
 int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
   char* start=out;
+  
   //va_start(ap,fmt);
   while(*fmt!='\0'){
     if(*fmt=='%'){
@@ -32,7 +33,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int32_t n=va_arg(ap,int);
           uint32_t num=0;
-          
+          n=-1;
           int cn=0;
           for(int i=0;i<32;i++){
           	if(n&(1<<i))cn++;
