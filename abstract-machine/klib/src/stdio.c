@@ -17,7 +17,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       switch(*++fmt){
         case'd':{
           int32_t num=va_arg(ap,int);
-           panic("Not implemented");
+           //panic("Not implemented");
          if(num<0){
           *out++='-';
           num=-num;
@@ -33,6 +33,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 		  cnt--;
 		  while(cnt>=0){
 		    *out++=src[cnt--];
+		    *out++='\0';
 		  }
           }
           break;
