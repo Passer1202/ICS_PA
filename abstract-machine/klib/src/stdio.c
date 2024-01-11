@@ -31,13 +31,25 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       switch(*++fmt){
         case'd':{
           int num=va_arg(ap,int);
-          if(num<0){*out++='-';num=(-num);}
+          int ow=0;
+          if(num<0){
+            *out++='-';
+            if(num==-2147483647){
+                num=-(num+1);
+                ow=1;
+                }
+            else
+            num=(-num);
+            }
           else if(num==0){*out++='0';}
           else{
 		  int cnt=0;
 		  char src[32];
 		  while(num!=0){
-		    src[cnt++]=(num%10+'0');
+            if(ow==1&&cnt==0)
+		        src[cnt++]=(num%10+'0'+1);
+            else
+                src[cnt++]=(num%10+'0'+1);
 		    num/=10;
 		  }
 		  cnt--;
