@@ -11,7 +11,7 @@ int printf(const char *fmt, ...) {
   va_list ap;
   va_start(ap,fmt);
   int ret=vsprintf(out,fmt,ap);
-  if(ret>=100000||ret<0)ret=-1;
+  //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
   int index_printf=0;
   while(out[index_printf]!='\0'){
@@ -71,7 +71,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
   *out='\0';
   
-  return (out-start-1);
+  return (out-start);
 
 }
 
