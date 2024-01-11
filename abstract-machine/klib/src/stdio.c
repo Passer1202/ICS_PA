@@ -11,15 +11,16 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char* start=out;
   
   //va_start(ap,fmt);
-  assert(0);
+  
   while(*fmt!='\0'){
     if(*fmt=='%'){
+    
       switch(*++fmt){
         case'd':{
           int32_t num=va_arg(ap,int);
            //panic("Not implemented");
            int ow;
-          if(num==-2147483647){num=1;}
+          if(num==-2147483648){ow=1;assert(0);}
          if(num<0){
          num++;
           *out++='-';
