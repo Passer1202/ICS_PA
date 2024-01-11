@@ -71,13 +71,15 @@ int printf(const char *fmt, ...) {
   vsprintf(out,fmt,ap);
   //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
-  //int index_printf=0;
-  //while(out[index_printf]!='\0'){
+  int index_printf=0;
+  int ret=0;
+  while(out[index_printf]!='\0'){
   	//putch(' ');
-  	//putch(out[index_printf++]);
+  	putch(out[index_printf++]);
+  	ret++;
   	//putch(' ');
-  //}
-  return 0;
+  }
+  return ret;
 }
 
 
