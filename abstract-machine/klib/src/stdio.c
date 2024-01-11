@@ -66,25 +66,33 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     *(start+strlen(start))='\0';
     return strlen(start);
 }
-
-
 int sprintf(char *out, const char *fmt, ...) {
-  //panic("Not implemented");
-  int ans=0;
-  
-  va_list ap;
-  va_start(ap,fmt);
-  
-  ans=vsprintf(out,fmt,ap);
-  
-  va_end(ap);
-  
-  return ans;
-  
+  memset(out,'\0',strlen(out));
+  va_list pArgs;
+  va_start(pArgs, fmt);
+  char *start = out;
+  for (; *fmt != '\0'; fmt++) 
+  {
+    if (*fmt != '%') {
+      out=start+strlen(start);
+      *out = *fmt;
+    } 
+    else {
+      switch (*(++fmt)) {
+      case 'd': itoa(va_arg(pArgs, int), start); break;
+      case 'c': char c = va_arg(pArgs, int); *(start+strlen(start))=c; *(start+strlen(start))='\0';break;
+      case 's': char *s = va_arg(pArgs, char*); strcat(start, s); break;
+      }
+    }
+  }
+  *(start+strlen(start))='\0';
+  va_end(pArgs);
+
+  return strlen(start);
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
-  panic("Not implemented");
+panic("Not implemented");
 }
 
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
