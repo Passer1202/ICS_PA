@@ -19,7 +19,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       
          if(num<0){
           *out++='-';
-          num=-2147483647;
           num=-num;
           }
          if(num==0){*out++='0';}
