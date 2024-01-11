@@ -5,22 +5,6 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-int printf(const char *fmt, ...) {
-  //panic("Not implemented");
-  char out[8192]={'\0'};;//buffer,可能不够大？
-  va_list ap;
-  va_start(ap,fmt);
-  int ret=vsprintf(out,fmt,ap);
-  //if(ret>=100000||ret<0)ret=-1;
-  va_end(ap);
-  int index_printf=0;
-  while(out[index_printf]!='\0'){
-  	//putch(' ');
-  	putch(out[index_printf++]);
-  	//putch(' ');
-  }
-  return ret;
-}
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
@@ -74,6 +58,24 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   return (out-start);
 
 }
+
+int printf(const char *fmt, ...) {
+  //panic("Not implemented");
+  char out[8192]={'\0'};;//buffer,可能不够大？
+  va_list ap;
+  va_start(ap,fmt);
+  int ret=vsprintf(out,fmt,ap);
+  //if(ret>=100000||ret<0)ret=-1;
+  va_end(ap);
+  int index_printf=0;
+  while(out[index_printf]!='\0'){
+  	//putch(' ');
+  	putch(out[index_printf++]);
+  	//putch(' ');
+  }
+  return ret;
+}
+
 
 int sprintf(char *out, const char *fmt, ...) {
   //panic("Not implemented");
