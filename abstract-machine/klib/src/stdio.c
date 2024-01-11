@@ -65,7 +65,7 @@ int printf(const char *fmt, ...) {
   va_list ap;
   va_start(ap,fmt);
   
-  //int ret=vsprintf(out,fmt,ap);
+  int ret=vsprintf(out,fmt,ap);
   //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
   int index_printf=0;
@@ -74,7 +74,7 @@ int printf(const char *fmt, ...) {
   	putch(out[index_printf++]);
   	//putch(' ');
   }
-  return 0;
+  return ret+1;
 }
 
 
