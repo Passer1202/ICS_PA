@@ -9,12 +9,11 @@
 int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
   char* start=out;
-  
+  assert(0);
   //va_start(ap,fmt);
   
   while(*fmt!='\0'){
     if(*fmt=='%'){
-    assert(0);
       switch(*++fmt){
         case'd':{
           int32_t num=va_arg(ap,int);
