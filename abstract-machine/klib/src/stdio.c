@@ -14,7 +14,6 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   
   while(*fmt!='\0'){
     if(*fmt=='%'){
-    
       switch(*++fmt){
         case'd':{
           int32_t num=va_arg(ap,int);
