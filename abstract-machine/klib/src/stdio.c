@@ -70,10 +70,9 @@ int printf(const char *fmt, ...) {
   //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
   int index_printf=0;
-  while(out[index_printf]!='\0'){
+  while(out[index_printf++]!='\0'){
   	//putch(' ');
-  	putch(out[index_printf++]);
-  	
+  	//putch(out[index_printf++]);
   	//putch(' ');
   }
   return 0;
