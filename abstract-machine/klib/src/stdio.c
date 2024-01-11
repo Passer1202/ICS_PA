@@ -32,14 +32,14 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int n=va_arg(ap,int);
           
-          uint64_t num;
+          uint32_t num;
   
           
           if(n<0){
             *out++='-';
             if(n==-2147483648)
             {
-            num=2147483648;
+            num=1;
             }
             else
             {n=-n;num=n;}
