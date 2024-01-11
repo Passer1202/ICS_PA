@@ -35,7 +35,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           else if(num==0){*out++='0';}
           else{
 		  int cnt=0;
-		  char src[15];
+		  char src[32];
 		  while(num!=0){
 		    src[cnt++]=(num%10+'0');
 		    num/=10;
