@@ -7,49 +7,17 @@
 
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
-  //char* out=SERIAL_PORT;//buffer,可能不够大？
-  //int ret=0;
+  char out[10000000];//buffer,可能不够大？
   va_list ap;
   va_start(ap,fmt);
-  while(*fmt!='\0'){
-    if(*fmt=='%'){
-      switch(*++fmt){
-        case'd':{
-          int num=va_arg(ap,int);
-          if(num<0){putch('-');num=(-num);}
-          else if(num==0){putch('0');}
-          else{
-		  int cnt=0;
-		  char src[15];
-		  while(num!=0){
-		    src[cnt++]=(num%10+'0');
-		    num/=10;
-		  }
-		  cnt--;
-		  while(cnt>=0){
-		    putch(src[cnt--]);
-		  }
-          }
-          break;
-          }
-        
-        case 's':{
-          char* str=va_arg(ap,char*);
-          while(*str!='\0'){
-            putch(*str++);
-          }  
-          break;
-          }
-      }
-      fmt++;
-    }
-    else{
-      putch(*fmt++);//maybe wrong
-    }
-    
-  }
+  int ret=vsprintf(out,fmt,ap);
+  if(ret>=10086||ret<0)ret=-1;
   va_end(ap);
-  return 0;
+  int index_printf=0;
+  while(out[index_printf]!='\0'){
+  	putch(out[index_printf++]);
+  }
+  return ret;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
