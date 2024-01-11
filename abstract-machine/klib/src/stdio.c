@@ -9,9 +9,9 @@
 int vsprintf(char *out, const char *fmt, va_list ap) {
   //panic("Not implemented");
   char* start=out;
-  assert(0);
-  //va_start(ap,fmt);
   
+  //va_start(ap,fmt);
+  assert(0);
   while(*fmt!='\0'){
     if(*fmt=='%'){
       switch(*++fmt){
