@@ -30,8 +30,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if(*fmt=='%'){
       switch(*++fmt){
         case'd':{
-          int32_t n=va_arg(ap,int);
-          uint32_t num=0;
+          //int32_t n=va_arg(ap,int);
+          int32_t num=0;
+          /*
           int cn=0;
           for(int i=0;i<32;i++){
           	if((n>>i)&1)cn++;
@@ -43,7 +44,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           else if(n&(1<<31)){
           *out++='-';
           num=-n;
-          }
+          }*/
+          if(num<0){*out++='-';num=-num;}
          if(num==0){*out++='0';}
           else{
 		  int cnt=0;
