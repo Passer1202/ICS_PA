@@ -33,16 +33,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int32_t n=va_arg(ap,int);
           uint32_t num=0;
-          n=-1;
+          
           int cn=0;
           for(int i=0;i<32;i++){
           	if(n&(1<<i))cn++;
           }
-          if(cn==32){
-          *out++='-';
-          num=2147483648;
-          }
-          else if(n&(1<<31)){
+          if(n&(1<<31)){
           *out++='-';
           num=-n;
           }
