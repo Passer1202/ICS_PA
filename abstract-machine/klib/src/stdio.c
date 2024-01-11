@@ -5,7 +5,6 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
-
 static void reverse(char *s, int len) {
   char *end = s + len - 1;
   char tmp;
