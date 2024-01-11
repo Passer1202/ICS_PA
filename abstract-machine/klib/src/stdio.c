@@ -19,7 +19,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           int32_t num=va_arg(ap,int);
            //panic("Not implemented");
            int ow=0;
-          if(num==-2147483648){ow=1; num=-2147483648+1;;}
+          if(num==-2147483648){ow=1; num=0;}
          if(num<0){
           *out++='-';
          
