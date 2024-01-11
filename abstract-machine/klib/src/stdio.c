@@ -8,11 +8,12 @@
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
   char out[10086];//buffer,可能不够大？
+  int ret=0;
   va_list ap;
   va_start(ap,fmt);
-  int ret=vsprintf(out,fmt,ap);
-  if(ret>=10086||ret<0)ret=-1;
+  ret=vsprintf(out,fmt,ap);
   va_end(ap);
+  if(ret>10086||ret<0)ret=-1;
   int index_printf=0;
   while(out[index_printf]!='\0'){
   	putch(out[index_printf++]);
