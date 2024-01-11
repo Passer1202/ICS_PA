@@ -7,7 +7,7 @@
 
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
-  char out[1000000000];//buffer,可能不够大？
+  char out[100];//buffer,可能不够大？
   va_list ap;
   va_start(ap,fmt);
   int ret=vsprintf(out,fmt,ap);
@@ -15,7 +15,9 @@ int printf(const char *fmt, ...) {
   va_end(ap);
   int index_printf=0;
   while(out[index_printf]!='\0'){
+  	putch('1');
   	putch(out[index_printf++]);
+  	putch('2');
   }
   return ret;
 }
