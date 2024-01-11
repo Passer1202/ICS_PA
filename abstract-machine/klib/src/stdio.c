@@ -32,7 +32,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int n=va_arg(ap,int);
           
-          unsigned int num;
+          uint32_t num;
   
           
           if(n<0){
@@ -43,7 +43,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
             }
             else
             {n=-n;num=n;}
-num=n;
+            
             }
             else num=n;
           if(num==0){*out++='0';}
