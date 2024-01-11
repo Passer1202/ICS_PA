@@ -41,11 +41,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           num=2147483648;
           }
           else if(n&(1<<31)){
-          for(int i=0;i<32;i++){
-          	n^=(1<<i);
-          	n=n+1;
-          	num=n;
-          }
+          	num=-n;
           }
          if(num==0){*out++='0';}
           else{
