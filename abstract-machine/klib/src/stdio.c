@@ -33,7 +33,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int32_t num=va_arg(ap,int);
       
-         if(num&(1<<31)){
+         if(num<0){
           *out++='-';
           num=-num;
           }
