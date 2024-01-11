@@ -52,7 +52,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     
   }
-  
+  *start='\0';
   *out='\0';
   
   return (out-start-1);
