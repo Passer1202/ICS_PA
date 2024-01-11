@@ -7,7 +7,7 @@
 
 int printf(const char *fmt, ...) {
   //panic("Not implemented");
-  char out[8];//buffer,可能不够大？
+  char out[7];//buffer,可能不够大？
   int ret=0;
   va_list ap;
   va_start(ap,fmt);
