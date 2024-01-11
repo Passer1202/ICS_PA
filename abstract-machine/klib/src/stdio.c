@@ -39,13 +39,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           }
         
         case 's':{
-          char* str=va_arg(ap,char*);
-          while(*str!='\0'){
-            *out++=*str++;
-          }  
+          
+          char *s = va_arg(ap, char*); strcat(start, s); break;
           break;
           }
-          default:assert(0);
+          
       }
       fmt++;
     }
