@@ -32,27 +32,25 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int n=va_arg(ap,int);
           
-          uint32_t num;
-  
-          
+          unsigned int num=0;
           if(n<0){
             *out++='-';
-            if(n==-2147483648)
+           if(n==-2147483648)
             {
-            num=1;
+            num=2147483648;
             }
             else
-            {n=-n;num=n;}
-            
+            n=-n;
+            num=n;
+
             }
             else num=n;
-          if(num==0){*out++='0';}
+         if(num==0){*out++='0';}
           else{
 		  int cnt=0;
 		  char src[32];
 		  while(num!=0){
-           
-                src[cnt++]=(num%10+'0');
+            src[cnt++]=(num%10+'0');
 		    num/=10;
 		  }
 		  cnt--;
@@ -81,6 +79,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   *out='\0';
   
   return (out-start-1);
+
 }
 
 int sprintf(char *out, const char *fmt, ...) {
