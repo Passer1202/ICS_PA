@@ -30,26 +30,29 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if(*fmt=='%'){
       switch(*++fmt){
         case'd':{
-          long long num=va_arg(ap,int);
-          int ow=0;
-          if(num<0){
+          int n=va_arg(ap,int);
+          
+          unsigned int num;
+  
+          
+          if(n<0){
             *out++='-';
-            if(num==-2147483647){
-                num=-(num+1);
-                ow=1;
-                }
-            else
-            num=(-num);
+            if(n==-2147483648)
+            {
+            num=2147483648;
             }
+            else
+            {n=-n;num=n;}
+
+            }
+            else num=n;
           if(num==0){*out++='0';}
           else{
 		  int cnt=0;
 		  char src[32];
 		  while(num!=0){
-            if(ow==1&&cnt==0)
-		        src[cnt++]=(num%10+'0'+1);
-            else
-                src[cnt++]=(num%10+'0'+1);
+           
+                src[cnt++]=(num%10+'0');
 		    num/=10;
 		  }
 		  cnt--;
