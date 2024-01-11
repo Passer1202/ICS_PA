@@ -35,7 +35,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           
           int cn=0;
           for(int i=0;i<32;i++){
-          	if(((uint32_t)n>>i)&1)cn++;
+          	if(n&(1<<i))cn++;
           }
           if(cn==32){
           *out++='-';
