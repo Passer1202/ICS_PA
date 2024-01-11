@@ -11,7 +11,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char* start=out;
   
   //va_start(ap,fmt);
-  /*
+  
   while(*fmt!='\0'){
     if(*fmt=='%'){
       switch(*++fmt){
@@ -45,6 +45,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           }  
           break;
           }
+          default:assert(0);
       }
       fmt++;
     }
@@ -53,7 +54,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     
   }
-  */
+  
   *out='\0';
   
   return (out-start-1);
