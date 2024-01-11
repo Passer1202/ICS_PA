@@ -18,7 +18,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int32_t num=va_arg(ap,int);
            //panic("Not implemented");
-           int ow;
+           int ow=0;
           if(num==-2147483648){ow=1;num++;}
          if(num<0){
           *out++='-';
