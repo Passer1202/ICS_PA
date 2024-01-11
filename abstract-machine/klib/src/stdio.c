@@ -18,11 +18,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int32_t num=va_arg(ap,int);
            //panic("Not implemented");
-           int ow=0;
-          if(num==-2147483648){ow=1; num=0;}
+       
          if(num<0){
           *out++='-';
-         
           num=-num;
           }
          if(num==0){*out++='0';}
@@ -30,10 +28,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 		  int cnt=0;
 		  char src[100];
 		  while(num!=0){
-		  int offset=0;
-		  if(cnt==0)offset='0'+ow;
-		  else offset='0';
-            src[cnt++]=(num%10+offset);
+		 
+            src[cnt++]=(num%10+'0');
 		    num/=10;
 		  }
 		  cnt--;
