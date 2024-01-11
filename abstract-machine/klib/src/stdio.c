@@ -30,21 +30,13 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     if(*fmt=='%'){
       switch(*++fmt){
         case'd':{
-          int n=va_arg(ap,int);
+          uint32_t num=va_arg(ap,int);
           
-          unsigned int num=0;
-          if(n<0){
+         
+          if(num&(1<<31)){
             *out++='-';
-           if(n==-1)
-            {
-            num=1;
+            num&=((uint32_t)(1<<31)-1);
             }
-            else
-            n=-n;
-            num=n;
-
-            }
-            else num=n;
          if(num==0){*out++='0';}
           else{
 		  int cnt=0;
