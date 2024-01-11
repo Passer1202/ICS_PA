@@ -19,6 +19,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       
          if(num<0){
           *out++='-';
+          num=-2147483647;
           num=-num;
           }
          if(num==0){*out++='0';}
@@ -64,6 +65,7 @@ int printf(const char *fmt, ...) {
   char out[8192]={'\0'};;//buffer,可能不够大？
   va_list ap;
   va_start(ap,fmt);
+  
   int ret=vsprintf(out,fmt,ap);
   //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
