@@ -18,7 +18,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'd':{
           int32_t num=va_arg(ap,int);
            //panic("Not implemented");
+           int ow;
+          if((num^(1<<31))==0){ow=1;}
          if(num<0){
+         num++;
           *out++='-';
           num=-num;
           }
@@ -27,7 +30,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
 		  int cnt=0;
 		  char src[100];
 		  while(num!=0){
-            src[cnt++]=(num%10+'0');
+		  int offset=0;
+		  if(cnt==0)offset='0'+ow;
+		  else offset='0';
+            src[cnt++]=(num%10+offset);
 		    num/=10;
 		  }
 		  cnt--;
