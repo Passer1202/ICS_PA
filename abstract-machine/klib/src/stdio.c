@@ -16,7 +16,7 @@ int printf(const char *fmt, ...) {
   if(ret>10086||ret<0)ret=-1;
   int index_printf=0;
   while(out[index_printf]!='\0'){
-  	//putch(out[index_printf++]);
+  	putch('1');
   	index_printf++;
   }
   return ret;
