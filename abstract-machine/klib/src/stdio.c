@@ -75,7 +75,7 @@ int printf(const char *fmt, ...) {
   	//putch(out[index_printf++]);
   	//putch(' ');
   //}
-  return 0;
+  return 1;
 }
 
 
