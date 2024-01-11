@@ -79,6 +79,7 @@ int printf(const char *fmt, ...) {
   	ret++;
   	//putch(' ');
   }
+  //assert(0);
   return ret;
 }
 
@@ -93,7 +94,7 @@ int sprintf(char *out, const char *fmt, ...) {
   ans=vsprintf(out,fmt,ap);
   
   va_end(ap);
-  
+  //assert(0);
   return ans;
   
 }
