@@ -17,14 +17,15 @@ void __am_gpu_init() {
   */
 }
 
-static const int vga_mask=0xffff;
+//static const int vga_mask=0xffff;
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
-  uint32_t information=inl(VGACTL_ADDR);
-  
+  //uint32_t information=inl(VGACTL_ADDR);
+  uint16_t h=400;
+  uint16_t w=300;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
-    .width = information&vga_mask, .height = information>>16,
+    .width = w, .height = h,
     .vmemsz = 0
   };
 }
