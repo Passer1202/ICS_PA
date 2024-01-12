@@ -44,7 +44,7 @@ void *malloc(size_t size) {
   hbrk += size;
   heap_size +=size;
   assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
-  for (uint64_t *p = (uint64_t *)addr; p != (uint64_t *)hbrk; p ++) {
+  for (uint32_t *p = (uint32_t *)addr; p != (uint32_t *)hbrk; p ++) {
     *p = 0;
   }
   
