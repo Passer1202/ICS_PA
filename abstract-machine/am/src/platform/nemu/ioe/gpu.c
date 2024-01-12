@@ -20,8 +20,6 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
   uint32_t information=inl(VGACTL_ADDR);
   
-  printf("%dw\n",information>>16);
-  
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = information&vga_mask, .height = information>>16,
@@ -36,7 +34,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *pixels = ctl->pixels;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   uint32_t screen_w = inl(VGACTL_ADDR) >> 16;
-  //printf("%dgpu\n",x);
+  printf("x%dy%dw%dh%d\n",x,y,w,h);
   for (int i = y; i < y+h; i++) {
     for (int j = x; j < x+w; j++) {
       fb[screen_w*i+j] = pixels[w*(i-y)+(j-x)];
