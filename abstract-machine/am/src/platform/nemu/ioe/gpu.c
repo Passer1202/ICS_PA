@@ -33,7 +33,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t w = ctl->w, h = ctl->h;
   if (!ctl->sync && (w == 0 || h == 0))
     return;
-  uint32_t x = ctl->x/32, y = ctl->y/32;
+  uint32_t x = ctl->x, y = ctl->y;
   uint32_t *pixels = ctl->pixels;
   uint32_t *p_fb = (uint32_t *)FB_ADDR;//删掉了(uintptr_t)后ok
   uint32_t wid = inl(VGACTL_ADDR) >> 16;
