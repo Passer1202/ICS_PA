@@ -42,6 +42,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   //uint32_t wid = inl(VGACTL_ADDR) >> 16;
   //uint32_t hig = inl(VGACTL_ADDR)&vga_mask;
   //printf("wid=%d\n",wid);
+  //w < W - x ? w : W - x
   for (int i = y; (i < y+h); i++) {
     for (int j = x; (j < x+w); j++) {
       p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
