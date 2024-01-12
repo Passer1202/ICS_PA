@@ -21,12 +21,12 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
   //uint32_t information=inl(VGACTL_ADDR);
-  uint32_t h=400;
-  uint32_t w=300;
+  uint16_t h=400;
+  uint16_t w=300;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = w, .height = h,
-    .vmemsz = 0
+    .vmemsz = w * h * sizeof(uint32_t)
   };
 }
 
