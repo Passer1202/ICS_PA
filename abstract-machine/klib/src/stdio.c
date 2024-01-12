@@ -86,6 +86,7 @@ int printf(const char *fmt, ...) {
   	//putch(' ');
   }
   //assert(0);
+  assert(0);
   return ret;
 }
 
