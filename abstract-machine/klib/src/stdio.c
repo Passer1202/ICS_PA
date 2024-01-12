@@ -48,6 +48,11 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           *out='\0';
           break;
           }
+        
+        case'c':{
+          char ch=va_arg(ap,int);
+          *out++=ch;    
+        }
       }
       fmt++;
     }
