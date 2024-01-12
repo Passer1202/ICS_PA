@@ -38,13 +38,13 @@ void *malloc(size_t size) {
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   //panic("Not implemented");
-  hbrk=(void*)ROUNDUP(heap.start,4) + heap_size;
-  size  = (size_t)ROUNDUP(size, 4);//不确定8还是4
+  hbrk=(void*)ROUNDUP(heap.start,8) + heap_size;
+  size  = (size_t)ROUNDUP(size, 8);//不确定8还是4
   char *addr = hbrk;
   hbrk += size;
   heap_size +=size;
   assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
-  for (uint32_t *p = (uint32_t *)addr; p != (uint32_t *)hbrk; p ++) {
+  for (uint64_t *p = (uint64_t *)addr; p != (uint64_t *)hbrk; p ++) {
     *p = 0;
   }
   
