@@ -47,7 +47,7 @@ void *malloc(size_t size) {
   for (uint64_t *p = (uint64_t *)addr; p != (uint64_t *)hbrk; p ++) {
     *p = 0;
   }
-  //assert(0);
+  assert(0);
   return addr;
   
 #endif
