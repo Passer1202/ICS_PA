@@ -33,20 +33,17 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
   uint32_t wid=400;
+  uint32_t hig=300;
   int32_t w = ctl->w, h = ctl->h;
   if (!ctl->sync && (w == 0 || h == 0))
     return;
   int32_t x = ctl->x, y = ctl->y;
   uint32_t *pixels = ctl->pixels;
-  uint32_t *p_fb = (uint32_t *)(uintptr_t)FB_ADDR;//删掉了(uintptr_t)后ok
-  //uint32_t wid = inl(VGACTL_ADDR) >> 16;
-  //uint32_t hig = inl(VGACTL_ADDR)&vga_mask;
-  //printf("wid=%d\n",wid);
-  //w < W - x ? w : W - x
-  for (int i = y; (i < y+h); i++) {
-    for (int j = x; (j < x+w); j++) {
-      p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
-    }
+  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;//删掉了(uintptr_t)后ok
+  uint32_t len=(w < wid - x ? w : wid - x);
+  for (int j = 0; j < h && y + j < hig; ++j){
+  	for(int z=0;z<len;z++)
+  	fb[(y + j) * wid + x +z]=pixels[z];
   }
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);    
