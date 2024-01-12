@@ -52,6 +52,7 @@ void *malloc(size_t size) {
   
 #endif
   return NULL;
+  assert(0);
 }
 
 void free(void *ptr) {
