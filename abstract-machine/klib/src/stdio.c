@@ -69,7 +69,7 @@ int printf(const char *fmt, ...) {
   va_list ap;
   //int ret=0;
   va_start(ap,fmt);
-  
+  assert(0);
   vsprintf(out,fmt,ap);
   //if(ret>=100000||ret<0)ret=-1;
   va_end(ap);
