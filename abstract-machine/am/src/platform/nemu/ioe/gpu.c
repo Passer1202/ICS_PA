@@ -21,8 +21,8 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
   //uint32_t information=inl(VGACTL_ADDR);
-  uint16_t h=400;
-  uint16_t w=300;
+  uint32_t h=300;
+  uint32_t w=400;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = w, .height = h,
@@ -32,13 +32,14 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
+  uint32_t wid=400;
   int32_t w = ctl->w, h = ctl->h;
   if (!ctl->sync && (w == 0 || h == 0))
     return;
   int32_t x = ctl->x, y = ctl->y;
   uint32_t *pixels = ctl->pixels;
   uint32_t *p_fb = (uint32_t *)FB_ADDR;//删掉了(uintptr_t)后ok
-  uint32_t wid = inl(VGACTL_ADDR) >> 16;
+  //uint32_t wid = inl(VGACTL_ADDR) >> 16;
   //uint32_t hig = inl(VGACTL_ADDR)&vga_mask;
   //printf("wid=%d\n",wid);
   for (int i = y; (i < y+h); i++) {
