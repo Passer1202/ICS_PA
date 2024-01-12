@@ -4,6 +4,9 @@
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 static unsigned long int next = 1;
+static size_t heap_size=0;//堆的总大小
+static char *hbrk;
+
 
 int rand(void) {
   // RAND_MAX assumed to be 32767
@@ -34,7 +37,19 @@ void *malloc(size_t size) {
   // Therefore do not call panic() here, else it will yield a dead recursion:
   //   panic() -> putchar() -> (glibc) -> malloc() -> panic()
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
-  panic("Not implemented");
+  //panic("Not implemented");
+  hbrk=(void*)ROUNDUP(heap.start,8) + heap_size;
+  size  = (size_t)ROUNDUP(size, 8);//不确定8还是4
+  char *addr = hbrk;
+  hbrk += size;
+  heap_size +=size;
+  assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
+  for (uint64_t *p = (uint64_t *)addr; p != (uint64_t *)hbrk; p ++) {
+    *p = 0;
+  }
+  
+  return addr;
+  
 #endif
   return NULL;
 }
