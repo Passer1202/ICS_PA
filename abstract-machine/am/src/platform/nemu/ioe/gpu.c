@@ -43,7 +43,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   for (int i = y; (i < y+h); i++) {
     for (int j = x; (j < x+w); j++) {
     
-    if(wid*i+j>=120000){printf("s\n");}
+    if(wid*i+j>=120000){printf("%d %d %d\n",wid,i,j);}
       p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
     }
   }
