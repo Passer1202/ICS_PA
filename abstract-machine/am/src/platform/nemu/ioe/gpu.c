@@ -21,8 +21,8 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
   //uint32_t information=inl(VGACTL_ADDR);
-  uint32_t h=400;
-  uint32_t w=300;
+  uint32_t h=300;
+  uint32_t w=400;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = w, .height = h,
@@ -32,7 +32,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
-  uint32_t wid=300;
+  uint32_t wid=400;
   int32_t w = ctl->w, h = ctl->h;
   if (!ctl->sync && (w == 0 || h == 0))
     return;
