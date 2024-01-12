@@ -20,7 +20,7 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
   uint32_t information=inl(VGACTL_ADDR);
   
-  printf("%dw\n",information&vga_mask);
+  printf("%dw\n",information>>16);
   
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
