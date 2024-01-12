@@ -34,11 +34,12 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   //uint32_t *pixels = ctl->pixels;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   uint32_t screen_w = inl(VGACTL_ADDR) >> 16;
-  printf("x%dy%dw%dh%d\n",x,y,w,h);
+  
   for (int i = y; i < y+h; i++) {
     for (int j = x; j < x+w; j++) {
+      printf("x%dy%dw%dh%di%dj%d\n",x,y,w,h,i,j);
       fb[screen_w*i+j]=0; //pixels[w*(i-y)+(j-x)];
- 
+      printf("x%dy%dw%dh%di%dj%d\n",x,y,w,h,i,j);
     }
   }
   if (ctl->sync) {
