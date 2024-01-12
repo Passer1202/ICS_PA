@@ -6,7 +6,7 @@
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
 void __am_gpu_init() {
- 
+ /*
   int i;
   int w = io_read(AM_GPU_CONFIG).width ; 
   int h = io_read(AM_GPU_CONFIG).height;  
@@ -14,7 +14,7 @@ void __am_gpu_init() {
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < w * h; i ++) fb[i] = i;
   outl(SYNC_ADDR, 1);
-  
+ */ 
 }
 
 //static const int vga_mask=0xffff;
@@ -43,7 +43,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   for (int i = y; (i < y+h); i++) {
     for (int j = x; (j < x+w); j++) {
     
-    //if(wid*i+j>=120000){printf("wid:%d i:%d j:%d x:%d y:%d h:%d w:%d\n",wid,i,j,x,y,h,w);}
+    if(wid*i+j>=120000){printf("wid:%d i:%d j:%d x:%d y:%d h:%d w:%d\n",wid,i,j,x,y,h,w);}
       p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
     }
   }
