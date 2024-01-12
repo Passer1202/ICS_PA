@@ -48,7 +48,7 @@ void *malloc(size_t size) {
     *p = 0;
   }
   
-  return addr;
+  return NULL;
   
 #endif
   return NULL;
