@@ -39,6 +39,7 @@ void *malloc(size_t size) {
 #if !(defined(__ISA_NATIVE__) && defined(__NATIVE_USE_KLIB__))
   //panic("Not implemented");
   hbrk=(void*)ROUNDUP(heap.start,8) + heap_size;
+  assert(0);
   size  = (size_t)ROUNDUP(size, 8);//不确定8还是4
   char *addr = hbrk;
   hbrk += size;
@@ -47,7 +48,6 @@ void *malloc(size_t size) {
   for (uint64_t *p = (uint64_t *)addr; p != (uint64_t *)hbrk; p ++) {
     *p = 0;
   }
-  assert(0);
   return addr;
   
 #endif
