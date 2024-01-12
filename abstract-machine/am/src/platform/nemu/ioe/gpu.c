@@ -38,12 +38,11 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
     return;
   int32_t x = ctl->x, y = ctl->y;
   uint32_t *pixels = ctl->pixels;
-  uint32_t *p_fb = (uint32_t *)(uintptr_t)FB_ADDR;//删掉了(uintptr_t)后ok
+  uint32_t *p_fb = (uint32_t *)(uintptr_t)FB_ADDR;
   
   for (int i = y; (i < y+h); i++) {
     for (int j = x; (j < x+w); j++) {
-    
-    if(wid*i+j>=120000){printf("wid:%d i:%d j:%d x:%d y:%d h:%d w:%d\n",wid,i,j,x,y,h,w);}
+    //if(wid*i+j>=120000){printf("wid:%d i:%d j:%d x:%d y:%d h:%d w:%d\n",wid,i,j,x,y,h,w);}
       p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
     }
   }
