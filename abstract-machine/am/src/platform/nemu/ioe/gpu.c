@@ -1,7 +1,7 @@
 #include <am.h>
 #include <nemu.h>
 //#include<stdio.h>
-#include<string.h>
+
 
 #define SYNC_ADDR (VGACTL_ADDR + 4)
 
@@ -21,8 +21,8 @@ void __am_gpu_init() {
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
   
   //uint32_t information=inl(VGACTL_ADDR);
-  uint16_t w=300;
-  uint16_t h=400;
+  uint32_t h=300;
+  uint32_t w=400;
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = w, .height = h,
@@ -32,28 +32,24 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
 
-  uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
- 
-  uint16_t W = 300;
-  uint16_t H = 400;
-
-  int x = ctl->x;
-  int y = ctl->y;
-  int w = ctl->w;
-  int h = ctl->h;
-  
-  uint32_t * base = (uint32_t *) ctl->pixels;
-  int cp_bytes = sizeof(uint32_t) * (w < W - x ? w : W - x);
-  
-  for (int j = 0; j < h && y + j < H; ++j) {
-      memcpy(&fb[(y + j) * W + x], base, cp_bytes);
-      base += w;
+  uint32_t wid=300;
+  int32_t w = ctl->w, h = ctl->h;
+  if (!ctl->sync && (w == 0 || h == 0))
+    return;
+  int32_t x = ctl->x, y = ctl->y;
+  uint32_t *pixels = ctl->pixels;
+  uint32_t *p_fb = (uint32_t *)FB_ADDR;//删掉了(uintptr_t)后ok
+  //uint32_t wid = inl(VGACTL_ADDR) >> 16;
+  //uint32_t hig = inl(VGACTL_ADDR)&vga_mask;
+  //printf("wid=%d\n",wid);
+  //w < W - x ? w : W - x
+  for (int i = y; (i < y+h); i++) {
+    for (int j = x; (j < x+w); j++) {
+      p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
+    }
   }
-  //for (int j = 0; j < h; ++j)
-  //  for (int i = 0; i < w; ++i)
-  //    fb[(y + j) * W + x + i] = base[j * w + i];
   if (ctl->sync) {
-    outl(SYNC_ADDR, 1);
+    outl(SYNC_ADDR, 1);    
   }
   
 }
