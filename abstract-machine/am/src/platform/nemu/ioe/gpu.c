@@ -38,10 +38,11 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *pixels = ctl->pixels;
   uint32_t *p_fb = (uint32_t *)FB_ADDR;//删掉了(uintptr_t)后ok
   uint32_t wid = inl(VGACTL_ADDR) >> 16;
+  printf("wid=%d\n",wid);
   for (int i = y; i < y+h; i++) {
     for (int j = x; j < x+w; j++) {
       p_fb[wid*i+j] = pixels[w*(i-y)+(j-x)]; 
-      printf("i=%d,j=%d\n",i,j);
+      
     }
   }
   if (ctl->sync) {
