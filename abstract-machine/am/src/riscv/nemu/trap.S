@@ -49,8 +49,8 @@ __am_asm_trap:
   csrr t2, mepc
   
   lui t1,11
-  bne t0,t1,__not_yield
-  addi t2,t2,8
+  beq t0,t1,__not_yield
+  addi t2,t2,4
 __not_yield:  
   
   csrr t1, mstatus
