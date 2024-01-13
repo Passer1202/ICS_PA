@@ -17,7 +17,7 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     assert(c != NULL);
   }
-  assert(0);
+  
   return c;
 }
 
