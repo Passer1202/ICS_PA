@@ -43,11 +43,13 @@ __am_asm_trap:
   addi sp, sp, -CONTEXT_SIZE
 
   MAP(REGS, PUSH)
+  
 
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
-
+  
+  
   STORE t0, OFFSET_CAUSE(sp)
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
@@ -59,6 +61,8 @@ __am_asm_trap:
 
   mv a0, sp
   jal __am_irq_handle
+  
+  addi t2, t2 , 4
 
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
