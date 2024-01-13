@@ -37,13 +37,13 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   if (!ctl->sync && (w == 0 || h == 0))
     return;
   int32_t x = ctl->x, y = ctl->y;
-  uint32_t *mypixels = ctl->pixels;
-  uint32_t *p_fb = (uint32_t *)(uintptr_t)FB_ADDR;
+  //uint32_t *mypixels = ctl->pixels;
+  //uint32_t *p_fb = (uint32_t *)(uintptr_t)FB_ADDR;
   
   for (int i = y; (i < y+h); i++) {
     for (int j = x; (j < x+w); j++) {
     if(wid*i+j>=0){printf("wid:%d i:%d j:%d x:%d y:%d h:%d w:%d\n",wid,i,j,x,y,h,w);yield();}
-      p_fb[wid*i+j] = mypixels[w*(i-y)+(j-x)]; 
+      //p_fb[wid*i+j] = mypixels[w*(i-y)+(j-x)]; 
     }
   }
   if (ctl->sync) {
