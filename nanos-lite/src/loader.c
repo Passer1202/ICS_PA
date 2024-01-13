@@ -32,7 +32,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	
 	//处理段信息
 	for(int i=0;i<ehdr.e_phnum;i++){
-		if(phdr[i].p_type!=0)continue;//检测是否是需要加载的段
+		//if(phdr[i].p_type!=0)continue;//检测是否是需要加载的段
 		//加载对应段到主存
 		assert(phdr[i].p_type==PT_LOAD);
 		ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_memsz);
