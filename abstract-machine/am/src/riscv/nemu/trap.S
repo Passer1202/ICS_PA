@@ -48,6 +48,7 @@ __am_asm_trap:
   csrr t0, mcause
   csrr t2, mepc
   
+  lui t1,11
   
   
   csrr t1, mstatus
