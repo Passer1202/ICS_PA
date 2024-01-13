@@ -24,7 +24,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	//check the magic number
 	assert(*(uint32_t *)ehdr.e_ident == 0x464c457f);
 	
-	printf("%d\n",ehdr.e_entry);
+	//printf("%d\n",ehdr.e_entry);
 	
 	//读取段信息
 	Elf_Phdr phdr[ehdr.e_phnum];
