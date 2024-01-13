@@ -44,10 +44,15 @@ __am_asm_trap:
 
   MAP(REGS, PUSH)
   
-
+  
   csrr t0, mcause
-  csrr t1, mstatus
   csrr t2, mepc
+  
+  
+  
+  csrr t1, mstatus
+  
+  
   
   
   STORE t0, OFFSET_CAUSE(sp)
@@ -66,7 +71,8 @@ __am_asm_trap:
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   
-  addi t2, t2 , 4
+  
+  #addi t2, t2 , 4
   
   csrw mstatus, t1
   csrw mepc, t2
