@@ -51,6 +51,6 @@ void naive_uload(PCB *pcb, const char *filename) {
   Log("Jump to entry = %p", entry);
  // assert(0);
   ((void(*)())entry) ();
-  assert(0);
+ // assert(0);
 }
 
