@@ -47,14 +47,14 @@ __am_asm_trap:
   
   csrr t0, mcause
   csrr t2, mepc
-  
+
+#判断是否是yield，是的话epc+4 
   lui t1,0
   addi t1,t1,11
-  
   bne t0,t1,__not_yield
   addi t2,t2,8
 __not_yield:  
-  
+
   csrr t1, mstatus
   
   
@@ -76,8 +76,6 @@ __not_yield:
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   
-  
-  #addi t2, t2 , 4
   
   csrw mstatus, t1
   csrw mepc, t2
