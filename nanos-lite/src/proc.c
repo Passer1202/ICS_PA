@@ -8,7 +8,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 
-size_t get_ramdisk_size();
+//size_t get_ramdisk_size();
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -29,7 +29,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
-  printf("%d",get_ramdisk_size());
+  //printf("%d",get_ramdisk_size());
   naive_uload(NULL, NULL);
 }
 
