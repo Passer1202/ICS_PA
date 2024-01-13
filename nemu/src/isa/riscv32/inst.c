@@ -63,7 +63,7 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
 }
 
 //查手册得CSR寄存器编号
-/*
+
 static vaddr_t *CSR(word_t imm) {
   switch (imm)
   {
@@ -74,7 +74,7 @@ static vaddr_t *CSR(word_t imm) {
   default: panic("Unknown csr");
   }
 }
-*/
+
 static int decode_exec(Decode *s) {
   int rd = 0;
   word_t src1 = 0, src2 = 0, imm = 0;
@@ -110,7 +110,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 011 ????? 00100 11", sltiu  , I, R(rd) = (src1 < imm)); 
   INSTPAT("??????? ????? ????? 010 ????? 00100 11", slti   , I, R(rd) = ((int32_t)src1 < (int32_t)imm)); 
   /*------CSR------*/   //字段划分和I形指令一样，方便起见就直接当I型处理了；//此处可能有误
-  //INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, vaddr_t* csr=CSR(imm);R(rd)=*(csr);*(csr)=src1);
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, vaddr_t* csr=CSR(imm);R(rd)=*(csr);*(csr)=src1);
   //INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, vaddr_t* csr=CSR(imm);R(rd)=*(csr);*(csr)|=src1);
   //INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , I, vaddr_t* csr=CSR(imm);R(rd)=*(csr);*(csr)&=(~src1));
   //INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , I, );
@@ -144,7 +144,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 010 ????? 01000 11", sw     , S, Mw(src1 + imm, 4, src2));
   INSTPAT("??????? ????? ????? 001 ????? 01000 11", sh     , S, Mw(src1 + imm, 2, src2));
   /*------ECALL-----*/   //感觉和ebreak很像，先放到N型来识别
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = (isa_raise_intr(11, s->pc)); );//跳转到异常入口地址
+  //INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = (isa_raise_intr(11, s->pc)); );//跳转到异常入口地址
   //bool success;s->dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc));
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret  ,  N, s->dnpc = cpu.csr.mepc );//从异常处理过程中返回
   /*-------N-------*/
