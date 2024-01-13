@@ -62,10 +62,12 @@ __am_asm_trap:
   mv a0, sp
   jal __am_irq_handle
   
-  addi t2, t2 , 4
 
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
+  
+  addi t2, t2 , 4
+  
   csrw mstatus, t1
   csrw mepc, t2
 
