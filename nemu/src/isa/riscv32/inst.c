@@ -144,7 +144,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 010 ????? 01000 11", sw     , S, Mw(src1 + imm, 4, src2));
   INSTPAT("??????? ????? ????? 001 ????? 01000 11", sh     , S, Mw(src1 + imm, 2, src2));
   /*------ECALL-----*/   //感觉和ebreak很像，先放到N型来识别
-  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, assert(0);s->dnpc = (isa_raise_intr(11, s->pc)); );//跳转到异常入口地址
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, bool success;s->dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc)); );//跳转到异常入口地址
   //bool success;s->dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc));
   //INSTPAT("0011000 00010 00000 000 00000 11100 11", mret  ,  N, s->dnpc = cpu.csr.mepc );//从异常处理过程中返回
   /*-------N-------*/
