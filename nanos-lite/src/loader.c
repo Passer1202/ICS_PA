@@ -32,12 +32,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 	
 	//处理段信息
 	for(int i=0;i<ehdr.e_phnum;i++){
-		//if(phdr[i].p_type!=0)continue;//检测是否是需要加载的段
+		if(phdr[i].p_type!=PT_LOAD)continue;//检测是否是需要加载的段
 		//加载对应段到主存
 		assert(phdr[i].p_type==PT_LOAD);
 		ramdisk_read((void*)phdr[i].p_vaddr, phdr[i].p_offset, phdr[i].p_memsz);
 		//将[VirtAddr + FileSiz, VirtAddr + MemSiz)对应的物理区间清零
-		memset((void*)(phdr[i].p_vaddr+phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
+		//memset((void*)(phdr[i].p_vaddr+phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
 
 
 	}
