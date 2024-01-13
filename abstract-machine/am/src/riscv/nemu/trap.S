@@ -52,7 +52,7 @@ __am_asm_trap:
   lui t1,0
   addi t1,t1,11
   bne t0,t1,__not_yield
-  addi t2,t2,8
+  addi t2,t2,4
 __not_yield:  
 
   csrr t1, mstatus
