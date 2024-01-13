@@ -146,7 +146,7 @@ static int decode_exec(Decode *s) {
   /*------ECALL-----*/   //感觉和ebreak很像，先放到N型来识别
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , N, s->dnpc = (isa_raise_intr(11, s->pc)); );//跳转到异常入口地址
   //bool success;s->dnpc = (isa_raise_intr(isa_reg_str2val("a7", &success), s->pc));
-  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret  ,  N, s->dnpc = cpu.csr.mepc );//从异常处理过程中返回
+  //INSTPAT("0011000 00010 00000 000 00000 11100 11", mret  ,  N, s->dnpc = cpu.csr.mepc );//从异常处理过程中返回
   /*-------N-------*/
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   //INSTPAT("0000000 00000 00000 000 00000 00000 00", .2byte , N, );//.2byte啥都不做...,为了方便处理nanos，可能有坑？
