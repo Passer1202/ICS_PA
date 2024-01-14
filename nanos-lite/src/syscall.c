@@ -10,7 +10,7 @@ void sys_exit(int x) {
     halt(x);
 }
 
-int sys_write(int fd, void *buf, size_t cnt){
+size_t sys_write(int fd, void *buf, size_t cnt){
     if(fd!=1&&fd!=2)return -1;//调用失败
     char* out=buf;
     size_t num=cnt;
