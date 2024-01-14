@@ -31,7 +31,6 @@ void init_proc() {
   // load program here
   //printf("%d",get_ramdisk_size());
   const char filename[] = "/bin/file-test";
-  assert(0);
   naive_uload(NULL, filename);
 }
 
