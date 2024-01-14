@@ -29,7 +29,7 @@ void do_syscall(Context *c) {
     case SYS_write: c->GPRx=fs_write(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
     case SYS_brk:   c->GPRx=sys_brk((void*)c->GPR2);break;
     case SYS_open:  c->GPRx=fs_open((const char*)c->GPR2,c->GPR3,c->GPR4);break;
-    case SYS_read:  assert(0);c->GPRx=fs_read(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
+    case SYS_read:  c->GPRx=fs_read(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
     case SYS_close: c->GPRx=fs_close(c->GPR2);break;
     case SYS_lseek: c->GPRx=fs_lseek(c->GPR2,(size_t)c->GPR3,c->GPR4);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
