@@ -127,7 +127,7 @@ size_t sys_write(int fd, void *buf, size_t cnt){
 
 
 size_t fs_write(int fd, const void *buf, size_t len){
-assert(0);
+
 	//对stdin,stdout,stderr进行识别
 	switch(fd){
 	case 0:
