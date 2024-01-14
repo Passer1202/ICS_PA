@@ -85,8 +85,7 @@ void *_sbrk(intptr_t increment) {
   	Log("aaaaaaaaa\n");
   	return (void*)ret;
   }
-
-
+  Log("aaaaaaaaa\n");
   return (void *)-1;
 }
 
