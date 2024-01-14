@@ -50,7 +50,7 @@ __am_asm_trap:
 
 #判断是否是yield，是的话epc+4 
   lui t1,0
-  addi t1,t1,11
+  addi t1,t1,1
   bne t0,t1,__not_yield
   addi t2,t2,4
 __not_yield:  
