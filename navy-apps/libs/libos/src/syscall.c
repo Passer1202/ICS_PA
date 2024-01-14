@@ -71,7 +71,7 @@ int _open(const char *path, int flags, mode_t mode) {
 int _write(int fd, void *buf, size_t count) {
   
   int ret=_syscall_(SYS_write, fd, (intptr_t)buf, count);
-  assert(0);
+  
   return ret;
   
 }
@@ -79,14 +79,12 @@ int _write(int fd, void *buf, size_t count) {
 void *_sbrk(intptr_t increment) {
 
   static char* program_break=&_end;
-  char* addr=my_program_break+increment;
+  char* addr=program_break+increment;
   if(_syscall_(SYS_brk, addr, 0, 0)==0){
   	char* ret=program_break;
-  	program_break=addr
-  	Log("aaaaaaaaa\n");
+  	program_break=addr;
   	return (void*)ret;
   }
-  assert(0);
   return (void *)-1;
 }
 
