@@ -49,14 +49,23 @@ __am_asm_trap:
   csrr t2, mepc
 
 #判断是否是yield，是的话epc+4 
-  lui t1,0
-  addi t1,t1,1
-  bne t0,t1,__not_yield
+#  lui t1,0
+#  addi t1,t1,1
+#  bne t0,t1,__not_yield
+#  addi t2,t2,4
+#__not_yield:  
+
+#目前是不管是什么都加4  
+  
   addi t2,t2,4
-__not_yield:  
 
   csrr t1, mstatus
   
+  
+
+  csrr t1, mstatus
+  
+ 
   
   
   
