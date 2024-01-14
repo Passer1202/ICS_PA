@@ -52,7 +52,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         case'c':{
           char ch=va_arg(ap,int);
           *out++=ch;    
+          break;
         }
+        //未实现打印指针功能
       }
       fmt++;
     }
