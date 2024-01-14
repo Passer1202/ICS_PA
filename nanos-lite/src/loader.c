@@ -60,6 +60,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
 
 	}
+	assert(0);
   return ehdr.e_entry;
 }
 
