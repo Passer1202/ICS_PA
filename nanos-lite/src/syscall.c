@@ -23,10 +23,11 @@ int fs_close(int fd);
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
+  assert(0);
   switch (a[0]) {
     case SYS_yield: c->GPRx=sys_yield(); break;
     case SYS_exit:  sys_exit(c->GPR2); break;
-    case SYS_write: assert(0);c->GPRx=fs_write(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
+    case SYS_write: c->GPRx=fs_write(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
     case SYS_brk:   c->GPRx=sys_brk((void*)c->GPR2);break;
     case SYS_open:  c->GPRx=fs_open((const char*)c->GPR2,c->GPR3,c->GPR4);break;
     case SYS_read:  c->GPRx=fs_read(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
