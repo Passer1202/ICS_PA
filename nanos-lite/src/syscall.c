@@ -21,6 +21,10 @@ size_t sys_write(int fd, void *buf, size_t cnt){
     return cnt;
 }
 
+int sys_brk(void* addr){
+	return 0;
+}
+
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -30,6 +34,7 @@ void do_syscall(Context *c) {
     case SYS_yield: c->GPRx=sys_yield(); break;
     case SYS_exit:  sys_exit(c->GPR2); break;
     case SYS_write: c->GPRx=sys_write(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
+    case SYS_brk: c->GPRx=sys_brk((void*)c->GPR2);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
  
