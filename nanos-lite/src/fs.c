@@ -58,7 +58,7 @@ static int get_index(size_t fd){
 int fs_open(const char *pathname, int flags, int mode){
 	//忽略了flags和mode参数
 	//忽略了 stdin,stdout,stderr的打开
-	
+	assert(0);
 	int index=0;
 	while(index<LENGTH(file_table)){
 		Finfo file_find=file_table[index];
