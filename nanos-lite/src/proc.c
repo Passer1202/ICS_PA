@@ -30,7 +30,8 @@ void init_proc() {
 
   // load program here
   //printf("%d",get_ramdisk_size());
-  naive_uload(NULL, NULL);
+  const char filename[] = "/bin/hello";
+  naive_uload(NULL, filename);
 }
 
 Context* schedule(Context *prev) {
