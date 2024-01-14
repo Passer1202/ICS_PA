@@ -81,7 +81,6 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len){
-	assert(0);
 	//同fs_open忽略了对stdin,stdout,stderr的读操作
 	if(fd>=3){
 		int index=get_index(fd);
@@ -128,7 +127,7 @@ size_t sys_write(int fd, void *buf, size_t cnt){
 
 
 size_t fs_write(int fd, const void *buf, size_t len){
-
+assert(0);
 	//对stdin,stdout,stderr进行识别
 	switch(fd){
 	case 0:
