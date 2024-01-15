@@ -6,6 +6,7 @@ typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
 size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+size_t serial_write(const void *buf, size_t offset, size_t len);
 
 typedef struct {
   char *name;
@@ -35,8 +36,8 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
 #include "files.h"
 };
 
@@ -82,6 +83,14 @@ int fs_open(const char *pathname, int flags, int mode){
 
 size_t fs_read(int fd, void *buf, size_t len){
 	//同fs_open忽略了对stdin,stdout,stderr的读操作
+	
+	ReadFn file_read;
+	file_read=file_table[fd].read;
+	if(file_read!=NULL){
+		size_t ret=file_read(buf,0,len);
+		return ret;
+	}
+	
 	if(fd>=3){
 		int index=get_index(fd);
 		if(index==-1){
@@ -129,6 +138,15 @@ size_t sys_write(int fd, void *buf, size_t cnt){
 size_t fs_write(int fd, const void *buf, size_t len){
 
 	//对stdin,stdout,stderr进行识别
+	
+	WriteFn file_write;
+	file_write=file_table[fd].write;
+	if(file_write!=NULL){
+		size_t ret=file_write(buf,0,len);
+		return ret;
+	}
+	
+	
 	switch(fd){
 	case 0:
 		Log("File to be ignored:stdin!");return 0;
