@@ -1,6 +1,29 @@
 #include <common.h>
 #include "syscall.h"
 
+//为获取时间，定义结构体，参考（搬运）自man 2 gettimeofday中定理
+struct timeval{
+	uint64_t tv_sec;	/*seconds*/
+	uint64_t tv_usec; /*microseconds*/
+};
+
+struct timezone{
+	int tz_minuteswest; /*minutes west of Greenwich*/
+	int tz_dsttime;     /*type of DST correction*/
+};
+
+int sys_gettimeofday(struct timeval *tv, struct timezone *tz){
+	
+	uint64_t time_get=io_read(AM_TIMER_UPTIME).us;
+	uint64_t one_millon=1000000;
+	
+	tv->tv_sec=time_get/one_millon;//秒
+	tv->tv_usec=time_get-(tv->tv_sec)*one_millon;//微秒
+	
+	
+	return 0;
+}
+
 int sys_yield() {
     yield();
     return 0;
@@ -38,6 +61,8 @@ void do_syscall(Context *c) {
     case SYS_read:  c->GPRx=fs_read(c->GPR2,(void*)c->GPR3,(size_t)c->GPR4);break;
     case SYS_close: c->GPRx=fs_close(c->GPR2);break;
     case SYS_lseek: c->GPRx=fs_lseek(c->GPR2,(size_t)c->GPR3,c->GPR4);break;
+    case SYS_gettimeofday: 
+    		    c->GPRx=sys_gettimeofday((struct timeval *)c->GPR2,(struct timezone *)c->GPR3);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
  
