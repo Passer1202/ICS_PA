@@ -44,14 +44,14 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		char* key_name=(char*)keyname[my_event.keycode];
 		
 		int len_get;
-		if(my_event.keydown)len_get=sprintf(key_buf,"kd");
+		if(my_event.keydown)len_get=sprintf(key_buf,"kd",key_name);
 		else len_get=sprintf(key_buf,"ku %s\n",key_name);
 		
 		len_get=(len_get>=len)?len:len_get;//最长写入n字节
-
-		for(int i=0;i<len_get-1;i++){
-			char* p_buf=(char*)buf;
-			char* p=key_buf;
+		char* p_buf=(char*)buf;
+		char* p=key_buf;
+		for(int i=0;i<len_get;i++){
+			
 			*p_buf++=*p++;
 		}
 		return len_get;
