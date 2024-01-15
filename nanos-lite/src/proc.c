@@ -30,7 +30,7 @@ void init_proc() {
 
   // load program here
   //printf("%d",get_ramdisk_size());
-  const char filename[] = "/bin/timer-test";
+  const char filename[] = "/bin/event-test";
   naive_uload(NULL, filename);
 }
 
