@@ -3,13 +3,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include<assert.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 
 uint32_t NDL_GetTicks() {
-  return 0;
+	
+	int one_thousand=1000;
+	
+	struct timeval my_time;
+	//确保成功获取时间
+	assert(gettimeofday(&my_time,NULL)==0);
+ 	
+ 	uint32_t ret_time;//毫秒
+ 	
+ 	ret_time=my_time.tv_sec*one_thousand+my_time.tv_usec/one_thousand;
+ 	
+	return ret_time;
 }
 
 int NDL_PollEvent(char *buf, int len) {

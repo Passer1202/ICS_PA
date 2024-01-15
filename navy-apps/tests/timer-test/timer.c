@@ -1,8 +1,14 @@
 #include <stdio.h>
+
+#define HAS_NDL
+
+#ifndef HAS_NDL
 #include <assert.h>
 #include <sys/time.h>
 
-int main() {
+void gettimeofday_test(){
+    printf("gettimeofday test start...\n");
+
     struct timeval init;
     struct timeval now;
 
@@ -23,3 +29,32 @@ int main() {
         }
     }
 }
+#else
+#include <NDL.h>
+
+void NDL_GetTicks_test(){
+	NDL_Init(0);
+    printf("NDL_GetTicks test start...\n");
+
+    uint32_t init = NDL_GetTicks();
+    size_t times = 1;
+
+    while (1) {
+        uint32_t now = NDL_GetTicks();
+        uint32_t time_gap = now - init;
+        if (time_gap > 500 * times) {
+            printf("Half a second passed, %u time(s)\n", times);
+            times++;
+        }
+    }
+}
+#endif
+
+int main() {
+#ifndef HAS_NDL
+    gettimeofday_test();
+#else
+    NDL_GetTicks_test();
+#endif
+}
+
