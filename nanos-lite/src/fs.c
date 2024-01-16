@@ -8,6 +8,9 @@ size_t ramdisk_read(void *buf, size_t offset, size_t len);
 size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 size_t serial_write(const void *buf, size_t offset, size_t len);
 size_t events_read(void *buf, size_t offset, size_t len);
+size_t dispinfo_read(void *buf, size_t offset, size_t len);
+size_t fb_write(const void *buf, size_t offset, size_t len);
+
 
 typedef struct {
   char *name;
@@ -22,7 +25,7 @@ typedef struct{
 	size_t fd_offset;//偏移量记录
 }FD_OF_info;
 
-enum {FD_STDIN, FD_STDOUT, FD_STDERR, DEV_EVENTS ,FD_FB};
+enum {FD_STDIN, FD_STDOUT, FD_STDERR, DEV_EVENTS,PROC_DISPINFO,FD_FB};
 
 size_t invalid_read(void *buf, size_t offset, size_t len) {
   panic("should not reach here");
@@ -40,6 +43,8 @@ static Finfo file_table[] __attribute__((used)) = {
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
   [DEV_EVENTS]= {"/dev/events", 0, 0, events_read, invalid_write},
+  [PROC_DISPINFO] = {"/proc/dispinfo", 0, 0, dispinfo_read, invalid_write},
+  [FD_FB] = {"/dev/fb", 0, 0, invalid_read, fb_write},
 #include "files.h"
 };
 
@@ -123,6 +128,8 @@ size_t fs_read(int fd, void *buf, size_t len){
 	return 0;
 
 }
+
+
 
 size_t sys_write(int fd, void *buf, size_t cnt){
     if(fd!=1&&fd!=2)return -1;//调用失败
@@ -253,5 +260,10 @@ int fs_close(int fd){
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  AM_GPU_CONFIG_T my_event=io_read(AM_GPU_CONFIG);
+  
+  int wid=my_event.width;
+  int hei=my_event.height;
+  file_table[FD_FB].size=wid*hei*sizeof(uint32_t);
   
 }

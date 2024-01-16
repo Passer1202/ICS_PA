@@ -62,7 +62,20 @@ int strcmp(const char *s1, const char *s2) {
 }
 
 int strncmp(const char *s1, const char *s2, size_t n) {
-  panic("Not implemented");
+  for(int i=0;i<n;i++)
+  {
+  	if(*s1>*s2){
+  		return 1;
+  	}
+  	else if(*s1<*s2){
+  		return -1;
+  	}
+  	else{
+  		s1++;
+  		s2++;
+  	}
+  }
+  return 0;
 }
 
 void *memset(void *s, int c, size_t n) {

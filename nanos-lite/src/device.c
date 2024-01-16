@@ -12,6 +12,7 @@
 //类似数电键盘实验，我们建立一个缓冲区;
 #define MAX_BUF 32
 static char key_buf[MAX_BUF];
+static char vga_buf[MAX_BUF];
 
 
 static const char *keyname[256] __attribute__((used)) = {
@@ -55,7 +56,8 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 			*p_buf++=*p++;
 		}
 		*p_buf='\0';
-		return len_get;
+		
+		return len_get;//实际写入字符数
 	}
 	
 	*(char*)buf='\0';
@@ -63,11 +65,44 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  return 0;
+	
+	//初始化缓冲区清零
+	for(int i=0;i<MAX_BUF;i++){
+		vga_buf[i]=0;
+	}
+	
+	//io读取事件
+	AM_GPU_CONFIG_T vga_event = io_read(AM_GPU_CONFIG);
+	
+	//和键盘不同的地方在于没有NONE的判定...
+	int len_get = sprintf(vga_buf, "WIDTH : %d\nHEIGHT : %d\n", vga_event.width, vga_event.height);
+	
+	len_get=(len_get>=len)?len-1:len_get;
+	
+	char* p_buf=(char*)buf;
+	char* p=key_buf;
+	for(int i=0;i<len_get;i++){
+		*p_buf++=*p++;
+	}
+	*p_buf='\0';
+	return len_get;
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  
+  AM_GPU_CONFIG_T fb_event = io_read(AM_GPU_CONFIG);
+  
+  int wid = fb_event.width;
+ 
+  int r_offset = offset/4;
+  int r_len = len/4;
+ 
+  int y = r_offset / wid;
+  int x = r_offset - y * wid;
+ 
+  io_write(AM_GPU_FBDRAW, x, y, (void *)buf, r_len, 1, true);
+ 
+  return r_len;
 }
 
 void init_device() {
