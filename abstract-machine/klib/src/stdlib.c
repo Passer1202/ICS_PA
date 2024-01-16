@@ -48,14 +48,11 @@ void *malloc(size_t size) {
   for (uint64_t *p = (uint64_t *)addr; p != (uint64_t *)hbrk; p ++) {
     *p = 0;
   }
-   panic(":ss");
   return addr;
   
   
 #endif
- panic(":ss");
   return NULL;
-  panic(":ss");
 }
 
 void free(void *ptr) {
