@@ -84,7 +84,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	for(int i=0;i<len_get;i++){
 		*p_buf++=*p++;
 	}
-	//*p_buf='\0';
+	*p_buf='\0';
 	
 	return len_get;
 }
@@ -95,8 +95,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   
   int wid = fb_event.width;
  
-  int r_offset = offset/4;
-  int r_len = len/4;
+  int r_offset = offset;
+  int r_len = len;
  
   int y = r_offset / wid;
   int x = r_offset - y * wid;
