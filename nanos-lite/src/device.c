@@ -80,12 +80,12 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	len_get=(len_get>=len)?len-1:len_get;
 	
 	char* p_buf=(char*)buf;
-	char* p=key_buf;
+	char* p=vga_buf;
 	for(int i=0;i<len_get;i++){
 		*p_buf++=*p++;
 	}
 	*p_buf='\0';
-	assert(0);
+	//assert(0);
 	
 	return len_get;
 }
