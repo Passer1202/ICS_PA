@@ -24,7 +24,7 @@ static void init_dispinfo(){
 	
 	assert(read(fd,dis_buf,size_of_buf)<size_of_buf);
 	
-	asseert(close(fd)==0);
+	assert(close(fd)==0);
 	
 	int index=0;
 	int h=0;
@@ -124,7 +124,7 @@ void NDL_OpenCanvas(int *w, int *h) {
     close(fbctl);
   }
   
-  printf("%d\n",screen_w);
+ // printf("%d\n",screen_w);
   
   if(*w==0&&*h==0){
   	*w=screen_w;
@@ -132,8 +132,8 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
   canvas_w=*w;
   canvas_h=*h;
-  canvas_x=(screen_w-canvas_w)/2+10;
-  canvas_y=(screen_h-canvas_h)/2+10;
+  canvas_x=(screen_w-canvas_w)/2;
+  canvas_y=(screen_h-canvas_h)/2;
   
   assert(canvas_w + canvas_x <= screen_w&& canvas_h + canvas_y <= screen_h);
 }
@@ -173,6 +173,8 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+  
+  init_dispinfo();
   return 0;
 }
 
