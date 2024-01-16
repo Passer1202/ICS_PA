@@ -40,8 +40,10 @@ static void init_dispinfo(){
 		assert(dis_buf[index]==' ');
 		index++;
 	}
+	index++;
 	
 	while((index<size_of_buf)&&(dis_buf[index]<'0'||dis_buf[index]>'9')){
+		
 		assert(dis_buf[index]==' ');
 		index++;
 	}
