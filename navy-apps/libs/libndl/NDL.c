@@ -29,10 +29,8 @@ static void init_dispinfo(){
 	int index=0;
 	int h=0;
 	int w=0;
-	char wid[]="WIDTH";
-	char hei[]="HEIGHT";
 	
-	assert(strncmp(dis_buf+index,wid,5)==0);
+	assert(strncmp(dis_buf+index,"WIDTH",5)==0);
 	index+=5;
 	
 	while((index<size_of_buf)&&(dis_buf[index]!=':')){
