@@ -29,48 +29,47 @@ static void init_dispinfo(){
 	assert(close(fd)==0);
 	
 	int i=0;
-	int index=0;
 	int h=0;
 	int w=0;
 	//printf("%s\n",dis_buf);
 	assert(strncmp(dis_buf+i,"WIDTH",5)==0);
 	
-	index+=5;
+	i+=5;
 	
-	while((index<size_of_buf)&&(dis_buf[index]!=':')){
-		assert(dis_buf[index]==' ');
-		index++;
+	while((i<size_of_buf)&&(dis_buf[i]!=':')){
+		assert(dis_buf[i]==' ');
+		i++;
 	}
-	index++;
+	i++;
 	
-	while((index<size_of_buf)&&(dis_buf[index]<'0'||dis_buf[index]>'9')){
+	while((i<size_of_buf)&&(dis_buf[i]<'0'||dis_buf[i]>'9')){
 		
-		assert(dis_buf[index]==' ');
-		index++;
+		assert(dis_buf[i]==' ');
+		i++;
 	}
 	
-	while((index>size_of_buf)&&(dis_buf[index]>='0'&&dis_buf[index]<='9')){
-		w=w*10+dis_buf[index]-'0';
+	while((i<size_of_buf)&&(dis_buf[i]>='0'&&dis_buf[i]<='9')){
+		w=w*10+dis_buf[i]-'0';
 	}
 	
-	assert(dis_buf[index]=='\n');
-	index+=1;
+	assert(dis_buf[i]=='\n');
+	i+=1;
 	
-	assert(strncmp(dis_buf+index,"HEIGHT",6)==0);
-	index+=6;
+	assert(strncmp(dis_buf+i,"HEIGHT",6)==0);
+	i+=6;
 	
-	while((index<size_of_buf)&&(dis_buf[index]!=':')){
-		assert(dis_buf[index]==' ');
-		index++;
+	while((i<size_of_buf)&&(dis_buf[i]!=':')){
+		assert(dis_buf[i]==' ');
+		i++;
 	}
 	
-	while((index<size_of_buf)&&(dis_buf[index]<'0'||dis_buf[index]>'9')){
-		assert(dis_buf[index]==' ');
-		index++;
+	while((i<size_of_buf)&&(dis_buf[i]<'0'||dis_buf[i]>'9')){
+		assert(dis_buf[i]==' ');
+		i++;
 	}
 	
-	while((index>size_of_buf)&&(dis_buf[index]>='0'&&dis_buf[index]<='9')){
-		h=h*10+dis_buf[index]-'0';
+	while((i<size_of_buf)&&(dis_buf[i]>='0'&&dis_buf[i]<='9')){
+		h=h*10+dis_buf[i]-'0';
 	}
 	
 	free(dis_buf);
