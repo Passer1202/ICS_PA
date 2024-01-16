@@ -123,7 +123,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
   
  // printf("%d\n",screen_w);
-  
+   init_dispinfo();
   if(*w==0&&*h==0){
   	*w=screen_w;
   	*h=screen_h;
@@ -172,7 +172,6 @@ int NDL_Init(uint32_t flags) {
     evtdev = 3;
   }
   
-  init_dispinfo();
   return 0;
 }
 
