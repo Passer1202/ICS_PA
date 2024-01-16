@@ -63,7 +63,7 @@ int strcmp(const char *s1, const char *s2) {
 
 int strncmp(const char *s1, const char *s2, size_t n) {
 
-	assert(0);
+  assert(0);
   for(int i=0;i<n;i++)
   {
   	if(*s1>*s2){
