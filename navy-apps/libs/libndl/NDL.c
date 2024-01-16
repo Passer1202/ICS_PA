@@ -124,6 +124,7 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
   
   printf("%d\n",screen_w);
+  assert(0);
   
   if(*w==0&&*h==0){
   	*w=screen_w;
