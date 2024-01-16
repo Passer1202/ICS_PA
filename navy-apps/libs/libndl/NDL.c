@@ -31,7 +31,7 @@ static void init_dispinfo(){
 	int index=0;
 	int h=0;
 	int w=0;
-	
+	printf("%s\n",dis_buf);
 	assert(strncmp(dis_buf+index,"WIDTH",5)==0);
 	
 	index+=5;
