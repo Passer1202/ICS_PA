@@ -139,7 +139,6 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-	assert(0);
 	//像素是一行一行写入
 	int fd=open("/dev/fb",0,0);
 	int index=0;
@@ -174,6 +173,7 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+  assert(0);
   return 0;
 }
 
