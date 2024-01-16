@@ -181,6 +181,8 @@ size_t fs_write(int fd, const void *buf, size_t len){
 		size_t w_len=(file_offset+len<=file_size)?len:(file_size-file_offset);
 	  		
 	  	file_o_table[index].fd_offset+=w_len;
+	  	
+	  	
 	  		
 	  	ramdisk_write(buf,disk_offset+file_offset,w_len);
 	  		

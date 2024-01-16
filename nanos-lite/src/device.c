@@ -94,9 +94,11 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   AM_GPU_CONFIG_T fb_event = io_read(AM_GPU_CONFIG);
   
   int wid = fb_event.width;
- 
-  int r_offset = offset;
-  int r_len = len;
+
+
+	assert(0);
+  int r_offset = offset/4;
+  int r_len = len/4;
  
   int y = r_offset / wid;
   int x = r_offset - y * wid;
