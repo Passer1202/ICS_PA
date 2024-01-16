@@ -28,11 +28,12 @@ static void init_dispinfo(){
 	
 	assert(close(fd)==0);
 	
+	int i=0;
 	int index=0;
 	int h=0;
 	int w=0;
 	//printf("%s\n",dis_buf);
-	assert(strncmp(dis_buf,"WIDTH",5)==0);
+	assert(strncmp(dis_buf+i,"WIDTH",5)==0);
 	
 	index+=5;
 	
