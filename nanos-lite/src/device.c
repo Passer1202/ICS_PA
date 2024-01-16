@@ -95,8 +95,6 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   
   int wid = fb_event.width;
 
-
-	assert(0);
   int r_offset = offset/4;
   int r_len = len/4;
  
