@@ -50,7 +50,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		len_get=(len_get>=len)?len:len_get;//最长写入n字节
 		char* p_buf=(char*)buf;
 		char* p=key_buf;
-		for(int i=0;i<len_get;i++){
+		for(int i=0;i<len_get-1;i++){
 			
 			*p_buf++=*p++;
 		}
