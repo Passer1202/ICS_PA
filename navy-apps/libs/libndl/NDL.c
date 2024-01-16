@@ -32,7 +32,7 @@ static void init_dispinfo(){
 	char wid[]="WIDTH";
 	char hei[]="HEIGHT";
 	
-	printf("%d\n",strncmp(dis_buf+index,wid,5));
+	printf("%s\n",dis_buf);
 	assert(0);
 	index+=5;
 	
