@@ -49,9 +49,11 @@ void *malloc(size_t size) {
     *p = 0;
   }
   return addr;
+   panic(":ss");
   
 #endif
   return NULL;
+  panic(":ss");
 }
 
 void free(void *ptr) {

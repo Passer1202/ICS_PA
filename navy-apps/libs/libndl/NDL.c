@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include<assert.h>
+#include <assert.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -31,6 +31,7 @@ static void init_dispinfo(){
 	int w=0;
 	
 	assert(strncmp(dis_buf+index,"WIDTH",5)==0);
+	
 	index+=5;
 	
 	while((index<size_of_buf)&&(dis_buf[index]!=':')){
