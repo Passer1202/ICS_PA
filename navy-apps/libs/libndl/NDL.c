@@ -122,6 +122,7 @@ void NDL_OpenCanvas(int *w, int *h) {
     }
     close(fbctl);
   }
+  init_dispinfo()
   
   if(*w==0&&*h==0){
   	*w=screen_w;
@@ -171,8 +172,6 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  
-  init_dispinfo();
   return 0;
 }
 
