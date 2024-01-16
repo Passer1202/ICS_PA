@@ -84,7 +84,8 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 	for(int i=0;i<len_get;i++){
 		*p_buf++=*p++;
 	}
-	*p_buf='\0';
+	//*p_buf='\0';
+	
 	return len_get;
 }
 
