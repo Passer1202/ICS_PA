@@ -22,7 +22,7 @@ static void init_dispinfo(){
 	
 	int fd=open("/proc/dispinfo",0,0);
 	
-	printf("%d\n",fd);
+	//printf("%d\n",fd);
 	assert(read(fd,dis_buf,size_of_buf)<size_of_buf);
 	
 	
