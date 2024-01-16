@@ -32,7 +32,8 @@ static void init_dispinfo(){
 	char wid[]="WIDTH";
 	char hei[]="HEIGHT";
 	
-	assert(strncmp(dis_buf+index,wid,5)==0);
+	printf("%d\n",strncmp(dis_buf+index,wid,5)==0);
+	assert(0);
 	index+=5;
 	
 	while((index<size_of_buf)&&(dis_buf[index]!=':')){
