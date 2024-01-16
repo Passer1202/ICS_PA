@@ -50,6 +50,7 @@ static void init_dispinfo(){
 	
 	while((i<size_of_buf)&&(dis_buf[i]>='0'&&dis_buf[i]<='9')){
 		w=w*10+dis_buf[i]-'0';
+		i++;
 	}
 	
 	assert(dis_buf[i]=='\n');
@@ -62,7 +63,7 @@ static void init_dispinfo(){
 		assert(dis_buf[i]==' ');
 		i++;
 	}
-	
+	i++;
 	while((i<size_of_buf)&&(dis_buf[i]<'0'||dis_buf[i]>'9')){
 		assert(dis_buf[i]==' ');
 		i++;
@@ -70,6 +71,7 @@ static void init_dispinfo(){
 	
 	while((i<size_of_buf)&&(dis_buf[i]>='0'&&dis_buf[i]<='9')){
 		h=h*10+dis_buf[i]-'0';
+		i++;
 	}
 	
 	free(dis_buf);
