@@ -82,7 +82,6 @@ SDL_Surface* SDL_CreateRGBSurfaceFrom(void *pixels, int width, int height, int d
 }
 
 void SDL_FreeSurface(SDL_Surface *s) {
-return ;
   if (s != NULL) {
     if (s->format != NULL) {
       if (s->format->palette != NULL) {
