@@ -77,6 +77,7 @@ int SDL_WaitEvent(SDL_Event *event) {
   		if(strncmp(wait_buf + 3, keyname[i], strlen(wait_buf) - 4) != 0||strlen(keyname[i])!=strlen(wait_buf)-4) continue;//偏移量或待调试
   		mark=1;
   		event->key.keysym.sym = i;
+  		assert(0);
   	}
 	return 1;
 }
