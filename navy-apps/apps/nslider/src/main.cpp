@@ -45,6 +45,7 @@ void next(int rep) {
 }
 
 int main() {
+assert(0);
   SDL_Init(0);
   SDL_Surface *screen = SDL_SetVideoMode(W, H, 32, SDL_HWSURFACE);
 
@@ -55,7 +56,7 @@ int main() {
   while (1) {
     SDL_Event e;
     SDL_WaitEvent(&e);
-    assert(0);
+    //assert(0);
 
     if (e.type == SDL_KEYDOWN) {
       switch(e.key.keysym.sym) {
