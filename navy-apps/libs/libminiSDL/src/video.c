@@ -85,11 +85,10 @@ void SDL_FreeSurface(SDL_Surface *s) {
   if (s != NULL) {
     if (s->format != NULL) {
       if (s->format->palette != NULL) {
-        if (s->format->palette->colors != NULL) assert(0);free(s->format->palette->colors);
-        assert(0);
+        if (s->format->palette->colors != NULL) free(s->format->palette->colors);
         free(s->format->palette);
       }
-      
+      assert(0);
       free(s->format);
     }
     if (s->pixels != NULL && !(s->flags & SDL_PREALLOC)) free(s->pixels);
