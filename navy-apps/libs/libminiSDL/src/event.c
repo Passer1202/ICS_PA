@@ -17,22 +17,26 @@ int SDL_PushEvent(SDL_Event *ev) {
 
 int SDL_PollEvent(SDL_Event *ev) {
 
-  uint32_t size_of_buf=32;
-  char *event_buf = (char *)malloc(size_of_buf * sizeof(char));
+  //unsigned size_of_buf=32;
+  //printf("%d\n",malloc(32));
+  char event_buf[32];
+  
   
   //assert(0);
-  if(NDL_PollEvent(event_buf,size_of_buf)==1){
+  if(NDL_PollEvent(event_buf,32)==1){
   //读取有事件
   //assert(0);
   	if(strncmp(event_buf,"ku",2)==0){
   		ev->key.type=SDL_KEYUP;
+  		//assert(0);
   	}
   	else if(strncmp(event_buf,"kd",2)==0){
   		ev->key.type=SDL_KEYDOWN;
+  		
   	}
   	//else assert(0);//确保没有其他事件
   	
-  	assert(0);
+  	//assert(0);
   	uint32_t i=0;
   	uint32_t bound=sizeof(keyname) / sizeof(keyname[0]);
   	
@@ -42,8 +46,6 @@ int SDL_PollEvent(SDL_Event *ev) {
   		
   		ev->key.keysym.sym = i;
   	}
-  	
-  	//free(event_buf);
   	
   	return 1;
   	

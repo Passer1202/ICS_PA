@@ -107,12 +107,13 @@ int NDL_PollEvent(char *buf, int len) {
   int ret_of_read = read(fd, buf, len);
   
    //assert(0);
-  //close(fd);
+  close(fd);
   //assert(0);
   //为了让event能在native上跑，忍痛注释掉
   //assert(close(fd) == 0);
   
- 
+  //assert(0);
+  //printf("%d\n",ret_of_read);
   if(ret_of_read==0)return 0;
   //assert(0);
   return 1;
@@ -167,7 +168,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 		i++;
 	}
 	
-	assert(close(fd)==0);
+	//assert(close(fd)==0);
 	//为了在native中能够翻页，忍痛删掉close
 }
 

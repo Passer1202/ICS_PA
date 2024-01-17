@@ -46,7 +46,9 @@
 #endif
 
 
-extern char _end;//_end标记
+extern int _end;//_end标记
+int program_break;
+int is_init = 0;
 
 intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
   register intptr_t _gpr1 asm (GPR1) = type;
@@ -81,10 +83,11 @@ int _write(int fd, void *buf, size_t count) {
 
 void *_sbrk(intptr_t increment) {
 
-  static char* program_break=&_end;
-  char* addr=program_break+increment;
+  if (is_init==0) { program_break = (int)(&_end); is_init = 1; }
+  
+  int addr=program_break+increment;
   if(_syscall_(SYS_brk, addr, 0, 0)==0){
-  	char* ret=program_break;
+  	int ret=program_break;
   	program_break=addr;
   	return (void*)ret;
   }
