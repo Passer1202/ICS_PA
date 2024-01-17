@@ -22,6 +22,7 @@ static int cur = 0;
 void render() {
   if (slide) {
     SDL_FreeSurface(slide);
+    assert(0);
   }
   char fname[256];
   sprintf(fname, path, cur);
@@ -52,7 +53,7 @@ int main() {
   int rep = 0, g = 0;
 
   render();
-assert(0);
+  //assert(0);
   while (1) {
     SDL_Event e;
     SDL_WaitEvent(&e);
