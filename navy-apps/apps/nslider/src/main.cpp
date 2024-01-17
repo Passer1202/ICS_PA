@@ -48,11 +48,11 @@ int main() {
   SDL_Init(0);
   
   SDL_Surface *screen = SDL_SetVideoMode(W, H, 32, SDL_HWSURFACE);
-  assert(0);
+  //assert(0);
   int rep = 0, g = 0;
 
   render();
-
+assert(0);
   while (1) {
     SDL_Event e;
     SDL_WaitEvent(&e);
