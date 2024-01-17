@@ -22,7 +22,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   char event_buf[32];
   
   
-  assert(0);
+  //assert(0);
   if(NDL_PollEvent(event_buf,32)==1){
   //读取有事件
   //assert(0);
@@ -36,7 +36,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   	}
   	//else assert(0);//确保没有其他事件
   	
-  	//assert(0);
+  	assert(0);
   	int mark=0;
   	uint32_t i=0;
   	uint32_t bound=sizeof(keyname) / sizeof(keyname[0]);
