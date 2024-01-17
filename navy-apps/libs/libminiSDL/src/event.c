@@ -60,7 +60,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
-	assert(0);
+	//assert(0);
 	char wait_buf[32];
 	while(NDL_PollEvent(wait_buf,32)==0);
 	
