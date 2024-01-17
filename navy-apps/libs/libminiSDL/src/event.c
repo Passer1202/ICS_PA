@@ -47,7 +47,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   		if(strncmp(event_buf + 3, keyname[i], strlen(event_buf) - 4) != 0||strlen(keyname[i])!=strlen(event_buf)-4) continue;//偏移量或待调试
   		mark=1;
   		ev->key.keysym.sym = i;
-  		//assert(0);
+  		assert(0);
   	}
   	
   	
