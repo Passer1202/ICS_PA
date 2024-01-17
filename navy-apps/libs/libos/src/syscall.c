@@ -83,12 +83,13 @@ void *_sbrk(intptr_t increment) {
 
   static char* program_break=&_end;
   char* addr=program_break+increment;
+  assert(0);
   if(_syscall_(SYS_brk, addr, 0, 0)==0){
   	char* ret=program_break;
   	program_break=addr;
   	return (void*)ret;
   }
-  assert(0);
+  
   return (void *)-1;
 }
 
