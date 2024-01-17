@@ -21,7 +21,7 @@ static int cur = 0;
 
 void render() {
   if (slide) {
-  assert(0);
+    //assert(0);
     SDL_FreeSurface(slide);
     //assert(0);
   }

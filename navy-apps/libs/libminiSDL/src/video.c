@@ -93,6 +93,7 @@ void SDL_FreeSurface(SDL_Surface *s) {
     if (s->pixels != NULL && !(s->flags & SDL_PREALLOC)) free(s->pixels);
     free(s);
   }
+  assert(0);
 }
 
 SDL_Surface* SDL_SetVideoMode(int width, int height, int bpp, uint32_t flags) {
