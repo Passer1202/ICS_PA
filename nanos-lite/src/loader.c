@@ -57,7 +57,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 		fs_lseek(fd, phdr[i].p_offset, 0);
 		assert(fs_read(fd,(void*)phdr[i].p_vaddr,phdr[i].p_memsz)==phdr[i].p_memsz);
 		//将[VirtAddr + FileSiz, VirtAddr + MemSiz)对应的物理区间清零
-		//memset((void*)(phdr[i].p_vaddr+phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
+		memset((void*)(phdr[i].p_vaddr+phdr[i].p_filesz), 0, phdr[i].p_memsz - phdr[i].p_filesz);
 		
 
 	}
