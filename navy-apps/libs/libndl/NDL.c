@@ -99,7 +99,7 @@ uint32_t NDL_GetTicks() {
 int NDL_PollEvent(char *buf, int len) {
   
    //assert(0);
-  //memset(buf, 0, 1);
+  memset(buf, 0, len);
   
    //assert(0);
   int fd = open("/dev/events", 0, 0);
