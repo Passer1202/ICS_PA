@@ -115,7 +115,7 @@ int NDL_PollEvent(char *buf, int len) {
   //assert(close(fd) == 0);
   
   //assert(0);
-  //printf("%d\n",ret_of_read);
+  printf("%s\n",buf);
   if(ret_of_read==0)return 0;
   //assert(0);
   return 1;
