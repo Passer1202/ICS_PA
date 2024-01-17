@@ -88,6 +88,7 @@ void *_sbrk(intptr_t increment) {
   	program_break=addr;
   	return (void*)ret;
   }
+  assert(0);
   return (void *)-1;
 }
 
