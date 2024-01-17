@@ -18,6 +18,7 @@ static int canvas_x = 0, canvas_y = 0;
 static void init_dispinfo(){
 	
 	int size_of_buf=1024;
+	assert(0);
 	char * dis_buf=(char*)malloc(size_of_buf*sizeof(char*));
 	assert(0);
 	int fd=open("/proc/dispinfo",0,0);
