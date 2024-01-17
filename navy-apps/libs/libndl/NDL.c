@@ -102,7 +102,8 @@ int NDL_PollEvent(char *buf, int len) {
   
   int ret_of_read = read(fd, buf, len);
   
-  assert(close(fd) == 0);
+  close(fd);
+  //assert(close(fd) == 0);
   
   if(ret_of_read==0)return 0;
   
@@ -146,15 +147,16 @@ void NDL_OpenCanvas(int *w, int *h) {
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 	//像素是一行一行写入
 	int fd=open("/dev/fb",0,0);
-	int index=0;
-	while(index<h&&y+index<canvas_h){
-		int lseek_two=((y + canvas_y + index) * screen_w + (x + canvas_x)) * 4;
-		int write_two=pixels + index * w;
-		int write_three=(w < canvas_w - x ? w : canvas_w - x)*4;
+	int i=0;
+	while(i<h&&y+i<canvas_h){
+		//开始定义为int native不出图像，后来在改称size_t ok了
+		size_t lseek_two=((y + canvas_y + i) * screen_w + (x + canvas_x)) * 4;
+		size_t write_two=pixels + i * w;
+		size_t write_three=(w < canvas_w - x ? w : canvas_w - x)*4;
 		
 		lseek(fd, lseek_two , SEEK_SET);
 		write(fd, write_two, write_three);
-		index++;
+		i++;
 	}
 	
 	assert(close(fd)==0);
