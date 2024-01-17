@@ -30,7 +30,7 @@ void init_proc() {
 
   // load program here
   //printf("%d",get_ramdisk_size());
-  const char filename[] = "/bin/hello";
+  const char filename[] = "/bin/nslider";
   naive_uload(NULL, filename);
 }
 
