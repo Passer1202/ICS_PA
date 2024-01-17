@@ -36,7 +36,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   	}
   	//else assert(0);//确保没有其他事件
   	
-  	assert(0);
+  	//assert(0);
   	int mark=0;
   	uint32_t i=0;
   	uint32_t bound=sizeof(keyname) / sizeof(keyname[0]);
@@ -60,7 +60,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 }
 
 int SDL_WaitEvent(SDL_Event *event) {
-	
+	assert(0);
 	char wait_buf[32];
 	while(NDL_PollEvent(wait_buf,32)==0);
 	
