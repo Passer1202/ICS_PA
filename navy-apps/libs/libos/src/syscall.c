@@ -87,7 +87,6 @@ void *_sbrk(intptr_t increment) {
   if(_syscall_(SYS_brk, addr, 0, 0)==0){
   	char* ret=program_break;
   	program_break=addr;
-  	assert(0);
   	return (void*)ret;
   }
   
