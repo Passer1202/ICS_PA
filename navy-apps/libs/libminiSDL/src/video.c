@@ -5,11 +5,61 @@
 #include <stdlib.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
-  assert(dst && src);
-  assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+  	assert(dst && src);
+	assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+  	
+  	uint32_t * src_p=(uint32_t*)src->pixels;
+  	uint32_t * dst_p=(uint32_t*)dst->pixels;
+  	
+  	int s_w=src->w;
+  	int s_h=src->h;
+  	int d_w=dst->w;
+  	int d_h=dst->h;
+  	int d_x=dstrect->x;
+  	int d_y=dstrect->y;
+  	
+  	if(srcrect!=NULL) assert(0);
+  	
+  	assert(s_w<=(d_w-d_x));
+  	assert(s_h<=(d_h-d_y));
+  	
+  	for(int i=0;i<s_h;i++)
+  		for(int j=0;j<s_w;j++)
+  		{
+  			int index_dst_p=(d_y+i)*d_w+d_x+j;
+  			int index_src_p=i*s_w+j;
+  			dst_p[index_dst_p]=src_p[index_src_p];
+  		}
+  		
+  	return ;
+	
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
+	uint32_t *buf=(uint32_t*)dst->pixels;
+	if(dstrect==NULL){
+		int i=0;
+		while(i<(dst->w*dst->h))
+		{
+			buf[i++]=color;
+		}
+		return;		
+	
+	}
+	int x=dstrect->x;
+	int y=dstrect->y;
+	int w,h;
+	if((dstrect->w)<((dst->w)-(dstrect->x)))w=dstrect->w;
+	else w=(dst->w)-(dstrect->x);
+	if((dstrect->h)<((dst->h)-(dstrect->y)))h=dstrect->h;
+	else h=(dst->h)-(dstrect->y);
+	
+	for(int i=0;i<h;i++)
+		for(int j=0;j<w;j++)
+			buf[(y+i)*(dst->w)+x+j]=color;
+			
+	
+	return;
 }
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
