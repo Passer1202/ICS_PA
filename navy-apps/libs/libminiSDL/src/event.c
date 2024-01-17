@@ -22,7 +22,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   char event_buf[32];
   
   
-  assert(0);
+  //assert(0);
   if(NDL_PollEvent(event_buf,32)==1){
   //读取有事件
   //assert(0);
