@@ -27,6 +27,7 @@ void render() {
   }
   //assert(0);
   char fname[256];
+  printf("%s\n",path);
   sprintf(fname, path, cur);
   printf("%s\n",fname);
   assert(0);
