@@ -100,7 +100,7 @@ uint32_t NDL_GetTicks() {
 
 int NDL_PollEvent(char *buf, int len) {
   
-  assert(0);
+  //assert(0);
   memset(buf, 0, len);
   
    //assert(0);
@@ -173,7 +173,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 		i++;
 	}
 	
-	//assert(close(fd)==0);
+	assert(close(fd)==0);
 	//为了在native中能够翻页，忍痛删掉close
 }
 
