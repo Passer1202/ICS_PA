@@ -137,10 +137,11 @@ void NDL_OpenCanvas(int *w, int *h) {
       if (strcmp(buf, "mmap ok") == 0) break;
     }
     close(fbctl);
-    assert(0);
+    
   }
   
  // printf("%d\n",screen_w);
+ assert(0);
    init_dispinfo();
   if(*w==0&&*h==0){
   	*w=screen_w;
