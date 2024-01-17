@@ -23,6 +23,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   //assert(0);
   if(NDL_PollEvent(event_buf,size_of_buf)==1){
   //读取有事件
+  //assert(0);
   	if(strncmp(event_buf,"ku",2)==0){
   		ev->key.type=SDL_KEYUP;
   	}
@@ -42,7 +43,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   		ev->key.keysym.sym = i;
   	}
   	
-  	free(event_buf);
+  	//free(event_buf);
   	
   	return 1;
   	

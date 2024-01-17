@@ -107,7 +107,7 @@ int NDL_PollEvent(char *buf, int len) {
   int ret_of_read = read(fd, buf, len);
   
    //assert(0);
-  close(fd);
+  //close(fd);
   //assert(0);
   //为了让event能在native上跑，忍痛注释掉
   //assert(close(fd) == 0);
