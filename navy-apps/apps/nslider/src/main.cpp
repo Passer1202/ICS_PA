@@ -30,6 +30,7 @@ void render() {
   sprintf(fname, path, cur);
   slide = SDL_LoadBMP(fname);
   assert(slide);
+  assert(0);
   SDL_UpdateRect(slide, 0, 0, 0, 0);
 }
 
