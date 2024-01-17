@@ -60,7 +60,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
 		return len_get;//实际写入字符数
 	}
 	
-	*(char*)buf='\0';
+	//*(char*)buf='\0';
 	return 0;
 }
 
