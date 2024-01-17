@@ -55,6 +55,7 @@ int main() {
   while (1) {
     SDL_Event e;
     SDL_WaitEvent(&e);
+    assert(0);
 
     if (e.type == SDL_KEYDOWN) {
       switch(e.key.keysym.sym) {
