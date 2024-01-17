@@ -19,7 +19,7 @@ static void init_dispinfo(){
 	
 	int size_of_buf=1024;
 	char * dis_buf=(char*)malloc(size_of_buf*sizeof(char*));
-	
+	assert(0);
 	int fd=open("/proc/dispinfo",0,0);
 	
 	//printf("%d\n",fd);
@@ -143,7 +143,7 @@ void NDL_OpenCanvas(int *w, int *h) {
  // printf("%d\n",screen_w);
  
    init_dispinfo();
-   assert(0);
+   //assert(0);
   if(*w==0&&*h==0){
   	*w=screen_w;
   	*h=screen_h;
