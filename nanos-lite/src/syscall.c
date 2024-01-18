@@ -1,5 +1,6 @@
 #include <common.h>
 #include "syscall.h"
+#include <proc.h>
 
 //为获取时间，定义结构体，参考（搬运）自man 2 gettimeofday中定理
 struct timeval{
@@ -35,6 +36,14 @@ void sys_exit(int x) {
 
 int sys_brk(void* addr){
 	return 0;
+
+}
+
+void naive_uload(PCB *pcb, const char *filename);
+
+int sys_execve(const char *filename){
+	naive_uload(NULL, filename);
+	return -1;
 }
 
 int fs_open(const char *pathname, int flags, int mode);
@@ -63,6 +72,7 @@ void do_syscall(Context *c) {
     case SYS_lseek: c->GPRx=fs_lseek(c->GPR2,(size_t)c->GPR3,c->GPR4);break;
     case SYS_gettimeofday: 
     		    c->GPRx=sys_gettimeofday((struct timeval *)c->GPR2,(struct timezone *)c->GPR3);break;
+    case SYS_execve: sys_execve((const char *)c->GPR2); break;//很特殊，无需返回//while
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
  
