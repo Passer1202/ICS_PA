@@ -37,7 +37,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   	//else assert(0);//确保没有其他事件
   	
   	//assert(0);
-  	int mark=0;
+  	//int mark=0;
   	uint32_t i=0;
   	uint32_t bound=sizeof(keyname) / sizeof(keyname[0]);
   	
@@ -46,7 +46,7 @@ int SDL_PollEvent(SDL_Event *ev) {
   		
   		//printf("%s\n",event_buf);
   		if(strncmp(event_buf + 3, keyname[i], strlen(event_buf) - 4) != 0||strlen(keyname[i])!=strlen(event_buf)-4) continue;//偏移量或待调试
-  		mark=1;
+  		//mark=1;
   		ev->key.keysym.sym = i;
   		
   	}
@@ -70,7 +70,7 @@ int SDL_WaitEvent(SDL_Event *event) {
 	else
 		event->key.type=SDL_KEYDOWN;
 	
-	int mark=0;
+	//int mark=0;
 	
 	uint32_t i=0;
   	uint32_t bound=sizeof(keyname) / sizeof(keyname[0]);
@@ -78,7 +78,7 @@ int SDL_WaitEvent(SDL_Event *event) {
   	for(;i<bound;i++){
   		
   		if(strncmp(wait_buf + 3, keyname[i], strlen(wait_buf) - 4) != 0||strlen(keyname[i])!=strlen(wait_buf)-4) continue;//偏移量或待调试
-  		mark=1;
+  		//mark=1;
   		event->key.keysym.sym = i;
   		
   	}
