@@ -237,7 +237,7 @@ size_t fs_lseek(int fd,size_t offset,int whence){
 int fs_close(int fd){
 
 	//同fs_open忽略了对stdin,stdout,stderr的读操作
-	if(fd>=3){
+	if(fd>=FD_FB){
 		int index=get_index(fd);
 		
 		if(index==-1){
