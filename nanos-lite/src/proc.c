@@ -30,7 +30,7 @@ void init_proc() {
 
   // load program here
   //printf("%d",get_ramdisk_size());
-  const char filename[] = "/bin/pal";
+  const char filename[] = "/bin/bird";
   naive_uload(NULL, filename);
 }
 
