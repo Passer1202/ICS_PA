@@ -15,19 +15,50 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   	int s_h=src->h;
   	int d_w=dst->w;
   	int d_h=dst->h;
-  	int d_x=dstrect->x;
-  	int d_y=dstrect->y;
+  	int d_x=0;
+  	int d_y=0;
+  	if(dstrect){
+  		d_x=dstrect->x;
+  		d_y=dstrect->y;
+  	}
   	
-  	if(srcrect!=NULL) assert(0);
+  	if(srcrect!=NULL) {
+  		int w=d_w-d_x,h=d_h-d_y;
+  		
+  		if(s_w<(d_w-d_x))w=s_w;
+  		if(s_h<(d_h-d_y))h=s_h;
+  		
+  		for(int i=0;i<h;i++)
+  			for(int j=0;j<w;j++)
+  			{
+  				int index_dst_p=(d_y+i)*d_w+d_x+j;
+  				int index_src_p=i*s_w+j;
+  				dst_p[index_dst_p]=src_p[index_src_p];
+  			}
+  			
+  		return ;
+  	}
   	
-  	assert(s_w<=(d_w-d_x));
-  	assert(s_h<=(d_h-d_y));
+  	//assert(s_w<=(d_w-d_x));
+  	//assert(s_h<=(d_h-d_y));
   	
-  	for(int i=0;i<s_h;i++)
-  		for(int j=0;j<s_w;j++)
+  	int sr_x=srcrect->x;
+  	int sr_y=srcrect->y;
+  	int sr_w=srcrect->w;
+  	int sr_h=srcrect->h;
+  	
+  	
+  	
+  	int w=d_w-d_x,h=d_h-d_y;
+  		
+  	if(sr_w<(d_w-d_x))w=sr_w;
+  	if(sr_h<(d_h-d_y))h=sr_h;
+  	
+  	for(int i=0;i<h;i++)
+  		for(int j=0;j<w;j++)
   		{
   			int index_dst_p=(d_y+i)*d_w+d_x+j;
-  			int index_src_p=i*s_w+j;
+  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
   			dst_p[index_dst_p]=src_p[index_src_p];
   		}
   		
