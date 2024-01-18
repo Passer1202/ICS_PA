@@ -97,14 +97,14 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  				int index_src_p=i*s_w+j;
 	  				dst_p[index_dst_p]=src_p[index_src_p];
 	  			}
-	  			//assert(0);
+	  			assert(0);
 	  		return ;
 	  	}
 	  	
 	  	//assert(s_w<=(d_w-d_x));
 	  	//assert(s_h<=(d_h-d_y));
 	  	//if(dst->format->palette!=NULL)assert(0);
-	  	//assert(0);
+	  	assert(0);
 	  	int sr_x=srcrect->x;
 	  	int sr_y=srcrect->y;
 	  	int sr_w=srcrect->w;
@@ -116,7 +116,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  		
 	  	if(sr_w<(d_w-d_x))w=sr_w;
 	  	if(sr_h<(d_h-d_y))h=sr_h;
-	  	assert(0);
+	  	
 	  	for(int i=0;i<h;i++)
 	  		for(int j=0;j<w;j++)
 	  		{
