@@ -36,6 +36,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  				int index_src_p=i*s_w+j;
 	  				dst_p[index_dst_p]=src_p[index_src_p];
 	  				
+	  				
 	  			}
 	  			
 	  		return ;
@@ -45,6 +46,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  	//assert(s_h<=(d_h-d_y));
 	  	//if(dst->format->palette!=NULL)assert(0);
 	  	//assert(0);
+	  	
+	  	
 	  	int sr_x=srcrect->x;
 	  	int sr_y=srcrect->y;
 	  	int sr_w=srcrect->w;
@@ -63,7 +66,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  			int index_dst_p=(d_y+i)*d_w+d_x+j;
 	  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
 	  			dst_p[index_dst_p]=src_p[index_src_p];
-	  			
 	  		}
 	  		
 	  	return ;
@@ -86,7 +88,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  		d_y=dstrect->y;
 	  	}
 	  	
-	  	if(srcrect!=NULL) {
+	  	if(srcrect==NULL) {
+	  	 	
 	  		int w=d_w-d_x,h=d_h-d_y;
 	  		
 	  		if(s_w<(d_w-d_x))w=s_w;
@@ -98,7 +101,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  				int index_dst_p=(d_y+i)*d_w+d_x+j;
 	  				int index_src_p=i*s_w+j;
 	  				dst_p[index_dst_p]=src_p[index_src_p];
-	  				//printf("%d\n",index_dst_p);
+	  				assert(index_dst_p>=0&&index_src_p>=0);
 	  			}
 	  			//assert(0);
 	  		return ;
@@ -107,7 +110,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  	//assert(s_w<=(d_w-d_x));
 	  	//assert(s_h<=(d_h-d_y));
 	  	//if(dst->format->palette!=NULL)assert(0);
-	  	//sassert(0);
+	  	
+	  	//printf("%d\n",srcrect->h);
 	  	int sr_x=srcrect->x;
 	  	int sr_y=srcrect->y;
 	  	int sr_w=srcrect->w;
@@ -115,19 +119,32 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  	
 	  	
 	  	
-	  	int w=d_w-d_x,h=d_h-d_y;
-	  		
-	  	if(sr_w<(d_w-d_x))w=sr_w;
-	  	if(sr_h<(d_h-d_y))h=sr_h;
-	  	
-	  	for(int i=0;i<h;i++)
-	  		for(int j=0;j<w;j++)
-	  		{
+	  	//assert(0);
+	  	int myw=d_w-d_x;
+	
+	  	int myh=d_h-d_y;
+	        //printf("%d\n",srcrect->h);
+	  	if(sr_w<(d_w-d_x))myw=sr_w;
+	  	if(sr_h<(d_h-d_y))myh=sr_h;
+	  	//assert(0);
+	  	//assert(0);a
+	  	//assert(h>0&&w>0);
+	  	//printf("\n");
+		//printf("%d\n",srcrect->h);
+		//assert(0);
+	  	for(int i=0;i<myh;i++)
+	  	{
+	  		for(int j=0;j<myw;j++)
+	  		{	//assert(0);
 	  			int index_dst_p=(d_y+i)*d_w+d_x+j;
 	  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
+	  			
+	  			
 	  			dst_p[index_dst_p]=src_p[index_src_p];
+	  			
 	  		}
-	  	
+	  	}
+	  	//assert(0);
 	  	return ;
   		
   	
