@@ -7,7 +7,7 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   	//assert(dst && src);
 	//assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-	if(src->format->BitsPerPixel == 32){
+	if(1){
   	
 	  	uint32_t * src_p=(uint32_t*)src->pixels;
 	  	uint32_t * dst_p=(uint32_t*)dst->pixels;
