@@ -97,6 +97,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  				int index_src_p=i*s_w+j;
 	  				dst_p[index_dst_p]=src_p[index_src_p];
 	  			}
+	  			assert(0);
 	  		return ;
 	  	}
 	  	
@@ -134,7 +135,6 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	
 	//if(dst->format->palette!=NULL)assert(0);
-	assert(0);
 	uint32_t *buf=(uint32_t*)dst->pixels;
 	if(dstrect==NULL){
 		int i=0;
