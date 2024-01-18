@@ -164,7 +164,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		return;
 	}
 	else{
-		assert(0);
+		//assert(0);
 		uint8_t *buf=(uint8_t*)dst->pixels;
 		if(dstrect==NULL){
 				int i=0;
@@ -221,7 +221,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	NDL_DrawRect(my_pixels, x, y, wid, hei);
         
         free(my_pixels);
-        
+        assert(0);
         return;
   
   }
