@@ -94,7 +94,7 @@ static unsigned char the_state_of_key[sizeof(keyname) / sizeof(keyname[0])];
 
 uint8_t* SDL_GetKeyState(int *numkeys) {
 
-	//if (numkeys) *numkeys = 83;
+  if (numkeys) *numkeys = 83;
 	
    SDL_Event key_state_event;
    
