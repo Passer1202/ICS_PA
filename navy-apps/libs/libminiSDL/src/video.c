@@ -5,66 +5,128 @@
 #include <stdlib.h>
 
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
-  	assert(dst && src);
-	assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-
+  	//assert(dst && src);
+	//assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
+	if(src->format->BitsPerPixel == 32){
   	
-  	uint32_t * src_p=(uint32_t*)src->pixels;
-  	uint32_t * dst_p=(uint32_t*)dst->pixels;
+	  	uint32_t * src_p=(uint32_t*)src->pixels;
+	  	uint32_t * dst_p=(uint32_t*)dst->pixels;
+	  	
+	  	int s_w=src->w;
+	  	int s_h=src->h;
+	  	int d_w=dst->w;
+	  	int d_h=dst->h;
+	  	int d_x=0;
+	  	int d_y=0;
+	  	if(dstrect){
+	  		d_x=dstrect->x;
+	  		d_y=dstrect->y;
+	  	}
+	  	
+	  	if(srcrect!=NULL) {
+	  		int w=d_w-d_x,h=d_h-d_y;
+	  		
+	  		if(s_w<(d_w-d_x))w=s_w;
+	  		if(s_h<(d_h-d_y))h=s_h;
+	  		
+	  		for(int i=0;i<h;i++)
+	  			for(int j=0;j<w;j++)
+	  			{
+	  				int index_dst_p=(d_y+i)*d_w+d_x+j;
+	  				int index_src_p=i*s_w+j;
+	  				dst_p[index_dst_p]=src_p[index_src_p];
+	  			}
+	  			
+	  		return ;
+	  	}
+	  	
+	  	//assert(s_w<=(d_w-d_x));
+	  	//assert(s_h<=(d_h-d_y));
+	  	//if(dst->format->palette!=NULL)assert(0);
+	  	
+	  	int sr_x=srcrect->x;
+	  	int sr_y=srcrect->y;
+	  	int sr_w=srcrect->w;
+	  	int sr_h=srcrect->h;
+	  	
+	  	
+	  	
+	  	int w=d_w-d_x,h=d_h-d_y;
+	  		
+	  	if(sr_w<(d_w-d_x))w=sr_w;
+	  	if(sr_h<(d_h-d_y))h=sr_h;
+	  	
+	  	for(int i=0;i<h;i++)
+	  		for(int j=0;j<w;j++)
+	  		{
+	  			int index_dst_p=(d_y+i)*d_w+d_x+j;
+	  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
+	  			dst_p[index_dst_p]=src_p[index_src_p];
+	  		}
+	  		
+	  	return ;
   	
-  	int s_w=src->w;
-  	int s_h=src->h;
-  	int d_w=dst->w;
-  	int d_h=dst->h;
-  	int d_x=0;
-  	int d_y=0;
-  	if(dstrect){
-  		d_x=dstrect->x;
-  		d_y=dstrect->y;
   	}
+  	else{
+  		uint8_t * src_p=(uint8_t*)src->pixels;
+	  	uint8_t * dst_p=(uint8_t*)dst->pixels;
+	  	
+	  	int s_w=src->w;
+	  	int s_h=src->h;
+	  	int d_w=dst->w;
+	  	int d_h=dst->h;
+	  	int d_x=0;
+	  	int d_y=0;
+	  	if(dstrect){
+	  		d_x=dstrect->x;
+	  		d_y=dstrect->y;
+	  	}
+	  	
+	  	if(srcrect!=NULL) {
+	  		int w=d_w-d_x,h=d_h-d_y;
+	  		
+	  		if(s_w<(d_w-d_x))w=s_w;
+	  		if(s_h<(d_h-d_y))h=s_h;
+	  		
+	  		for(int i=0;i<h;i++)
+	  			for(int j=0;j<w;j++)
+	  			{
+	  				int index_dst_p=(d_y+i)*d_w+d_x+j;
+	  				int index_src_p=i*s_w+j;
+	  				dst_p[index_dst_p]=src_p[index_src_p];
+	  			}
+	  			
+	  		return ;
+	  	}
+	  	
+	  	//assert(s_w<=(d_w-d_x));
+	  	//assert(s_h<=(d_h-d_y));
+	  	//if(dst->format->palette!=NULL)assert(0);
+	  	
+	  	int sr_x=srcrect->x;
+	  	int sr_y=srcrect->y;
+	  	int sr_w=srcrect->w;
+	  	int sr_h=srcrect->h;
+	  	
+	  	
+	  	
+	  	int w=d_w-d_x,h=d_h-d_y;
+	  		
+	  	if(sr_w<(d_w-d_x))w=sr_w;
+	  	if(sr_h<(d_h-d_y))h=sr_h;
+	  	
+	  	for(int i=0;i<h;i++)
+	  		for(int j=0;j<w;j++)
+	  		{
+	  			int index_dst_p=(d_y+i)*d_w+d_x+j;
+	  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
+	  			dst_p[index_dst_p]=src_p[index_src_p];
+	  		}
+	  		
+	  	return ;
+  		
   	
-  	if(srcrect!=NULL) {
-  		int w=d_w-d_x,h=d_h-d_y;
-  		
-  		if(s_w<(d_w-d_x))w=s_w;
-  		if(s_h<(d_h-d_y))h=s_h;
-  		
-  		for(int i=0;i<h;i++)
-  			for(int j=0;j<w;j++)
-  			{
-  				int index_dst_p=(d_y+i)*d_w+d_x+j;
-  				int index_src_p=i*s_w+j;
-  				dst_p[index_dst_p]=src_p[index_src_p];
-  			}
-  			
-  		return ;
   	}
-  	
-  	//assert(s_w<=(d_w-d_x));
-  	//assert(s_h<=(d_h-d_y));
-  	if(dst->format->palette!=NULL)assert(0);
-  	
-  	int sr_x=srcrect->x;
-  	int sr_y=srcrect->y;
-  	int sr_w=srcrect->w;
-  	int sr_h=srcrect->h;
-  	
-  	
-  	
-  	int w=d_w-d_x,h=d_h-d_y;
-  		
-  	if(sr_w<(d_w-d_x))w=sr_w;
-  	if(sr_h<(d_h-d_y))h=sr_h;
-  	
-  	for(int i=0;i<h;i++)
-  		for(int j=0;j<w;j++)
-  		{
-  			int index_dst_p=(d_y+i)*d_w+d_x+j;
-  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
-  			dst_p[index_dst_p]=src_p[index_src_p];
-  		}
-  		
-  	return ;
 	
 }
 
