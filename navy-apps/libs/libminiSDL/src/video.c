@@ -97,7 +97,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  			{
 	  				int index_dst_p=(d_y+i)*d_w+d_x+j;
 	  				int index_src_p=i*s_w+j;
-	  				dst_p[index_dst_p]=src_p[index_src_p];
+	  				dst_p[index_dst_p]=(uint8_t)src_p[index_src_p];
 	  				//printf("%d\n",index_dst_p);
 	  			}
 	  			//assert(0);
@@ -208,7 +208,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	
   	uint8_t * p_pixels=(uint8_t *)s->pixels;
   	
-  	uint32_t * my_pixels[100000];// = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
+  	uint32_t * my_pixels = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
   	
   	int bound=wid*hei;
   	
@@ -223,7 +223,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	
   	NDL_DrawRect(my_pixels, x, y, wid, hei);
         
-        //free(my_pixels);
+        free(my_pixels);
         //assert(0);
         return;
   
