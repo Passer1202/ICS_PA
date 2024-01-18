@@ -95,7 +95,38 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
 
-  //assert(0);
+  //assert(0);debug
+  
+  //添加调色板支持
+  if(s->format->palette!=NULL){
+  	
+  	
+  	int wid=(x == 0 && y == 0 && w == 0 && h == 0)?s->w:w;
+  	int hei=(x == 0 && y == 0 && w == 0 && h == 0)?s->h:h;
+  	
+  	uint8_t * p_pixels=(uint8_t *)s->pixels;
+  	
+  	uint32_t * my_pixels = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
+  	
+  	int bound=wid*hei;
+  	
+  	int index=0;
+  	
+  	while(index<bound)
+  	{
+  		SDL_Color my_colors = s->format->palette->colors[p_pixels[index]];
+            	uint32_t color_32bit = (my_colors.a << 24) | (my_colors.r << 16) | (my_colors.g << 8) | (my_colors.b << 0);
+            	my_pixels[index++] = color_32bit;
+  	}
+  	
+  	NDL_DrawRect(my_pixels, x, y, wid, hei);
+        
+        free(my_pixels);
+        
+        return;
+  
+  }
+  
   (x == 0 && y == 0 && w == 0 && h == 0) ?NDL_DrawRect((uint32_t *)s->pixels, x, y, s->w, s->h):NDL_DrawRect((uint32_t *)s->pixels, x, y, w, h); 
   
   return;

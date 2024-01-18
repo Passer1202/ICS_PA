@@ -13,11 +13,11 @@ SDL_Surface* IMG_Load_RW(SDL_RWops *src, int freesrc) {
 }
 
 SDL_Surface* IMG_Load(const char *filename) {
-	//assert(0);
+	//assert(0);//debug
 	//用libc中的文件操作打开文件, 并获取文件大小
 	FILE * file_point = fopen(filename, "r");
     	if (!file_point) return NULL;
-    	//assert(0);
+    	//assert(0);//debug
     	fseek(file_point, 0L, SEEK_END);
     	long read_len = ftell(file_point);
     	rewind(file_point);
@@ -32,7 +32,7 @@ SDL_Surface* IMG_Load(const char *filename) {
     	fclose(file_point);
     	free(img_buf);
 	//返回SDL_Surface结构指针
-	//assert(0);
+	//assert(0);//debug
     	return ret;
 }
 
