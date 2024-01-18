@@ -62,16 +62,17 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  			int index_dst_p=(d_y+i)*d_w+d_x+j;
 	  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
 	  			dst_p[index_dst_p]=src_p[index_src_p];
+	  			printf("%d\n",src_p[index_src_p]);
 	  		}
-	  		assert(0);
+	  		
 	  	return ;
 	  	
   	
   	}
   	else{
   		
-  		uint32_t * src_p=(uint32_t*)src->pixels;
-	  	uint32_t * dst_p=(uint32_t*)dst->pixels;
+  		uint8_t * src_p=(uint8_t*)src->pixels;
+	  	uint8_t * dst_p=(uint8_t*)dst->pixels;
 	  	
 	  	int s_w=src->w;
 	  	int s_h=src->h;
@@ -96,7 +97,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  				int index_dst_p=(d_y+i)*d_w+d_x+j;
 	  				int index_src_p=i*s_w+j;
 	  				dst_p[index_dst_p]=src_p[index_src_p];
-	  				printf("%d\n",src_p+index_src_p);
+	  				
 	  			}
 	  			//assert(0);
 	  		return ;
