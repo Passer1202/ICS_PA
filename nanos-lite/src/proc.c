@@ -30,7 +30,7 @@ void init_proc() {
 
   // load program here
   //printf("%d",get_ramdisk_size());
-  const char filename[] = "/bin/nterm";
+  const char filename[] = "/bin/pal";
   naive_uload(NULL, filename);
 }
 
