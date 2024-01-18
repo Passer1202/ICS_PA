@@ -208,7 +208,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	
   	uint8_t * p_pixels=(uint8_t *)s->pixels;
   	
-  	uint32_t * my_pixels[1024];// = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
+  	uint32_t * my_pixels[100000];// = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
   	
   	int bound=wid*hei;
   	
