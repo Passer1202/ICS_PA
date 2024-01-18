@@ -32,7 +32,7 @@ SDL_Surface* IMG_Load(const char *filename) {
     	fclose(file_point);
     	free(img_buf);
 	//返回SDL_Surface结构指针
-	assert(0);
+	//assert(0);
     	return ret;
 }
 
