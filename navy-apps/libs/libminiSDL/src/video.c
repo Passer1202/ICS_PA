@@ -70,8 +70,8 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   	}
   	else{
   		
-  		uint8_t * src_p=(uint32_t*)src->pixels;
-	  	uint8_t * dst_p=(uint32_t*)dst->pixels;
+  		uint32_t * src_p=(uint32_t*)src->pixels;
+	  	uint32_t * dst_p=(uint32_t*)dst->pixels;
 	  	
 	  	int s_w=src->w;
 	  	int s_h=src->h;
