@@ -7,7 +7,7 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   	//assert(dst && src);
 	//assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-	if(1){
+	if(src->format->BitsPerPixel == 32){
   	
 	  	uint32_t * src_p=(uint32_t*)src->pixels;
 	  	uint32_t * dst_p=(uint32_t*)dst->pixels;
@@ -208,7 +208,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	
   	uint8_t * p_pixels=(uint8_t *)s->pixels;
   	
-  	uint32_t * my_pixels = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
+  	uint32_t * my_pixels[1024];// = (uint32_t *)malloc(wid * hei * sizeof(uint32_t *));
   	
   	int bound=wid*hei;
   	
@@ -223,7 +223,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	
   	NDL_DrawRect(my_pixels, x, y, wid, hei);
         
-        free(my_pixels);
+        //free(my_pixels);
         //assert(0);
         return;
   
