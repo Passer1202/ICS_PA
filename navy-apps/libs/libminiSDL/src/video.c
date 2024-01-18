@@ -124,7 +124,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  			int index_src_p=(sr_y + i) * s_w + sr_x + j;
 	  			dst_p[index_dst_p]=src_p[index_src_p];
 	  		}
-	  		//assert(0);
+	  		assert(0);
 	  	return ;
   		
   	
@@ -221,7 +221,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	NDL_DrawRect(my_pixels, x, y, wid, hei);
         
         free(my_pixels);
-        assert(0);
+        //assert(0);
         return;
   
   }
