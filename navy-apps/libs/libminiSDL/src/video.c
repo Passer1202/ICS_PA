@@ -43,7 +43,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  	//assert(s_w<=(d_w-d_x));
 	  	//assert(s_h<=(d_h-d_y));
 	  	//if(dst->format->palette!=NULL)assert(0);
-	  	assert(0);
+	  	//assert(0);
 	  	int sr_x=srcrect->x;
 	  	int sr_y=srcrect->y;
 	  	int sr_w=srcrect->w;
@@ -137,7 +137,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 	//if(dst->format->palette!=NULL)assert(0);
 	if(dst->format->BitsPerPixel == 32)
 	{
-	        assert(0);
+	        
 		uint32_t *buf=(uint32_t*)dst->pixels;
 		if(dstrect==NULL){
 			int i=0;
@@ -164,7 +164,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 		return;
 	}
 	else{
-	
+		assert(0);
 		uint8_t *buf=(uint8_t*)dst->pixels;
 		if(dstrect==NULL){
 				int i=0;
