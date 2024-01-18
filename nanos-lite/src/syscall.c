@@ -30,9 +30,7 @@ int sys_yield() {
     return 0;
 }
 
-void sys_exit(int x) {
-    halt(x);
-}
+
 
 int sys_brk(void* addr){
 	return 0;
@@ -44,6 +42,11 @@ void naive_uload(PCB *pcb, const char *filename);
 int sys_execve(const char *filename){
 	naive_uload(NULL, filename);
 	return -1;
+}
+
+void sys_exit(int x) {
+    const char nterm[]="/bin/nterm";	
+    naive_uload(NULL,nterm);
 }
 
 int fs_open(const char *pathname, int flags, int mode);
