@@ -69,7 +69,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   	
   	}
   	else{
-  		assert(0);
+  		
   		uint8_t * src_p=(uint8_t*)src->pixels;
 	  	uint8_t * dst_p=(uint8_t*)dst->pixels;
 	  	
@@ -83,7 +83,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  		d_x=dstrect->x;
 	  		d_y=dstrect->y;
 	  	}
-	  	
+	  	assert(0);
 	  	if(srcrect!=NULL) {
 	  		int w=d_w-d_x,h=d_h-d_y;
 	  		
