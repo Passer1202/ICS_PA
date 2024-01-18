@@ -65,9 +65,11 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  		}
 	  		
 	  	return ;
+	  	
   	
   	}
   	else{
+  		assert(0);
   		uint8_t * src_p=(uint8_t*)src->pixels;
 	  	uint8_t * dst_p=(uint8_t*)dst->pixels;
 	  	
