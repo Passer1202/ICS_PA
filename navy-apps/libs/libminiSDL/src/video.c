@@ -7,7 +7,7 @@
 void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect) {
   	assert(dst && src);
 	assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
-  	if(dst->format->palette!=NULL)assert(0);
+
   	
   	uint32_t * src_p=(uint32_t*)src->pixels;
   	uint32_t * dst_p=(uint32_t*)dst->pixels;
@@ -42,6 +42,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   	
   	//assert(s_w<=(d_w-d_x));
   	//assert(s_h<=(d_h-d_y));
+  	if(dst->format->palette!=NULL)assert(0);
   	
   	int sr_x=srcrect->x;
   	int sr_y=srcrect->y;
