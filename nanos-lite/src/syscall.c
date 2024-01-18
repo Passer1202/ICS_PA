@@ -47,6 +47,7 @@ int sys_execve(const char *filename){
 void sys_exit(int x) {
     const char nterm[]="/bin/nterm";	
     naive_uload(NULL,nterm);
+    //return -1;
 }
 
 int fs_open(const char *pathname, int flags, int mode);
