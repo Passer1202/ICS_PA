@@ -36,7 +36,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 	  				int index_src_p=i*s_w+j;
 	  				dst_p[index_dst_p]=src_p[index_src_p];
 	  			}
-	  			
+	  			assert(0);
 	  		return ;
 	  	}
 	  	
