@@ -27,7 +27,7 @@ static void init_dispinfo(){
 	assert(read(fd,dis_buf,size_of_buf)<size_of_buf);
 	
 	
-	//assert(close(fd)==0);
+	assert(close(fd)==0);
 	
 	int i=0;
 	int h=0;
@@ -75,7 +75,7 @@ static void init_dispinfo(){
 		i++;
 	}
 	
-	free(dis_buf);
+	//free(dis_buf);
 	
 	screen_h=h;
 	screen_w=w;
