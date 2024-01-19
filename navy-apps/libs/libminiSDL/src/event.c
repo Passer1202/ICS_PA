@@ -11,7 +11,7 @@ static const char *keyname[] = {
 };
 
 int SDL_PushEvent(SDL_Event *ev) {
-//assert(0);
+assert(0);
   return 0;
 }
 
@@ -19,7 +19,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 
   //unsigned size_of_buf=32;
   //printf("%d\n",malloc(32));
-  static char event_buf[32];
+  char event_buf[32];
   
   
   //assert(0);
@@ -62,7 +62,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 
 int SDL_WaitEvent(SDL_Event *event) {
 	//assert(0);
-	static char wait_buf[32];
+	char wait_buf[32];
 	while(NDL_PollEvent(wait_buf,32)==0);
 	
 	if(strncmp(wait_buf,"ku",2)==0)
