@@ -175,6 +175,7 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
 	
 	assert(close(fd)==0);
 	//为了在native中能够翻页，忍痛删掉close
+	//在运行nemu上pal时要保留这一行
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
