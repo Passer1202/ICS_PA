@@ -10,7 +10,7 @@
   [AM_KEY_##key] = #key,
 
 //类似数电键盘实验，我们建立一个缓冲区;
-#define MAX_BUF 32
+#define MAX_BUF 64
 static char key_buf[MAX_BUF];
 static char vga_buf[MAX_BUF];
 
