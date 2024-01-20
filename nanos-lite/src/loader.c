@@ -144,7 +144,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     	index++;
     }
     u_s[argc + 1 + index + 1]=0;
-    printf("%d\n",3);
+    printf("%d\n",u_s[3]);
     //printf("%d\n",u_s[3]);
     pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
    assert(0);
