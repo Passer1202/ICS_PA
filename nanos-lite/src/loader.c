@@ -79,7 +79,7 @@ uintptr_t* good_bound(uintptr_t* s){
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[])  {
- assert(0);
+ //assert(0);
     Area pcb_stack;
     
     pcb_stack.start = pcb->stack;
@@ -93,7 +93,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     while (envp[envc++] != NULL) ;
     envc--;
  
-    
+    assert(0);
     uintptr_t* u_s = (uintptr_t*)heap.end;
     
     uintptr_t* p_heap = (uintptr_t*)heap.end;
