@@ -122,7 +122,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
  
     u_s=good_bound(u_s);
  
-    u_s =  u_s - (argc + envc + 3);  
+    u_s = u_s-(argc + envc + 3);  
  
     u_s[0] = argc;
  
@@ -144,10 +144,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     	index++;
     }
     u_s[argc + 1 + index + 1]=0;
-    printf("%d\n",u_s[3]);
+    //printf("%d\n",u_s[3]);
     //printf("%d\n",u_s[3]);
     pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
-   assert(0);
+   //assert(0);
     pcb->cp->GPRx = (uintptr_t)u_s;
 }
 
