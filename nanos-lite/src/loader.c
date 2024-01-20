@@ -144,8 +144,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     	index++;
     }
     u_s[argc + 1 + index + 1]=0;
-    
-    printf("%d\n",u_s[0]);
+    printf("%d\n",argc + 1 + index + 1);
+    //printf("%d\n",u_s[0]);
     pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
    assert(0);
     pcb->cp->GPRx = (uintptr_t)u_s;
