@@ -93,7 +93,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     while (envp[envc++] != NULL) ;
     envc--;
  
-    assert(0);
+   
     uintptr_t* u_s = (uintptr_t*)heap.end;
     
     uintptr_t* p_heap = (uintptr_t*)heap.end;
@@ -107,6 +107,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     	char* p_us=(char*)u_s;
     	for(int i=0;i<size;i++)
     		*(p_us+i)=*(argv[index]+i);
+    	index++;
     }
  
    index=0;
@@ -116,6 +117,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     	char* p_us=(char*)u_s;
     	for(int i=0;i<size;i++)
     		*(p_us+i)=*(envp[index]+i);
+    	index++;
     }
  
     u_s=good_bound(u_s);
