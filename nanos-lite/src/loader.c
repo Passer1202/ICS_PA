@@ -149,7 +149,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     //printf("%d\n",u_s[3]);
     pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
    //assert(0);
-    assert(pcb->cp==NULL);
+    //assert(pcb->cp==NULL);
     pcb->cp->GPRx = (uintptr_t)u_s;
     //assert(0);
 }
