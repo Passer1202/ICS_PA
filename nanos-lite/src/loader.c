@@ -67,6 +67,14 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   return ehdr.e_entry;
 }
 
+void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
+  Area kcontext_stack;
+  kcontext_stack.start = pcb->stack;
+  kcontext_stack.end = pcb->stack + STACK_SIZE;
+  pcb->cp = kcontext(kcontext_stack, entry, arg);
+}
+
+
 void naive_uload(PCB *pcb, const char *filename) {
 
   uintptr_t entry = loader(pcb, filename);

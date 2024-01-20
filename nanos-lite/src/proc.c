@@ -35,5 +35,12 @@ void init_proc() {
 }
 
 Context* schedule(Context *prev) {
-  return NULL;
+	// save the context pointer
+	current->cp = prev;
+
+	// switch between pcb[0] and pcb[1]
+	current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+
+	// then return the new context
+	return current->cp;
 }
