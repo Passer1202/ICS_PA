@@ -95,8 +95,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
  
    
     uintptr_t* u_s = (uintptr_t*)heap.end;
+    u_s=good_bound(u_s);
     
-    uintptr_t* p_heap = (uintptr_t*)heap.end;
+    uintptr_t* p_heap = u_s;
  
     
     int index=0;
@@ -148,7 +149,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     //printf("%d\n",u_s[3]);
     pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
    //assert(0);
-   assert(pcb->cp!=NULL);
+    //assert(pcb->cp!=NULL);
     pcb->cp->GPRx = (uintptr_t)u_s;
 }
 
