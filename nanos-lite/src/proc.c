@@ -27,9 +27,8 @@ void hello_fun(void *arg) {
 
 void init_proc() {
 
-  char *argv[] = {"/bin/pal",  NULL};
+  char *argv[] = {"/bin/pal", "--skip", NULL};
   char *envp[] = {NULL};
-  
   context_uload(&pcb[1], "/bin/pal", argv, envp);
   
   switch_boot_pcb();
