@@ -1,6 +1,8 @@
 #include <proc.h>
 
 void naive_uload(PCB *pcb, const char *filename);
+void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
+void context_uload(PCB *pcb, const char *filename);
 
 #define MAX_NR_PROC 4
 
@@ -17,21 +19,26 @@ void switch_boot_pcb() {
 void hello_fun(void *arg) {
   int j = 1;
   while (1) {
-    Log("Hello World from Nanos-lite with arg '%p' for the %dth time!", (uintptr_t)arg, j);
+    Log("Hello World from Nanos-lite with arg '%s' for the %dth time!", (uintptr_t)arg, j);
     j ++;
     yield();
   }
 }
 
 void init_proc() {
+
+  context_kload(&pcb[0], hello_fun, "ljy");
+  context_kload(&pcb[1], hello_fun, "lhj");
+  
   switch_boot_pcb();
 
   Log("Initializing processes...");
 
   // load program here
   //printf("%d",get_ramdisk_size());
-  const char filename[] = "/bin/nterm";
-  naive_uload(NULL, filename);
+  //PA4.1注释掉，
+  //const char filename[] = "/bin/nterm";
+  //naive_uload(NULL, filename);
 }
 
 Context* schedule(Context *prev) {
