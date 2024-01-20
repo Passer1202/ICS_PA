@@ -6,7 +6,7 @@ static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
       //Log("EVENT_YIELD is identified."); 
-      break;
+      c = schedule(c);break;
     case EVENT_SYSCALL:
       //Log("EVENT_SYSCALL is identified."); 
       do_syscall(c); break;

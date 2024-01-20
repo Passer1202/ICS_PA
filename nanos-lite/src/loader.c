@@ -75,6 +75,18 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
 }
 
 
+void context_uload(PCB *pcb, const char *filename) {
+  //这里用PCB的stack
+  Area ucontext_stack;
+  ucontext_stack.start = pcb->stack;
+  ucontext_stack.end = pcb->stack + STACK_SIZE;
+  uintptr_t entry = loader(pcb, filename);
+ 
+  pcb->cp = ucontext(NULL, ucontext_stack, (void*)entry);
+  //这里用heap，表示用户栈
+  pcb->cp->GPRx = (uintptr_t) heap.end;
+}
+
 void naive_uload(PCB *pcb, const char *filename) {
 
   uintptr_t entry = loader(pcb, filename);

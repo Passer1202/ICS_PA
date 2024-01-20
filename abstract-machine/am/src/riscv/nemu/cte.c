@@ -40,6 +40,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
 
   Context *p_kcontext = (Context *)(kstack.end-sizeof(Context));
   p_kcontext->mepc=(uintptr_t) entry;
+  p_kcontext->GPR2 = (uintptr_t)arg;
   return p_kcontext;
   
 }
