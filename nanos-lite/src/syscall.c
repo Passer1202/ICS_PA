@@ -45,6 +45,7 @@ int sys_execve(const char *filename){
 }
 
 void sys_exit(int x) {
+halt(0);
     const char nterm[]="/bin/nterm";	
     naive_uload(NULL,nterm);
     //return -1;
