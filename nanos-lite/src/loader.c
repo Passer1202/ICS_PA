@@ -151,7 +151,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
    //assert(0);
     //assert(pcb->cp!=NULL);
     pcb->cp->GPRx = (uintptr_t)u_s;
-    assert(0);
+    //assert(0);
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
