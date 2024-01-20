@@ -231,12 +231,14 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   	
   	int index=0;
   	
-  	while(index<bound)
-  	{
-  		SDL_Color my_colors = s->format->palette->colors[p_pixels[index]];
-            	uint32_t color_32bit = (my_colors.a << 24) | (my_colors.r << 16) | (my_colors.g << 8) | (my_colors.b << 0);
-            	my_pixels[index++] = color_32bit;
-  	}
+  	for(int i=0;i<hei;i++)
+  		for(int j=0;j<wid;j++)
+  		{
+  			SDL_Color my_colors = s->format->palette->colors[p_pixels[(y + i) * s->w + x + j]];
+            		uint32_t color_32bit = (my_colors.a << 24) | (my_colors.r << 16) | (my_colors.g << 8) | (my_colors.b << 0);
+            		my_pixels[i * wid + j] = color_32bit;
+
+  		}
   	
   	NDL_DrawRect(my_pixels, x, y, wid, hei);
         
