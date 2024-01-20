@@ -79,7 +79,7 @@ uintptr_t* good_bound(uintptr_t* s){
 }
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[])  {
- 
+ assert(0);
     Area pcb_stack;
     
     pcb_stack.start = pcb->stack;
@@ -144,7 +144,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     u_s[argc + 1 + index + 1]=0;
  
     pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
- assert(0);
+ //assert(0);
     pcb->cp->GPRx = (uintptr_t)u_s;
 }
 
