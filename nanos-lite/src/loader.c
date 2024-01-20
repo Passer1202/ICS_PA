@@ -74,17 +74,78 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
   pcb->cp = kcontext(kcontext_stack, entry, arg);
 }
 
+uintptr_t* good_bound(uintptr_t* s){
+	return (uintptr_t*)((uintptr_t)s & ~(sizeof(uintptr_t) - 1));
+}
 
-void context_uload(PCB *pcb, const char *filename) {
-  //这里用PCB的stack
-  Area ucontext_stack;
-  ucontext_stack.start = pcb->stack;
-  ucontext_stack.end = pcb->stack + STACK_SIZE;
-  uintptr_t entry = loader(pcb, filename);
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[])  {
  
-  pcb->cp = ucontext(NULL, ucontext_stack, (void*)entry);
-  //这里用heap，表示用户栈
-  pcb->cp->GPRx = (uintptr_t) heap.end;
+    Area pcb_stack;
+    
+    pcb_stack.start = pcb->stack;
+    pcb_stack.end = pcb->stack + STACK_SIZE;
+ 
+    uintptr_t entry = loader(pcb, filename);
+ 
+    int argc = 0,envc = 0;
+    while (argv[argc++] != NULL);
+    argc--;
+    while (envp[envc++] != NULL) ;
+    envc--;
+ 
+    
+    uintptr_t* u_s = (uintptr_t*)heap.end;
+    
+    uintptr_t* p_heap = (uintptr_t*)heap.end;
+ 
+    
+    int index=0;
+    
+    while(index<argc){
+    	size_t size = strlen(argv[index]) + 1;
+    	u_s-=size;
+    	char* p_us=(char*)u_s;
+    	for(int i=0;i<size;i++)
+    		*(p_us+i)=*(argv[index]+i);
+    }
+ 
+   index=0;
+   while(index<envc){
+    	size_t size = strlen(envp[index]) + 1;
+    	u_s-=size;
+    	char* p_us=(char*)u_s;
+    	for(int i=0;i<size;i++)
+    		*(p_us+i)=*(envp[index]+i);
+    }
+ 
+    u_s=good_bound(u_s);
+ 
+    u_s =  u_s - (argc + envc + 3);  
+ 
+    u_s[0] = argc;
+ 
+    index=0;
+    
+    while(index<argc){
+    	size_t size = strlen(argv[index]) + 1;
+    	p_heap-=size;
+    	u_s[index + 1]=(uintptr_t)p_heap;
+    	index++;
+    }
+    u_s[index + 1]=0;
+    
+    index=0;
+    while(index<envc){
+    	size_t size = strlen(envp[index]) + 1;
+    	p_heap-=size;
+    	u_s[argc + 1 + index + 1]=(uintptr_t)p_heap;
+    	index++;
+    }
+    u_s[argc + 1 + index + 1]=0;
+ 
+    pcb->cp = ucontext(NULL, pcb_stack, (void*)entry);
+ 
+    pcb->cp->GPRx = (uintptr_t)u_s;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
