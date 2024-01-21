@@ -73,7 +73,7 @@ static void sh_handle_cmd(const char *cmd) {
 		    	}
             		char *argv[] = {name_buf, NULL};
             		//assert(0);
-            		printf("s",name_buf);
+            		printf("%s\n",name_buf);
             		execve(name_buf, argv, NULL);
             
             	}
