@@ -94,8 +94,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     envc--;
  
    
-    uintptr_t* u_s = (uintptr_t*)heap.end;
-    u_s=good_bound(u_s);
+    uintptr_t* u_s = (uintptr_t*)new_page(8);//原本写作heap.end
+    
+    //u_s=good_bound(u_s);
     
     uintptr_t* p_heap = u_s;
  

@@ -38,14 +38,22 @@ int sys_brk(void* addr){
 }
 
 void naive_uload(PCB *pcb, const char *filename);
-
-int sys_execve(const char *filename){
-	naive_uload(NULL, filename);
-	return -1;
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
+void switch_boot_pcb() ;
+int sys_execve(const char *fname, char *const argv[], char *const envp[]) {
+	
+	context_uload(current, fname, argv, envp);
+	
+    	switch_boot_pcb();
+    	
+    	yield();
+    	
+    	return -1;
+    	
 }
 
 void sys_exit(int x) {
-halt(0);
+    //halt(0);
     const char nterm[]="/bin/nterm";	
     naive_uload(NULL,nterm);
     //return -1;
@@ -77,7 +85,8 @@ void do_syscall(Context *c) {
     case SYS_lseek: c->GPRx=fs_lseek(c->GPR2,(size_t)c->GPR3,c->GPR4);break;
     case SYS_gettimeofday: 
     		    c->GPRx=sys_gettimeofday((struct timeval *)c->GPR2,(struct timezone *)c->GPR3);break;
-    case SYS_execve: sys_execve((const char *)c->GPR2); break;//很特殊，无需返回//while
+    case SYS_execve:
+    		    sys_execve((const char *)c->GPR2, (char * const*)c->GPR3, (char * const*)c->GPR4);while(1); break;//很特殊，无需返回//while
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
  
