@@ -72,7 +72,7 @@ static void sh_handle_cmd(const char *cmd) {
 		    		name_buf[len++]=*p_cmd++;
 		    	}
             		char *argv[] = {name_buf, NULL};
-            		assert(0);
+            		//assert(0);
             		execve(name_buf, argv, NULL);
             
             	}
