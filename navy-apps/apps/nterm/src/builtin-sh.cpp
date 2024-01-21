@@ -52,6 +52,7 @@ static void sh_handle_cmd(const char *cmd) {
             			mark=1;
             			break;
             		}
+            		index++;
             	
             	}
             	
