@@ -26,6 +26,8 @@ typedef struct {
   
   word_t mtvec;   //mtvec寄存器 - 存放异常入口地址
   
+  word_t satp;   //Supervisor寄存器
+  
 } riscv32_CSRs;
 
 
@@ -42,6 +44,7 @@ typedef struct {
   } inst;
 } MUXDEF(CONFIG_RV64, riscv64_ISADecodeInfo, riscv32_ISADecodeInfo);
 
-#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+#define isa_mmu_check(vaddr, len, type) ((((cpu.csr.satp & 0x80000000) >> 31) == 1) ? MMU_TRANSLATE : MMU_DIRECT)
+//不很确定。。。
 
 #endif
