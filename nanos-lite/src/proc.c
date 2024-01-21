@@ -31,6 +31,7 @@ void init_proc() {
   char *argv[] = {"/bin/exec-test",NULL};
   char *envp[] = {NULL};
   context_uload(&pcb[1], "/bin/exec-test", argv, envp);
+  
   //nterm暴露出了些许bug。。。
   switch_boot_pcb();
   

@@ -28,6 +28,7 @@ word_t ifetch_read(vaddr_t addr,int len,int type){
 		case MMU_DIRECT:
 			
 	}
+	
 	return paddr_read(paddr,len);
 
 }
@@ -35,6 +36,7 @@ word_t ifetch_read(vaddr_t addr,int len,int type){
 word_t vaddr_ifetch(vaddr_t addr, int len) {
 
 	word_t ret=ifetch_read(addr, len , MEM_TYPE_IFETCH);
+	
   	return ret;
   	
 }
@@ -42,6 +44,7 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 word_t vaddr_read(vaddr_t addr, int len) {
 	
 	word_t ret=ifetch_read(addr, len , MEM_TYPE_READ);
+	
   	return ret;
 }
 
