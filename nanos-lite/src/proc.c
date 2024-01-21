@@ -28,7 +28,7 @@ void hello_fun(void *arg) {
 void init_proc() {
   
   context_kload(&pcb[0], hello_fun, "Begin");
-  char *argv[] = {"/bin/exec-test","/bin/menu"};
+  char *argv[] = {"/bin/exec-test",NULL};
   char *envp[] = {NULL};
   context_uload(&pcb[1], "/bin/exec-test", argv, envp);
   
