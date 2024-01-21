@@ -37,6 +37,60 @@ static void sh_handle_cmd(const char *cmd) {
             		return;
             	}
             	
+            	//下面对通过空格分开来argv的cmd进行解析
+            	//argc<=2:
+            	
+            	int index=0;
+            	int mark=0;
+            	
+            	//找出来分隔的空格
+            	
+            	while(cmd[index]!=' '){
+            		
+            		//没找到空格
+            		if(cmd[index]=='\n'){
+            			mark=1;
+            			break;
+            		}
+            	
+            	}
+            	
+            	for(int i=0;i<MAX_FILE_NAME;i++){
+            	
+            		name_buf[i]=0;
+            		arg_buf[i]=0;
+            		
+            	}
+            	
+            	if(mark==1){
+            		
+            		int len=0;
+            		char* p_cmd=(char*)cmd;
+		    	while(len<strlen(cmd)-1)//删除换行符'\n'
+		    	{
+		    		name_buf[len++]=*p_cmd++;
+		    	}
+            		char *argv[] = {name_buf, NULL};
+            		execve(name_buf, argv, NULL);
+            
+            	}
+            	else{
+            		
+            		for(int i=0;i<index;i++){
+            			name_buf[i]=cmd[i];
+            		}
+            		char* p_cmd=(char*)cmd+index+1;
+            		for(int i=0;i<strlen(cmd)-index;i++){
+            			arg_buf[i]=*p_cmd++;
+            		}
+            		
+            		char *argv[] = {name_buf, arg_buf, NULL};
+            		execve(name_buf, argv, NULL);
+            	}
+            	
+            	
+            	
+            	
             	//char* p_name_buf;
             	/*
             	for(int i=0;i<MAX_FILE_NAME;i++)
