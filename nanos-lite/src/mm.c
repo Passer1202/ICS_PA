@@ -12,7 +12,19 @@ void* new_page(size_t nr_page) {
 
 #ifdef HAS_VME
 static void* pg_alloc(int n) {
-  return NULL;
+	//Nanos-lite的pg_alloc(). pg_alloc()的参数是分配空间的字节数, 
+	//但我们保证AM通过回调函数调用pg_alloc()时申请的空间总是页面大小的整数倍, 
+	//因此可以通过调用new_page()来实现pg_alloc(). 此外pg_alloc()还需要对分配的页面清零.
+	
+	int p_num = n / PGSIZE;
+  	assert(p_num * PGSIZE == n);//根据保证（）
+  	void *page_end = new_page(p_num);
+  	void *page_start = page_end - n;
+  	
+  	
+  	memset(page_start, 0, n);//清零
+  	
+  	return page_start;
 }
 #endif
 

@@ -27,11 +27,11 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   
-  //context_kload(&pcb[0], hello_fun, "Begin");
-  char *argv[] = {NULL};
+  context_kload(&pcb[0], hello_fun, "Begin");
+  char *argv[] = {"/bin/exec-test",NULL};
   char *envp[] = {NULL};
-  context_uload(&pcb[0], "/bin/nterm", argv, envp);
-  
+  context_uload(&pcb[1], "/bin/exec-test", argv, envp);
+  //nterm暴露出了些许bug。。。
   switch_boot_pcb();
   
   Log("Initializing processes...");
