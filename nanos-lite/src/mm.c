@@ -21,7 +21,6 @@ static void* pg_alloc(int n) {
   	void *page_end = new_page(p_num);
   	void *page_start = page_end - n;
   	
-  	
   	memset(page_start, 0, n);//清零
   	
   	return page_start;
