@@ -28,9 +28,9 @@ void hello_fun(void *arg) {
 void init_proc() {
   
   //context_kload(&pcb[0], hello_fun, "Begin");
-  char *argv[] = {"/bin/nterm","/bin/pal","--skip",NULL};
+  char *argv[] = {NULL};
   char *envp[] = {NULL};
-  context_uload(&pcb[0], "/bin/nterm", argv, envp);
+  context_uload(&pcb[0], "exec-test", argv, envp);
   
   switch_boot_pcb();
   
